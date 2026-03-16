@@ -6,7 +6,8 @@ import 'package:flutter/material.dart';
 
 // Import the screen we want to navigate to after the splash screen
 // You can change this later to LoginScreen or HomeScreen
-import 'home_screen.dart';
+//import 'home_screen.dart';
+import 'auth/login_screen.dart';
 
 
 // SplashScreen is a StatefulWidget because the screen
@@ -42,7 +43,7 @@ class _SplashScreenState extends State<SplashScreen> {
         MaterialPageRoute(
 
           // builder tells Flutter which screen to open
-          builder: (context) => const HomeScreenPage(),
+          builder: (context) => const LoginScreen(),
         ),
       ),
     );
