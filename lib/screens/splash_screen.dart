@@ -66,7 +66,7 @@ class _SplashScreenState extends State<SplashScreen> {
         child: Image.asset(
 
           // Path to the Vibely logo inside assets
-          "assets/images/vibely_logo.png",
+          "assets/images/splash_screen.jpg",
 
           // Controls how large the logo appears
           width: 180,
