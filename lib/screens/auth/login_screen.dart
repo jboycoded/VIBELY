@@ -68,64 +68,82 @@ class _LoginScreenState extends State<LoginScreen> {
       // Dark theme background
       backgroundColor: const Color(0xFF0F0B1F),
 
-      body: SafeArea(
+      body: Stack(
 
-        child: SingleChildScrollView(
+  children: [
 
-          child: Padding(
+    // BACKGROUND IMAGE
+    Container(
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage("assets/images/login_bg.png"),
+          fit: BoxFit.cover,
+        ),
+      ),
+    ),
 
-            padding: const EdgeInsets.symmetric(horizontal: 24),
+    // DARK OVERLAY (makes text easier to read)
+    Container(
+      color: Colors.black.withOpacity(0.35),
+    ),
 
-            child: Column(
+    // MAIN CONTENT
+    SafeArea(
 
-              children: [
+      child: SingleChildScrollView(
 
-                const SizedBox(height: 40),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 24),
 
-                // Vibely Logo
-                Row(
-                  mainAxisAlignment: MainAxisAlignment.center,
-                  children: [
+          child: Column(
+            children: [
 
-                    Image.asset(
-                      "assets/images/vibely_icon.png",
-                      height: 28,
+              const SizedBox(height: 40),
+
+              // Logo Row
+              Row(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+
+                  Image.asset(
+                    "assets/images/vibely_logo.png",
+                    height: 28,
+                  ),
+
+                  const SizedBox(width: 8),
+
+                  const Text(
+                    "VIBELY",
+                    style: TextStyle(
+                      fontSize: 22,
+                      fontWeight: FontWeight.bold,
+                      color: Colors.white,
                     ),
+                  )
+                ],
+              ),
 
-                    const SizedBox(width: 8),
+              const SizedBox(height: 40),
 
-                    const Text(
-                      "VIBELY",
-                      style: TextStyle(
-                        fontSize: 22,
-                        fontWeight: FontWeight.bold,
-                        color: Colors.white,
-                      ),
-                    )
-                  ],
+              const Text(
+                "Welcome to Vibely! 👋",
+                style: TextStyle(
+                  fontSize: 26,
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
                 ),
+              ),
 
-                const SizedBox(height: 40),
+              const SizedBox(height: 10),
 
-                const Text(
-                  "Welcome to Vibely! 👋",
-                  style: TextStyle(
-                    fontSize: 26,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
+              const Text(
+                "Connect with new friends and have fun",
+                style: TextStyle(
+                  color: Colors.white70,
                 ),
+              ),
 
-                const SizedBox(height: 10),
-
-                const Text(
-                  "Connect with new friends and have fun",
-                  style: TextStyle(
-                    color: Colors.white70,
-                  ),
-                ),
-
-                const SizedBox(height: 40),
+              const SizedBox(height: 40),
 
                 // Email Field
                 TextField(
@@ -293,7 +311,9 @@ class _LoginScreenState extends State<LoginScreen> {
           ),
         ),
       ),
-    );
+    ],//children
+        ),//stack
+    );//scaffold
   }
 
   // Reusable social login button widget
