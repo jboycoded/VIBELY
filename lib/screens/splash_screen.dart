@@ -53,7 +53,7 @@ class _SplashScreenState extends State<SplashScreen> {
   // build() describes what the UI looks like
   @override
   Widget build(BuildContext context) {
-
+    /*
     return Scaffold(
 
       // Sets the background color of the screen
@@ -71,6 +71,18 @@ class _SplashScreenState extends State<SplashScreen> {
 
           // Controls how large the logo appears
           width: 180,
+        ),
+      ),*/
+
+      return Scaffold(
+      body: Container(
+        width: double.infinity,
+        height: double.infinity,
+        decoration: BoxDecoration(
+          image: DecorationImage(
+            image: AssetImage("assets/images/splash_screen.jpg"),
+            fit: BoxFit.cover,
+          ),
         ),
       ),
     );
