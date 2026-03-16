@@ -106,7 +106,7 @@ class _LoginScreenState extends State<LoginScreen> {
                 children: [
 
                   Image.asset(
-                    "assets/images/vibely_logo.png",
+                    "assets/images/vibely_icon.jpg",
                     height: 28,
                   ),
 
