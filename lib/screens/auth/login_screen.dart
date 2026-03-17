@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import '../home_screen.dart';
+import '../profile_creation_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -52,7 +52,7 @@ class _LoginScreenState extends State<LoginScreen> {
     Future.delayed(const Duration(seconds: 2), () {
 
       Navigator.pushReplacement(context,MaterialPageRoute(
-        builder: (context) => const HomeScreenPage(),
+        builder: (context) => const ProfileCreationScreen(),
         ),
       );
 
