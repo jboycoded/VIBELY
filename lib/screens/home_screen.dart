@@ -125,6 +125,11 @@ class _HomeScreenState extends State<HomeScreen> {
                   liveCard("David","801","assets/images/stream2.jpg"),
                   liveCard("Mia","530","assets/images/stream3.jpg"),
                   liveCard("Jenny","167","assets/images/stream4.jpg"),
+                  liveCard("Lovisa","2.3K","assets/images/stream1.jpg"),
+                  liveCard("David","801","assets/images/stream2.jpg"),
+                  liveCard("Mia","530","assets/images/stream3.jpg"),
+                  liveCard("Jenny","167","assets/images/stream4.jpg"),
+                  
 
                 ],
               ),
