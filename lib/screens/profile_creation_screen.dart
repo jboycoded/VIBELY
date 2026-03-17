@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-//import '../home_screen.dart'
+import 'home_screen.dart'
 
 class ProfileCreationScreen extends StatefulWidget {
   const ProfileCreationScreen({super.key});
@@ -49,6 +49,15 @@ class _ProfileCreationScreenState extends State<ProfileCreationScreen> {
     print(selectedGender);
     print(selectedBirthday);
 
+    Future.delayed(const Duration(seconds: 2), () {
+
+      Navigator.pushReplacement(context,MaterialPageRoute(
+        builder: (context) => const HomeScreen(),
+        ),
+      );
+
+    });
+
   }
 
   @override
@@ -93,15 +102,6 @@ class _ProfileCreationScreenState extends State<ProfileCreationScreen> {
                     Row(
 
                       children: [
-
-                        IconButton(
-                          icon: const Icon(Icons.arrow_back,color: Colors.white),
-                          onPressed: (){
-                            Navigator.pop(context);
-                          },
-                        ),
-
-                        const Spacer(),
 
                         Row(
                           children: [
