@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'match/random_match_screen.dart';
 
-import 'home/home_content.dart'
+import 'home/home_content.dart';
 
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
