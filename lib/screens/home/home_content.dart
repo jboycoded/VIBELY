@@ -6,7 +6,25 @@ class HomeContent extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
 
-    return SafeArea(
+    return Stack(
+        children: [
+
+          /// BACKGROUND IMAGE
+          Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("assets/images/login_bg.png"),
+                fit: BoxFit.cover,
+              ),
+            ),
+          ),
+
+          /// DARK OVERLAY
+          Container(
+            color: Colors.black.withOpacity(0.5),
+          ),
+          
+          SafeArea(
         child: Column(
 
           children: [
@@ -117,6 +135,8 @@ class HomeContent extends StatelessWidget {
           ],
         ),
       );
+          ]
+      )
   }
 
   /// CATEGORY BUTTON
