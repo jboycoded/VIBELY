@@ -134,9 +134,9 @@ class HomeContent extends StatelessWidget {
 
           ],
         ),
-      );
+      ),
           ]
-      )
+      );
   }
 
   /// CATEGORY BUTTON
