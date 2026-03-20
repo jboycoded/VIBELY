@@ -4,6 +4,8 @@ import 'match/random_match_screen.dart';
 
 import 'home/home_content.dart';
 
+import 'chats/chat_screen.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -17,7 +19,7 @@ class _HomeScreenState extends State<HomeScreen> {
   const HomeContent(), // your current home UI
   const RandomMatchScreen(),
   const Center(child: Text("Go Live")),
-  const Center(child: Text("Chats")),
+  const ChatsScreen(),
   const Center(child: Text("Profile")),
 ];
 
