@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'live_stream_viewer_screen.dart';
+
 class Livestreams extends StatelessWidget {
   const Livestreams({super.key});
 
@@ -118,14 +120,14 @@ class Livestreams extends StatelessWidget {
 
                 children: [
 
-                  liveCard("Lovisa","2.3K","assets/images/stream1.jpg"),
-                  liveCard("David","801","assets/images/stream2.jpg"),
-                  liveCard("Mia","530","assets/images/stream3.jpg"),
-                  liveCard("Jenny","167","assets/images/stream4.jpg"),
-                  liveCard("Lovisa","2.3K","assets/images/stream1.jpg"),
-                  liveCard("David","801","assets/images/stream2.jpg"),
-                  liveCard("Mia","530","assets/images/stream3.jpg"),
-                  liveCard("Jenny","167","assets/images/stream4.jpg"),
+                  liveCard(context,"Lovisa","2.3K","assets/images/stream1.jpg"),
+                  liveCard(context,"David","801","assets/images/stream2.jpg"),
+                  liveCard(context,"Mia","530","assets/images/stream3.jpg"),
+                  liveCard(context,"Jenny","167","assets/images/stream4.jpg"),
+                  liveCard(context,"Lovisa","2.3K","assets/images/stream1.jpg"),
+                  liveCard(context,"David","801","assets/images/stream2.jpg"),
+                  liveCard(context,"Mia","530","assets/images/stream3.jpg"),
+                  liveCard(context,"Jenny","167","assets/images/stream4.jpg"),
                   
 
                 ],
@@ -170,90 +172,82 @@ Widget categoryButton(String text){
 
 
 /// LIVE STREAM CARD
-Widget liveCard(String name,String viewers,String image){
+Widget liveCard(BuildContext context, String name, String viewers, String image) {
+  return GestureDetector(
+    onTap: () {
+      /// 👉 Navigate to Viewer Screen
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const ViewerScreen(),
+        ),
+      );
+    },
 
-  return Padding(
+    child: Padding(
+      padding: const EdgeInsets.all(6),
 
-    padding: const EdgeInsets.all(6),
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(16),
 
-    child: ClipRRect(
+        child: Stack(
+          children: [
 
-      borderRadius: BorderRadius.circular(16),
-
-      child: Stack(
-
-        children: [
-
-          /// STREAM IMAGE
-          Positioned.fill(
-            child: Image.asset(
-              image,
-              fit: BoxFit.cover,
-            ),
-          ),
-
-          /// LIVE TAG
-          Positioned(
-
-            top:10,
-            left:10,
-
-            child: Container(
-
-              padding: const EdgeInsets.symmetric(horizontal:8,vertical:4),
-
-              decoration: BoxDecoration(
-                color: Colors.red,
-                borderRadius: BorderRadius.circular(10),
-              ),
-
-              child: const Text(
-                "LIVE",
-                style: TextStyle(color: Colors.white,fontSize:12),
-              ),
-
-            ),
-          ),
-
-          /// VIEWERS COUNT
-          Positioned(
-
-            top:10,
-            right:10,
-
-            child: Row(
-
-              children: [
-
-                const Icon(Icons.remove_red_eye,color: Colors.white,size:16),
-
-                const SizedBox(width:4),
-
-                Text(
-                  viewers,
-                  style: const TextStyle(color: Colors.white),
-                )
-
-              ],
-            ),
-          ),
-
-          /// STREAMER NAME
-          Positioned(
-
-            bottom:10,
-            left:10,
-
-            child: Text(
-              name,
-              style: const TextStyle(
-                color: Colors.white,
-                fontWeight: FontWeight.bold,
+            /// STREAM IMAGE
+            Positioned.fill(
+              child: Image.asset(
+                image,
+                fit: BoxFit.cover,
               ),
             ),
-          )
 
-        ],
+            /// LIVE TAG
+            Positioned(
+              top: 10,
+              left: 10,
+              child: Container(
+                padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                decoration: BoxDecoration(
+                  color: Colors.red,
+                  borderRadius: BorderRadius.circular(10),
+                ),
+                child: const Text(
+                  "LIVE",
+                  style: TextStyle(color: Colors.white, fontSize: 12),
+                ),
+              ),
+            ),
+
+            /// VIEWERS COUNT
+            Positioned(
+              top: 10,
+              right: 10,
+              child: Row(
+                children: [
+                  const Icon(Icons.remove_red_eye, color: Colors.white, size: 16),
+                  const SizedBox(width: 4),
+                  Text(
+                    viewers,
+                    style: const TextStyle(color: Colors.white),
+                  )
+                ],
+              ),
+            ),
+
+            /// STREAMER NAME
+            Positioned(
+              bottom: 10,
+              left: 10,
+              child: Text(
+                name,
+                style: const TextStyle(
+                  color: Colors.white,
+                  fontWeight: FontWeight.bold,
+                ),
+              ),
+            )
+          ],
+        ),
       ),
     ),
   );
