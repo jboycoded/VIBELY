@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 
-class LivestreamRooms extends StatelessWidget {
-  const LivestreamRooms({super.key});
+class Livestreams extends StatelessWidget {
+  const Livestreams({super.key});
 
   @override
   Widget build(BuildContext context) {
