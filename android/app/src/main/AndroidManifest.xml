@@ -1,5 +1,12 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
     package="com.example.vibely">
+
+    <!-- CAMERA PERMISSION -->
+    <uses-permission android:name="android.permission.CAMERA" />
+
+    <!-- Optional: microphone if you’ll capture audio -->
+    <uses-permission android:name="android.permission.RECORD_AUDIO" />
+    
    <application
         android:label="vibely"
         android:name="${applicationName}"
