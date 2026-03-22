@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'streaming/live_streaming_screen.dart';
+import '../streaming/live_streaming_screen.dart';
 
 class GoLiveScreen extends StatefulWidget {
   const GoLiveScreen({super.key});
