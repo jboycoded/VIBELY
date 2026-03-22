@@ -99,32 +99,34 @@ Widget navItem(IconData icon,int index){
 }
 
    /// GO LIVE BUTTON
-Widget goLiveButton(){
+Widget goLiveButton() {
+  return GestureDetector(
 
-  return Container(
+    onTap: () {
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const GoLiveScreen(),
+        ),
+      );
+    },
 
-    height:60,
-    width:60,
+    child: Container(
+      height: 55,
+      width: 55,
 
-    decoration: const BoxDecoration(
-
-      shape: BoxShape.circle,
-
-      gradient: LinearGradient(
-        colors: [
-          Color(0xFF7B3BFF),
-          Color(0xFFFF4D8D),
-        ],
+      decoration: const BoxDecoration(
+        shape: BoxShape.circle,
+        gradient: LinearGradient(
+          colors: [
+            Color(0xFF7B3BFF),
+            Color(0xFFFF4D8D),
+          ],
+        ),
       ),
 
+      child: const Icon(Icons.videocam, color: Colors.white),
     ),
-
-    child: const Icon(
-      Icons.videocam,
-      color: Colors.white,
-      size:28,
-    ),
-
   );
 }
 
