@@ -8,6 +8,8 @@ import 'chats/chat_screen.dart';
 
 import 'profile/profile_screen.dart';
 
+import 'golive/go_live_screen.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -20,7 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final List<Widget> pages = [
   const Livestreams(), // your current home UI
   const RandomMatchScreen(),
-  const Center(child: Text("Go Live")),
+  const GoLiveStream(),
   const ChatsScreen(),
   const ProfileScreen(),
 ];
