@@ -6,6 +6,8 @@ import 'streaming/livestreams.dart';
 
 import 'chats/chat_screen.dart';
 
+import 'profile/profile_screen.dart';
+
 class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
 
@@ -20,7 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
   const RandomMatchScreen(),
   const Center(child: Text("Go Live")),
   const ChatsScreen(),
-  const Center(child: Text("Profile")),
+  const ProfileScreen(),
 ];
 
   // Stores which bottom navigation item is selected
