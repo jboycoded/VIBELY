@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 
 import 'match/random_match_screen.dart';
 
-import 'home/home_content.dart';
+import 'streaming/livestreams.dart';
 
 import 'chats/chat_screen.dart';
 
@@ -16,7 +16,7 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
 
   final List<Widget> pages = [
-  const HomeContent(), // your current home UI
+  const Livestreams(), // your current home UI
   const RandomMatchScreen(),
   const Center(child: Text("Go Live")),
   const ChatsScreen(),
