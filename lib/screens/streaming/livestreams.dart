@@ -179,7 +179,7 @@ Widget liveCard(BuildContext context, String name, String viewers, String image)
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => const ViewerScreen(),
+          builder: (context) => const LiveStreamViewerScreen(),
         ),
       );
     },
