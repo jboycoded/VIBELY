@@ -22,7 +22,7 @@ class _HomeScreenState extends State<HomeScreen> {
   final List<Widget> pages = [
   const Livestreams(), // your current home UI
   const RandomMatchScreen(),
-  const GoLiveStream(),
+  const GoLiveScreen(),
   const ChatsScreen(),
   const ProfileScreen(),
 ];
