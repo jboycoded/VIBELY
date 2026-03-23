@@ -6,202 +6,253 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: const Color(0xFF0D0A1F), // Matches your HomeScreen
-      body: Stack(
-        children: [
-          // 1. Background Vibe (Purple Glow)
-          Positioned(
-            top: -100,
-            right: -50,
-            child: Container(
-              width: 300,
-              height: 300,
-              decoration: BoxDecoration(
-                shape: BoxShape.circle,
-                color: const Color(0xFF7B3BFF).withOpacity(0.15),
-                boxShadow: [
-                  BoxShadow(
-                    color: const Color(0xFF7B3BFF).withOpacity(0.2),
-                    blurRadius: 100,
-                    spreadRadius: 50,
+      body: Container(
+
+        /// 🌌 BACKGROUND (Dark Gradient Theme)
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Color(0xFF0D0A1F),
+              Color(0xFF1A0F3C),
+              Color(0xFF2A0D4D),
+            ],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
+
+        child: SafeArea(
+          child: SingleChildScrollView(
+            child: Column(
+              children: [
+
+                /// 🔝 TOP BAR
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: const [
+                      Icon(Icons.arrow_back, color: Colors.white),
+                      Row(
+                        children: [
+                          Icon(Icons.settings, color: Colors.white),
+                          SizedBox(width: 15),
+                          Icon(Icons.person_add_alt, color: Colors.white),
+                        ],
+                      )
+                    ],
                   ),
-                ],
-              ),
+                ),
+
+                const SizedBox(height: 10),
+
+                /// 👤 PROFILE HEADER
+                Column(
+                  children: [
+
+                    /// Profile Image with Glow
+                    Stack(
+                      alignment: Alignment.bottomRight,
+                      children: [
+
+                        Container(
+                          padding: const EdgeInsets.all(3),
+                          decoration: BoxDecoration(
+                            shape: BoxShape.circle,
+                            gradient: const LinearGradient(
+                              colors: [
+                                Color(0xFF7B3BFF),
+                                Color(0xFFFF4D8D),
+                              ],
+                            ),
+                          ),
+                          child: const CircleAvatar(
+                            radius: 50,
+                            backgroundImage: AssetImage(
+                              "assets/images/streamer1.jpg",
+                            ),
+                          ),
+                        ),
+
+                        /// ❤️ Like Button
+                        Container(
+                          decoration: const BoxDecoration(
+                            shape: BoxShape.circle,
+                            color: Colors.pink,
+                          ),
+                          padding: const EdgeInsets.all(8),
+                          child: const Icon(Icons.favorite, color: Colors.white, size: 18),
+                        ),
+                      ],
+                    ),
+
+                    const SizedBox(height: 12),
+
+                    /// Name
+                    const Text(
+                      "Johnson Onoja",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 20,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+
+                    const SizedBox(height: 5),
+
+                    /// ID Row
+                    Row(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: const [
+                        Icon(Icons.circle, size: 8, color: Colors.blue),
+                        SizedBox(width: 5),
+                        Text("11", style: TextStyle(color: Colors.white70)),
+                        SizedBox(width: 10),
+                        Text("|", style: TextStyle(color: Colors.white38)),
+                        SizedBox(width: 10),
+                        Icon(Icons.person, size: 16, color: Colors.white70),
+                        SizedBox(width: 5),
+                        Text("110305", style: TextStyle(color: Colors.white70)),
+                      ],
+                    ),
+                  ],
+                ),
+
+                const SizedBox(height: 20),
+
+                /// 📊 STATS ROW (Followers, Following, Likes)
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                    children: const [
+                      StatItem(title: "Followers", value: "1.2K"),
+                      StatItem(title: "Following", value: "230"),
+                      StatItem(title: "Likes", value: "5.6K"),
+                    ],
+                  ),
+                ),
+
+                const SizedBox(height: 20),
+
+                /// 💎 LEVEL + VIP CARDS
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 20),
+                  child: Row(
+                    children: const [
+                      Expanded(child: InfoCard(title: "Lv.1", icon: Icons.diamond)),
+                      SizedBox(width: 10),
+                      Expanded(child: InfoCard(title: "Purchase VIP", icon: Icons.workspace_premium)),
+                    ],
+                  ),
+                ),
+
+                const SizedBox(height: 25),
+
+                /// 📂 MENU LIST
+                buildMenuItem(Icons.dashboard, "Creator Center"),
+                buildMenuItem(Icons.emoji_events, "Event Center"),
+                buildMenuItem(Icons.account_balance_wallet, "Wallet"),
+                buildMenuItem(Icons.inventory, "Item Bag"),
+                buildMenuItem(Icons.post_add, "My Posts"),
+
+                const SizedBox(height: 20),
+              ],
             ),
-          ),
-
-          SafeArea(
-            child: SingleChildScrollView(
-              padding: const EdgeInsets.symmetric(horizontal: 20),
-              child: Column(
-                children: [
-                  const SizedBox(height: 10),
-                  _buildTopBar(),
-                  const SizedBox(height: 20),
-                  _buildProfileAvatar(),
-                  const SizedBox(height: 10),
-                  _buildUsername(),
-                  const SizedBox(height: 8),
-                  _buildStatsRow(),
-                  const SizedBox(height: 25),
-                  _buildActionCards(),
-                  const SizedBox(height: 20),
-                  _buildMenuSection(),
-                ],
-              ),
-            ),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildTopBar() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.spaceBetween,
-      children: [
-        const Icon(Icons.arrow_back_ios_new, color: Colors.white, size: 20),
-        Row(
-          children: const [
-            Icon(Icons.settings_outlined, color: Colors.white, size: 24),
-            SizedBox(width: 15),
-            Icon(Icons.person_add_outlined, color: Colors.white, size: 24),
-          ],
-        ),
-      ],
-    );
-  }
-
-  Widget _buildProfileAvatar() {
-    return Center(
-      child: Stack(
-        alignment: Alignment.bottomRight,
-        children: [
-          Container(
-            padding: const EdgeInsets.all(3),
-            decoration: const BoxDecoration(
-              shape: BoxShape.circle,
-              gradient: LinearGradient(
-                colors: [Color(0xFF7B3BFF), Color(0xFFFF4D8D)],
-              ),
-            ),
-            child: const CircleAvatar(
-              radius: 55,
-              backgroundImage: NetworkImage('https://via.placeholder.com'), // Replace with user image
-            ),
-          ),
-          Container(
-            padding: const EdgeInsets.all(5),
-            decoration: const BoxDecoration(
-              color: Color(0xFFFF4D8D),
-              shape: BoxShape.circle,
-            ),
-            child: const Icon(Icons.favorite, color: Colors.white, size: 14),
-          ),
-        ],
-      ),
-    );
-  }
-
-  Widget _buildUsername() {
-    return const Text(
-      "Johnson Onoja",
-      style: TextStyle(
-        color: Colors.white,
-        fontSize: 22,
-        fontWeight: FontWeight.bold,
-        letterSpacing: 0.5,
-      ),
-    );
-  }
-
-  Widget _buildStatsRow() {
-    return Row(
-      mainAxisAlignment: MainAxisAlignment.center,
-      children: [
-        _statItem(Icons.circle, "0", Colors.blue),
-        const SizedBox(width: 15),
-        _statItem(Icons.person_outline, "110305", Colors.white70),
-        const SizedBox(width: 15),
-        const Icon(Icons.crop_square, color: Colors.white54, size: 18),
-      ],
-    );
-  }
-
-  Widget _statItem(IconData icon, String label, Color iconColor) {
-    return Row(
-      children:,
-    );
-  }
-
-  Widget _buildActionCards() {
-    return Row(
-      children: [
-        Expanded(
-          child: _actionCard(
-            gradient: const [Color(0xFF2A1B5E), Color(0xFF3B1E7E)],
-            icon: Icons.diamond,
-            iconColor: Colors.cyanAccent,
-            title: "Lv.1",
-          ),
-        ),
-        const SizedBox(width: 15),
-        Expanded(
-          child: _actionCard(
-            gradient: const [Color(0xFF5E441B), Color(0xFF3E2C11)],
-            icon: Icons.verified_user,
-            iconColor: Colors.orangeAccent,
-            title: "Purchase VIP",
           ),
         ),
-      ],
-    );
-  }
-
-  Widget _actionCard({required List<Color> gradient, required IconData icon, required Color iconColor, required String title}) {
-    return Container(
-      padding: const EdgeInsets.symmetric(vertical: 18),
-      decoration: BoxDecoration(
-        borderRadius: BorderRadius.circular(15),
-        gradient: LinearGradient(colors: gradient),
-        border: Border.all(color: Colors.white.withOpacity(0.1)),
-      ),
-      child: Row(
-        mainAxisAlignment: MainAxisAlignment.center,
-        children:,
       ),
     );
   }
 
-  Widget _buildMenuSection() {
-    return Column(
-      children: [
-        _menuTile(Icons.chat_bubble_outline, "Creator Center", Colors.cyan),
-        _menuTile(Icons.emoji_events_outlined, "Event Center", Colors.orange, value: "1,200"),
-        _menuTile(Icons.account_balance_wallet_outlined, "Wallet", Colors.pinkAccent),
-        _menuTile(Icons.inventory_2_outlined, "Item Bag", Colors.amber),
-        _menuTile(Icons.grid_view_outlined, "My Posts", Colors.purpleAccent),
-      ],
-    );
-  }
-
-  Widget _menuTile(IconData icon, String title, Color color, {String? value}) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 10),
-      decoration: BoxDecoration(
-        color: const Color(0xFF15102E).withOpacity(0.5),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: ListTile(
-        leading: Icon(icon, color: color),
-        title: Text(title, style: const TextStyle(color: Colors.white, fontSize: 16)),
-        trailing: Row(
-          mainAxisSize: MainAxisSize.min,
-          children:,
-            const Icon(Icons.arrow_forward_ios, color: Colors.white24, size: 14),
+  /// 📂 REUSABLE MENU ITEM
+  Widget buildMenuItem(IconData icon, String title) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
+      child: Container(
+        padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 16),
+        decoration: BoxDecoration(
+          color: Colors.white.withOpacity(0.05),
+          borderRadius: BorderRadius.circular(15),
+        ),
+        child: Row(
+          children: [
+            Icon(icon, color: Colors.pinkAccent),
+            const SizedBox(width: 15),
+            Expanded(
+              child: Text(
+                title,
+                style: const TextStyle(color: Colors.white),
+              ),
+            ),
+            const Icon(Icons.arrow_forward_ios, size: 14, color: Colors.white54),
           ],
         ),
       ),
     );
   }
 }
+
+/// 📊 STAT ITEM WIDGET (Reusable)
+class StatItem extends StatelessWidget {
+  final String title;
+  final String value;
+
+  const StatItem({super.key, required this.title, required this.value});
+
+  @override
+  Widget build(BuildContext context) {
+    return Column(
+      children: [
+        Text(
+          value,
+          style: const TextStyle(
+            color: Colors.white,
+            fontSize: 16,
+            fontWeight: FontWeight.bold,
+          ),
+        ),
+        const SizedBox(height: 5),
+        Text(
+          title,
+          style: const TextStyle(color: Colors.white54),
+        ),
+      ],
+    );
+  }
+}
+
+/// 💎 CARD WIDGET (Level & VIP)
+class InfoCard extends StatelessWidget {
+  final String title;
+  final IconData icon;
+
+  const InfoCard({super.key, required this.title, required this.icon});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      padding: const EdgeInsets.symmetric(vertical: 18),
+      decoration: BoxDecoration(
+        gradient: const LinearGradient(
+          colors: [
+            Color(0xFF7B3BFF),
+            Color(0xFFFF4D8D),
+          ],
+        ),
+        borderRadius: BorderRadius.circular(15),
+      ),
+      child: Column(
+        children: [
+          Icon(icon, color: Colors.white),
+          const SizedBox(height: 5),
+          Text(
+            title,
+            style: const TextStyle(color: Colors.white),
+          ),
+        ],
+      ),
+    );
+  }
+}                                        icon: Icons.diamond,
+            
