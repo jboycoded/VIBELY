@@ -38,13 +38,12 @@ class _HostLiveScreenState extends State<HostLiveScreen> {
   @override
   void dispose() {
     _cameraController?.dispose();
-    titleController.dispose();
     super.dispose();
   }
   
   /// function tto flip the camera
   Future<void> switchCamera() async {
-    if (cameras == null || cameras!.isEmpty) return;
+    if (_cameras == null || _cameras!.isEmpty) return;
 
   selectedCameraIndex =
       selectedCameraIndex == 0 ? 1 : 0;
@@ -52,7 +51,7 @@ class _HostLiveScreenState extends State<HostLiveScreen> {
   await _cameraController?.dispose();
 
   _cameraController = CameraController(
-    cameras![selectedCameraIndex],
+    _cameras![selectedCameraIndex],
     ResolutionPreset.high,
   );
 
