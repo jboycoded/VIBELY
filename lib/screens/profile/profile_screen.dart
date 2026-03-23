@@ -6,6 +6,27 @@ class ProfileScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: const Color(0xFF0F0B1F),
+
+      body: Stack(
+        children: [
+
+    // BACKGROUND IMAGE
+    Container(
+      decoration: const BoxDecoration(
+        image: DecorationImage(
+          image: AssetImage("assets/images/login_bg.png"),
+          fit: BoxFit.cover,
+        ),
+      ),
+    ),
+
+    // DARK OVERLAY (makes text easier to read)
+    Container(
+      color: Colors.black.withOpacity(0.35),
+    ),
+
+      /*
       body: Container(
 
         /// 🌌 BACKGROUND (Dark Gradient Theme)
@@ -19,9 +40,9 @@ class ProfileScreen extends StatelessWidget {
             begin: Alignment.topCenter,
             end: Alignment.bottomCenter,
           ),
-        ),
+        ),*/
 
-        child: SafeArea(
+      SafeArea(
           child: SingleChildScrollView(
             child: Column(
               children: [
@@ -161,8 +182,9 @@ class ProfileScreen extends StatelessWidget {
             ),
           ),
         ),
-      ),
-    );
+      ],
+    ),
+      );
   }
 
   /// 📂 REUSABLE MENU ITEM
