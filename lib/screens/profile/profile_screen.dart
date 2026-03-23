@@ -254,5 +254,5 @@ class InfoCard extends StatelessWidget {
       ),
     );
   }
-}                                        icon: Icons.diamond,
+} 
             
