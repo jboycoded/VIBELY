@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:camera/camera.dart';
 
-import '../streaming/live_streaming_screen.dart';
+import '../streaming/host_live_screen.dart';
 
 class GoLiveScreen extends StatefulWidget {
   const GoLiveScreen({super.key});
@@ -49,7 +49,7 @@ class _GoLiveScreenState extends State<GoLiveScreen> {
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => const LiveStreamingScreen(),
+        builder: (context) => const HostLiveScreen(),
       ),
     );
   }
@@ -79,13 +79,13 @@ class _GoLiveScreenState extends State<GoLiveScreen> {
                 child: CircularProgressIndicator(color: Colors.white),
               ),
             ),
-
+          /*
           // -----------------------------
           // DARK OVERLAY
           // -----------------------------
           Container(
             color: Colors.black.withOpacity(0.5),
-          ),
+          ),*/
 
           SafeArea(
             child: Padding(
@@ -123,7 +123,7 @@ class _GoLiveScreenState extends State<GoLiveScreen> {
                       // later: open gallery
                     },
                     child: Container(
-                      height: 180,
+                      height: 100,
                       width: double.infinity,
                       decoration: BoxDecoration(
                         color: const Color(0xFF1B1534),
