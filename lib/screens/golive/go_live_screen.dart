@@ -71,17 +71,13 @@ class _GoLiveScreenState extends State<GoLiveScreen> {
           // -----------------------------
           if (_cameraController != null &&
               _cameraController!.value.isInitialized)
-            ClipRRect(
-        borderRadius: BorderRadius.circular(0),
-        child: Transform.scale(
-          scale: _cameraController!.value.aspectRatio /
-              MediaQuery.of(context).size.aspectRatio,
-
-          child: Center(
-            child: AspectRatio(
-              aspectRatio: _cameraController!.value.aspectRatio,
-              child: CameraPreview(_cameraController!),
-            ),
+            SizedBox.expand(
+        child: FittedBox(
+          fit: BoxFit.cover, // 👈 KEY LINE
+          child: SizedBox(
+            width: _cameraController!.value.previewSize!.height,
+            height: _cameraController!.value.previewSize!.width,
+            child: CameraPreview(_cameraController!),
           ),
         ),
       )
