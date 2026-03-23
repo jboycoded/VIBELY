@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import 'private_chat_screen.dart';
+
 class ChatsScreen extends StatelessWidget {
   const ChatsScreen({super.key});
 
