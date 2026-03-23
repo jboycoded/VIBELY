@@ -82,7 +82,21 @@ class _HostLiveScreenState extends State<HostLiveScreen> {
           // -----------------------------
           if (_cameraController != null &&
               _cameraController!.value.isInitialized)
-            CameraPreview(_cameraController!)
+            ClipRRect(
+        borderRadius: BorderRadius.circular(0),
+        child: Transform.scale(
+          scale: _cameraController!.value.aspectRatio /
+              MediaQuery.of(context).size.aspectRatio,
+
+          child: Center(
+            child: AspectRatio(
+              aspectRatio: _cameraController!.value.aspectRatio,
+              child: CameraPreview(_cameraController!),
+            ),
+          ),
+        ),
+      )
+            
           else
             Container(
               color: Colors.black,
