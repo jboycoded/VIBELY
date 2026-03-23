@@ -92,7 +92,7 @@ class _HostLiveScreenState extends State<HostLiveScreen> {
           ),
         ),
       )
-            
+          
           else
             Container(
               color: Colors.black,
