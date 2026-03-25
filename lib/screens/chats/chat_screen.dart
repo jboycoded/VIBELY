@@ -205,7 +205,7 @@ return InkWell(
       );
   },
   child: Card(
-    margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+    margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
     color: Colors.white.withOpacity(0.05), // glass effect
     shape: RoundedRectangleBorder(
   borderRadius: BorderRadius.circular(15),
