@@ -192,9 +192,32 @@ class ChatItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+  
+return InkWell(
+  borderRadius: BorderRadius.circular(15),
+  onTap: () {
+    // Navigate to chat screen
+    Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const PrivateChatScreen(),
+        ),
+      );
+  },
+  child: Card(
+    margin: const EdgeInsets.symmetric(horizontal: 10, vertical: 6),
+    color: Colors.white.withOpacity(0.05), // glass effect
+    shape: RoundedRectangleBorder(
+  borderRadius: BorderRadius.circular(15),
+  side: BorderSide(
+    color: Colors.white.withOpacity(0.05),
+  ),
+),
+    
+    elevation: 0, // keep it flat (modern UI)
 
-    return Padding(
-      padding: const EdgeInsets.only(bottom:16),
+    child: Padding(
+      padding: const EdgeInsets.all(12),
 
       child: Row(
         children: [
@@ -202,20 +225,19 @@ class ChatItem extends StatelessWidget {
           /// PROFILE IMAGE
           Stack(
             children: [
-
               CircleAvatar(
                 radius: 25,
                 backgroundImage: AssetImage(image),
               ),
 
-              if(online)
+              if (online)
                 Positioned(
                   bottom: 0,
                   right: 0,
                   child: Container(
                     height: 10,
                     width: 10,
-                    decoration: BoxDecoration(
+                    decoration: const BoxDecoration(
                       color: Colors.green,
                       shape: BoxShape.circle,
                     ),
@@ -224,13 +246,12 @@ class ChatItem extends StatelessWidget {
             ],
           ),
 
-          const SizedBox(width:12),
+          const SizedBox(width: 12),
 
           /// TEXT CONTENT
           Expanded(
             child: Column(
               crossAxisAlignment: CrossAxisAlignment.start,
-
               children: [
 
                 Text(
@@ -241,14 +262,13 @@ class ChatItem extends StatelessWidget {
                   ),
                 ),
 
-                const SizedBox(height:4),
+                const SizedBox(height: 4),
 
                 Text(
                   message,
                   style: const TextStyle(color: Colors.white70),
                   overflow: TextOverflow.ellipsis,
                 ),
-
               ],
             ),
           ),
@@ -260,12 +280,15 @@ class ChatItem extends StatelessWidget {
 
               Text(
                 time,
-                style: const TextStyle(color: Colors.white54,fontSize:12),
+                style: const TextStyle(
+                  color: Colors.white54,
+                  fontSize: 12,
+                ),
               ),
 
-              const SizedBox(height:6),
+              const SizedBox(height: 6),
 
-              if(unread)
+              if (unread)
                 Container(
                   height: 8,
                   width: 8,
@@ -274,12 +297,13 @@ class ChatItem extends StatelessWidget {
                     shape: BoxShape.circle,
                   ),
                 )
-
             ],
           )
-
         ],
       ),
-    );
-  }
+    ),
+  ),
+);
+  
+}
 }
