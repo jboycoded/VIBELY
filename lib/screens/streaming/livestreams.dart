@@ -66,7 +66,7 @@ class _LivestreamsState extends State<Livestreams> {
                           onPressed: () {},
                         ),
                         IconButton(
-                          icon: const Icon(Icons.tune, color: Colors.white),
+                          icon: const Icon(Icons.notifications, color: Colors.white),
                           onPressed: () {},
                         ),
                       ],
