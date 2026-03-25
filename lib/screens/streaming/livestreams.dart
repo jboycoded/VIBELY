@@ -2,8 +2,15 @@ import 'package:flutter/material.dart';
 
 import 'viewer_live_screen.dart';
 
-class Livestreams extends StatelessWidget {
+class Livestreams extends StatefulWidget {
   const Livestreams({super.key});
+
+  @override
+  State<Livestreams> createState() => _LivestreamsState();
+}
+
+class _LivestreamsState extends State<Livestreams> {
+  String selectedCategory = "Popular";
 
   @override
   Widget build(BuildContext context) {
@@ -98,8 +105,8 @@ class Livestreams extends StatelessWidget {
                   categoryButton("Popular"),
                   categoryButton("Nearby"),
                   categoryButton("Featured"),
-                  categoryButton("New"),
-                  categoryButton("Top Hosts"),
+                  categoryButton("Following"),
+                  categoryButton("Explore"),
 
                 ],
               ),
@@ -142,30 +149,52 @@ class Livestreams extends StatelessWidget {
   }
 
   /// CATEGORY BUTTON
-Widget categoryButton(String text){
+Widget categoryButton(String text) {
+  final bool isSelected = selectedCategory == text;
 
-  return Padding(
-    padding: const EdgeInsets.symmetric(horizontal:6),
+  return GestureDetector(
+    onTap: () {
+      setState(() {
+        selectedCategory = text;
+      });
+    },
 
-    child: Container(
+    child: Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 6),
 
-      padding: const EdgeInsets.symmetric(horizontal:18),
+      child: AnimatedContainer(
+        duration: const Duration(milliseconds: 250),
 
-      decoration: BoxDecoration(
+        padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
 
-        color: const Color(0xFF1A1435),
+        decoration: BoxDecoration(
+          color: isSelected
+              ? const Color(0xFF9C27B0) // 🔥 Purple highlight
+              : const Color(0xFF1A1435),
 
-        borderRadius: BorderRadius.circular(20),
+          borderRadius: BorderRadius.circular(20),
 
+          /// Optional glow effect
+          boxShadow: isSelected
+              ? [
+                  BoxShadow(
+                    color: const Color(0xFF9C27B0).withOpacity(0.5),
+                    blurRadius: 8,
+                  )
+                ]
+              : [],
+        ),
+
+        alignment: Alignment.center,
+
+        child: Text(
+          text,
+          style: TextStyle(
+            color: Colors.white,
+            fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+          ),
+        ),
       ),
-
-      alignment: Alignment.center,
-
-      child: Text(
-        text,
-        style: const TextStyle(color: Colors.white),
-      ),
-
     ),
   );
 }
