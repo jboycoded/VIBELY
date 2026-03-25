@@ -15,7 +15,6 @@ class PrivteChatScreen extends StatelessWidget {
           fit: BoxFit.cover,
         ),
       ),
-    ),
 
     // DARK OVERLAY (makes text easier to read)
     Container(
@@ -61,7 +60,7 @@ class PrivteChatScreen extends StatelessWidget {
             ),
           ),
         ],
-      ),
+        ),
     );
   }
 
