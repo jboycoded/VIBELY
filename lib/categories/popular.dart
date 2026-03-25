@@ -11,6 +11,10 @@ class PopularCategory extends StatelessWidget {
       {"name": "David", "viewers": "801", "image": "assets/images/stream2.jpg"},
       {"name": "Mia", "viewers": "530", "image": "assets/images/stream3.jpg"},
       {"name": "Jenny", "viewers": "167", "image": "assets/images/stream4.jpg"},
+      {"name": "Lovisa", "viewers": "2.3K", "image": "assets/images/stream1.jpg"},
+      {"name": "David", "viewers": "801", "image": "assets/images/stream2.jpg"},
+      {"name": "Mia", "viewers": "530", "image": "assets/images/stream3.jpg"},
+      {"name": "Jenny", "viewers": "167", "image": "assets/images/stream4.jpg"},
     ];
 
     return GridView.builder(
