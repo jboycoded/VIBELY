@@ -90,7 +90,7 @@ class PrivateChatScreen extends StatelessWidget {
           const SizedBox(width: 10),
 
           const CircleAvatar(
-            backgroundImage: AssetImage("assets/streamer1.jpg"),
+            backgroundImage: AssetImage("assets/images/streamer1.jpg"),
           ),
 
           const SizedBox(width: 10),
