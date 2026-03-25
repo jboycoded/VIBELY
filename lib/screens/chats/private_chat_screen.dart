@@ -68,8 +68,21 @@ class PrivateChatScreen extends StatelessWidget {
 
   /// 🔹 Top Bar
   Widget _buildAppBar() {
-    return Padding(
+    return Container(
       padding: const EdgeInsets.all(12),
+
+      decoration: BoxDecoration(
+      color: Colors.black.withOpacity(0.3),
+
+      /// 👇 THIS CREATES THE SEPARATION
+      border: Border(
+        bottom: BorderSide(
+          color: Colors.white.withOpacity(0.1),
+          width: 1,
+        ),
+      ),
+    ),
+      
       child: Row(
         children: [
           const Icon(Icons.arrow_back, color: Colors.white),
