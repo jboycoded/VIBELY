@@ -1,13 +1,13 @@
 import 'package:flutter/material.dart';
 
-class LiveStreamViewerScreen extends StatefulWidget {
-  const LiveStreamViewerScreen({super.key});
+class ViewerLiveScreen extends StatefulWidget {
+  const ViewerLiveScreen({super.key});
 
   @override
-  State<LiveStreamViewerScreen> createState() => _LiveStreamViewerScreenState();
+  State<ViewerLiveScreen> createState() => _ViewerLiveScreenState();
 }
 
-class _LiveStreamViewerScreenState extends State<LiveStreamViewerScreen> {
+class _ViewerLiveScreenState extends State<ViewerLiveScreen> {
 
   final TextEditingController messageController = TextEditingController();
 
