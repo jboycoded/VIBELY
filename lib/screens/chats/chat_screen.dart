@@ -47,7 +47,7 @@ class ChatsScreen extends StatelessWidget {
                         style: TextStyle(color: Colors.white,fontSize:18),
                       ),
 
-                      Icon(Icons.mail_outline, color: Colors.white),
+                      Icon(Icons.search, color: Colors.white),
                     ],
                   ),
 
@@ -68,7 +68,7 @@ class ChatsScreen extends StatelessWidget {
                         Icon(Icons.search,color: Colors.white54),
                         SizedBox(width:10),
                         Text(
-                          "Search messages...",
+                          "Search messages/calls...",
                           style: TextStyle(color: Colors.white54),
                         )
                       ],
