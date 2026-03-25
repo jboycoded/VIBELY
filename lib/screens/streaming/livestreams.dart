@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-import 'live_stream_viewer_screen.dart';
+import 'viewer_live_screen.dart';
 
 class Livestreams extends StatelessWidget {
   const Livestreams({super.key});
@@ -179,7 +179,7 @@ Widget liveCard(BuildContext context, String name, String viewers, String image)
       Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => const LiveStreamViewerScreen(),
+          builder: (context) => const ViewerLiveScreen(),
         ),
       );
     },
