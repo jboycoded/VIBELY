@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 
-class PrivteChatScreen extends StatelessWidget {
+class PrivateChatScreen extends StatelessWidget {
   const PrivateChatScreen({super.key});
 
   @override
@@ -8,13 +8,15 @@ class PrivteChatScreen extends StatelessWidget {
     return Scaffold(
       body: Stack(
         children: [
-          /// BackgroundContainer(
+          /// Background
+          Container(
       decoration: const BoxDecoration(
         image: DecorationImage(
           image: AssetImage("assets/images/login_bg.png"),
           fit: BoxFit.cover,
         ),
       ),
+            ),
 
     // DARK OVERLAY (makes text easier to read)
     Container(
