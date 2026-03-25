@@ -2,11 +2,11 @@ import 'package:flutter/material.dart';
 import 'viewer_live_screen.dart';
 
 // Import category widgets
-import '../../categories/popular.dart';
-import '../../categories/featured.dart';
-import '../../categories/nearby.dart';
-import '../../categories/following.dart';
-import '../../categories/explore.dart';
+import '../../categories/popular_category.dart';
+import '../../categories/featured_category.dart';
+import '../../categories/nearby_category.dart';
+import '../../categories/following_category.dart';
+import '../../categories/explore_category.dart';
 
 class Livestreams extends StatefulWidget {
   const Livestreams({super.key});
