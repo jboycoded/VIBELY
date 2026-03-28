@@ -25,6 +25,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
       message: "Wanna video chat? ❤️",
       time: "5 mins ago",
       image: "assets/images/stream1.jpg",
+      online: true
       unreadCount: 2,
     ),
     ChatModel(
@@ -78,18 +79,33 @@ class _ChatsScreenState extends State<ChatsScreen> {
             child: Column(
               children: [
 
-                /// TOP BAR
-                const Text(
-                  "Messages",
-                  style: TextStyle(color: Colors.white, fontSize: 18),
-                ),
+                Padding(
+  padding: const EdgeInsets.symmetric(horizontal: 16),
 
-                const SizedBox(height: 10),
+  child: Row(
+    mainAxisAlignment: MainAxisAlignment.spaceBetween,
+    children: [
 
-                /// TABS
-                _buildTabs(),
+      /// LEFT (you can keep empty or add profile icon later)
+      const SizedBox(width: 24),
 
-                const SizedBox(height: 10),
+      /// CENTER (TABS)
+      Expanded(
+        child: Center(
+          child: _buildTabs(),
+        ),
+      ),
+
+      /// RIGHT (SEARCH ICON)
+      IconButton(
+  icon: const Icon(Icons.search, color: Colors.white),
+  onPressed: () {
+    // TODO: open search screen
+  },
+),
+    ],
+  ),
+),
 
                 /// PAGE VIEW (SWIPE)
                 Expanded(
@@ -149,40 +165,54 @@ class _ChatsScreenState extends State<ChatsScreen> {
 
   /// TABS WITH INDICATOR
   Widget _buildTabs() {
-    return Column(
-      children: [
+  return LayoutBuilder(
+    builder: (context, constraints) {
 
-        Row(
-          mainAxisAlignment: MainAxisAlignment.center,
-          children: [
-            _tabItem("Messages", Icons.chat, 0),
-            const SizedBox(width: 40),
-            _tabItem("Calls", Icons.call, 1),
-          ],
-        ),
+      // total width divided by 2 tabs
+      double tabWidth = constraints.maxWidth / 2;
 
-        const SizedBox(height: 5),
+      return Column(
+        children: [
 
-        /// ANIMATED INDICATOR
-        AnimatedBuilder(
-          animation: _pageController,
-          builder: (context, child) {
-            double position =
-                _pageController.hasClients ? _pageController.page ?? 0 : 0;
+          /// TAB ROW
+          Row(
+            children: [
+              Expanded(child: _tabItem("Messages", Icons.chat, 0)),
+              Expanded(child: _tabItem("Calls", Icons.call, 1)),
+            ],
+          ),
 
-            return Transform.translate(
-              offset: Offset((position * 80) - 40, 0),
-              child: Container(
-                height: 3,
-                width: 30,
-                color: Colors.purple,
-              ),
-            );
-          },
-        ),
-      ],
-    );
-  }
+          const SizedBox(height: 5),
+
+          /// 🔥 FULL WIDTH SLIDING INDICATOR
+          AnimatedBuilder(
+            animation: _pageController,
+            builder: (context, child) {
+
+              double position =
+                  _pageController.hasClients ? _pageController.page ?? 0 : 0;
+
+              return Align(
+                alignment: Alignment.centerLeft,
+                child: Transform.translate(
+                  offset: Offset(position * tabWidth, 0),
+                  child: Container(
+                    width: tabWidth,
+                    height: 3,
+                    decoration: BoxDecoration(
+                      color: const Color(0xFF9C27B0),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
+                  ),
+                ),
+              );
+            },
+          ),
+        ],
+      );
+    },
+  );
+}
 
   /// TAB ITEM
   Widget _tabItem(String text, IconData icon, int index) {
@@ -196,8 +226,10 @@ class _ChatsScreenState extends State<ChatsScreen> {
           curve: Curves.easeInOut,
         );
       },
-      child: Row(
-        children: [
+      child: Center( // 👈 IMPORTANT (keeps content centered)
+    child: Row(
+      mainAxisSize: MainAxisSize.min,
+      children: [
 
           Icon(
             icon,
@@ -230,6 +262,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
             ),
         ],
       ),
+        ),
     );
   }
 }
