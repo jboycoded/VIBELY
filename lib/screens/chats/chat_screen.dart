@@ -22,6 +22,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
   List<ChatModel> chats = [
     ChatModel(
       name: "Jenny",
+      userID: "1000",
       message: "Wanna video chat? ❤️",
       time: "5 mins ago",
       image: "assets/images/stream1.jpg",
@@ -30,6 +31,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
     ),
     ChatModel(
       name: "Lisa",
+      userID: "1001";
       message: "Hello!",
       time: "15m",
       image: "assets/images/stream2.jpg",
@@ -141,6 +143,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
           time: chat.time,
           image: chat.image,
           unread: chat.unreadCount > 0,
+          userID: chat.userID,
           onTap: () {
 
             /// MARK AS READ
