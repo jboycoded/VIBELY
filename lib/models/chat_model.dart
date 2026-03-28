@@ -1,5 +1,6 @@
 class ChatModel {
   final String name;
+  final String userID;
   final String message;
   final String time;
   final String image;
@@ -9,6 +10,7 @@ class ChatModel {
 
   ChatModel({
     required this.name,
+    required this.userID,
     required this.message,
     required this.time,
     required this.image,
