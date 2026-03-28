@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../widgets/chat_bubble.dart';
+
 class PrivateChatScreen extends StatelessWidget {
   final String image;
   final String name;
@@ -56,7 +58,39 @@ class PrivateChatScreen extends StatelessWidget {
                   ],
                 ),
 
-                const Expanded(child: SizedBox()),
+                Expanded(
+  child: ListView(
+    padding: const EdgeInsets.all(12),
+
+    children: const [
+
+      ChatBubble(
+        message: "Hey, how’s your night going?",
+        isMe: true,
+        time: "10:10 PM",
+      ),
+
+      ChatBubble(
+        message:
+            "Hey! Pretty good so far, just relaxing at home.",
+        isMe: false,
+        time: "10:12 PM",
+      ),
+
+      ChatBubble(
+        message: "Wanna video chat? ❤️",
+        isMe: true,
+        time: "10:14 PM",
+      ),
+
+      ChatBubble(
+        message: "Sure! Let’s do it 😊",
+        isMe: false,
+        time: "10:14 PM",
+      ),
+    ],
+  ),
+),
 
                 /// INPUT BAR
                 Container(
