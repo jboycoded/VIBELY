@@ -54,11 +54,15 @@ class ChatItem extends StatelessWidget {
                         bottom: 0,
                         right: 0,
                         child: Container(
-                          height: 10,
-                          width: 10,
+                          height: 12,
+                          width: 12,
                           decoration: const BoxDecoration(
                             color: Colors.green,
                             shape: BoxShape.circle,
+                            border: Border.all(
+                              color: Colors.black,
+                              width: 2,
+                            ),
                           ),
                         ),
                       )
@@ -68,7 +72,7 @@ class ChatItem extends StatelessWidget {
 
               const SizedBox(width: 12),
 
-              /// TEXT
+             /// TEXT
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
