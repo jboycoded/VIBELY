@@ -3,6 +3,7 @@ import '../screens/chats/private_chat_screen.dart';
 
 class ChatItem extends StatelessWidget {
   final String name;
+  final String userID;
   final String message;
   final String time;
   final String image;
@@ -13,6 +14,7 @@ class ChatItem extends StatelessWidget {
   const ChatItem({
     super.key,
     required this.name,
+    required this.userID,
     required this.message,
     required this.time,
     required this.image,
@@ -23,6 +25,8 @@ class ChatItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    String heroTag = image+"_"+userID;
+    
     return InkWell(
       onTap: onTap,
 
@@ -41,7 +45,7 @@ class ChatItem extends StatelessWidget {
 
               /// HERO AVATAR (for animation)
               Hero(
-                tag: image,
+                tag: heroTag,
                 child: Stack(
                   children: [
                     CircleAvatar(
