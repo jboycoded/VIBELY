@@ -25,7 +25,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
       message: "Wanna video chat? ❤️",
       time: "5 mins ago",
       image: "assets/images/stream1.jpg",
-      online: true
+      online: true,
       unreadCount: 2,
     ),
     ChatModel(
