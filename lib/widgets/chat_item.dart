@@ -56,7 +56,7 @@ class ChatItem extends StatelessWidget {
                         child: Container(
                           height: 12,
                           width: 12,
-                          decoration: const BoxDecoration(
+                          decoration: BoxDecoration(
                             color: Colors.green,
                             shape: BoxShape.circle,
                             border: Border.all(
