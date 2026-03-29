@@ -103,22 +103,40 @@ class ProfileScreen extends StatelessWidget {
                       const SizedBox(height: 12),
 
                       /// NAME
-                      const Text(
-                        "Johnson Onoja",
-                        style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold,
-                        ),
-                      ),
+const Text(
+  "Johnson Onoja",
+  style: TextStyle(
+    color: Colors.white,
+    fontSize: 20,
+    fontWeight: FontWeight.bold,
+  ),
+),
 
-                      const SizedBox(height: 5),
+const SizedBox(height: 5),
 
-                      /// 🆔 USER ID
-                      const Text(
-                        "ID: 110305",
-                        style: TextStyle(color: Colors.white70),
-                      ),
+/// 🌍 AGE + COUNTRY (NEW)
+Row(
+  mainAxisAlignment: MainAxisAlignment.center,
+  children: const [
+    Icon(Icons.cake, size: 14, color: Colors.white70),
+    SizedBox(width: 5),
+    Text("23", style: TextStyle(color: Colors.white70)),
+
+    SizedBox(width: 10),
+
+    Icon(Icons.location_on, size: 14, color: Colors.white70),
+    SizedBox(width: 5),
+    Text("Nigeria", style: TextStyle(color: Colors.white70)),
+  ],
+),
+
+const SizedBox(height: 5),
+
+/// 🆔 USER ID
+const Text(
+  "ID: 110305",
+  style: TextStyle(color: Colors.white70),
+),
 
                       const SizedBox(height: 10),
 
