@@ -35,6 +35,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
       message: "Hello!",
       time: "15m",
       image: "assets/images/stream2.jpg",
+      online: false,
     ),
   ];
 
@@ -144,6 +145,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
           image: chat.image,
           unread: chat.unreadCount > 0,
           userID: chat.userID,
+          online: chat.online,
           onTap: () {
 
             /// MARK AS READ
