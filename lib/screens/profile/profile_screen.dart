@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../coins/coins_page.dart';
+
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
 
@@ -325,6 +327,12 @@ class WalletCard extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         /// 👉 Navigate to coins page later
+        Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const GoLiveScreen(),
+        ),
+      );
       },
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 18),
