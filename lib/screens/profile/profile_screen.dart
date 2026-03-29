@@ -330,7 +330,7 @@ class WalletCard extends StatelessWidget {
         Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => const GoLiveScreen(),
+          builder: (context) => const CoinsPage(),
         ),
       );
       },
