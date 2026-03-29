@@ -95,7 +95,7 @@ class _FollowersTabPageState extends State<FollowersTabPage>
       icon: Icon(Icons.search, color: Colors.white54),
     ),
   ),
-)
+),
 
           // Content
           Expanded(
