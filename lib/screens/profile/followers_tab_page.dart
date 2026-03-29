@@ -79,7 +79,23 @@ class _FollowersTabPageState extends State<FollowersTabPage>
             ),
           ),
 
-          const SizedBox(height: 16),
+          Container(
+  margin: const EdgeInsets.symmetric(horizontal: 16),
+  padding: const EdgeInsets.symmetric(horizontal: 12),
+  decoration: BoxDecoration(
+    color: const Color(0xFF1A1A1A),
+    borderRadius: BorderRadius.circular(16),
+  ),
+  child: const TextField(
+    style: TextStyle(color: Colors.white),
+    decoration: InputDecoration(
+      hintText: "Search...",
+      hintStyle: TextStyle(color: Colors.white54),
+      border: InputBorder.none,
+      icon: Icon(Icons.search, color: Colors.white54),
+    ),
+  ),
+)
 
           // Content
           Expanded(
