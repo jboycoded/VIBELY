@@ -31,7 +31,7 @@ class _ChatsScreenState extends State<ChatsScreen> {
     ),
     ChatModel(
       name: "Lisa",
-      userID: "1001";
+      userID: "1001",
       message: "Hello!",
       time: "15m",
       image: "assets/images/stream2.jpg",
