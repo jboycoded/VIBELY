@@ -46,7 +46,7 @@ class ChatItem extends StatelessWidget {
               /// HERO AVATAR (for animation)
               Hero(
                 tag: heroTag,
-                SizedBox(
+                child: SizedBox(
                   height: 50,
                   width: 50,
                 child: Stack(
