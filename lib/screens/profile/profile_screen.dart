@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 
 import '../coins/coins_page.dart';
+import 'followers_tab_page.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
@@ -251,6 +252,12 @@ class StatCard extends StatelessWidget {
     return GestureDetector(
       onTap: () {
         /// 👉 Handle navigation later
+        Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (context) => const FollowersTabPage(),
+        ),
+      );
       },
       child: Container(
         width: 100,
