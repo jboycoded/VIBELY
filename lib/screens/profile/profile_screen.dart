@@ -236,14 +236,16 @@ class StatCard extends StatelessWidget {
         width: 100,
         padding: const EdgeInsets.symmetric(vertical: 12),
         decoration: BoxDecoration(
-          gradient: const LinearGradient(
-            colors: [
-              Color(0xFF7B3BFF),
-              Color(0xFFFF4D8D),
-            ],
-          ),
-          borderRadius: BorderRadius.circular(12),
-        ),
+  gradient: const LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [
+      Color(0xFF1B1448), // A slightly lighter navy for the "glow"
+      Color(0xFF15102E), // Your deep midnight navy
+    ],
+  ),
+  borderRadius: BorderRadius.circular(12),
+),
         child: Column(
           children: [
             Text(
