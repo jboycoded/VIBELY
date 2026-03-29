@@ -10,7 +10,7 @@ class VibelyBackground extends StatelessWidget {
     return Container(
       decoration: const BoxDecoration(
         image: DecorationImage(
-          image: AssetImage("assets/images/galaxy_bg.jpg"),
+          image: AssetImage("assets/images/login_bg.jpg"),
           fit: BoxFit.cover,
         ),
       ),
