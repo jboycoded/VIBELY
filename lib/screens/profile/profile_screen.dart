@@ -255,7 +255,7 @@ class StatCard extends StatelessWidget {
         Navigator.push(
         context,
         MaterialPageRoute(
-          builder: (context) => const FollowersTabPage(),
+          builder: (context) => const FollowersPage(),
         ),
       );
       },
