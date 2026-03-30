@@ -29,7 +29,7 @@ class _FollowersPageState extends State<FollowersPage>
   Widget build(BuildContext context) {
     return Scaffold(
       backgroundColor: Colors.black,
-      body: vibelyBackground(
+      body: VibelyBackground(
         child: SafeArea(
           child: Column(
             children: [
