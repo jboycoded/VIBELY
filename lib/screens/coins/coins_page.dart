@@ -8,7 +8,7 @@ class CoinsPage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      body: vibelyBackground(
+      body: VibelyBackground(
         child: SafeArea(
           child: Padding(
             padding: const EdgeInsets.all(16),
