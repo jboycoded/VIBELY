@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import '../screens/chats/private_chat_screen.dart';
-
+ 
 class ChatItem extends StatelessWidget {
   final String name;
   final String userID;
