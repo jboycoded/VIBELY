@@ -5,6 +5,7 @@ class UserModel {
   String bio;
   String country;
   String imageUrl;
+  File? imageFile;
 
   UserModel({
     required this.name,
@@ -13,5 +14,6 @@ class UserModel {
     required this.bio,
     required this.country,
     required this.imageUrl,
+    this.imageFile = null,
   });
 }
