@@ -2,9 +2,27 @@ import 'package:flutter/material.dart';
 
 import '../coins/coins_page.dart';
 import 'followers_tab_page.dart';
+import 'edit_profile_page.dart';
+import '../settings/settings_page.dart';
+import '../../models/user_model.dart';
 
 class ProfileScreen extends StatelessWidget {
   const ProfileScreen({super.key});
+
+  override
+  State<ProfileScreen> createState() => _ProfileScreenState();
+}
+
+class _ProfileScreenState extends State<ProfileScreen> {
+
+  UserModel user = UserModel(
+    name: "Johnson Onoja",
+    userID: "ID: 110305",
+    age: 23,
+    country: "Nigeria",
+    bio: "Live streamer | Chill vibes 🎧 | Night streams 🌙",
+    imageUrl: "assets/images/streamer1.jpg",
+    );
 
   @override
   Widget build(BuildContext context) {
@@ -46,7 +64,30 @@ class ProfileScreen extends StatelessWidget {
                           children: [
                             /// ✏️ EDIT PROFILE ICON
                             IconButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                final result = await Navigator.push(
+  context,
+  MaterialPageRoute(
+    builder: (_) => EditProfilePage(
+      name: user.name,
+      age: user.age,
+      country: user.country,
+      bio: user.bio,
+      imageUrl: user.image,
+    ),
+  ),
+);
+
+if (result != null) {
+  setState(() {
+    user.name = result["name"];
+    user.age = result["age"];
+    user.country = result["country"];
+    user.bio = result["bio"];
+    user.image = result["image"];
+  });
+}
+                              },
                               icon: const Icon(Icons.edit, color: Colors.white),
                             ),
 
@@ -86,7 +127,7 @@ class ProfileScreen extends StatelessWidget {
                             child: const CircleAvatar(
                               radius: 50,
                               backgroundImage: AssetImage(
-                                "assets/images/streamer1.jpg",
+                                user.imageUrl,
                               ),
                             ),
                           ),
@@ -107,7 +148,7 @@ class ProfileScreen extends StatelessWidget {
 
                       /// NAME
 const Text(
-  "Johnson Onoja",
+  user.name,
   style: TextStyle(
     color: Colors.white,
     fontSize: 20,
@@ -123,13 +164,13 @@ Row(
   children: const [
     Icon(Icons.cake, size: 14, color: Colors.white70),
     SizedBox(width: 5),
-    Text("23", style: TextStyle(color: Colors.white70)),
+    Text(user.age.toString(), style: TextStyle(color: Colors.white70)),
 
     SizedBox(width: 10),
 
     Icon(Icons.location_on, size: 14, color: Colors.white70),
     SizedBox(width: 5),
-    Text("Nigeria", style: TextStyle(color: Colors.white70)),
+    Text(user.country, style: TextStyle(color: Colors.white70)),
   ],
 ),
 
@@ -137,7 +178,7 @@ const SizedBox(height: 5),
 
 /// 🆔 USER ID
 const Text(
-  "ID: 110305",
+  user.userID,
   style: TextStyle(color: Colors.white70),
 ),
 
@@ -147,7 +188,7 @@ const Text(
                       const Padding(
                         padding: EdgeInsets.symmetric(horizontal: 30),
                         child: Text(
-                          "Live streamer | Chill vibes 🎧 | Night streams 🌙",
+                          user.bio,
                           textAlign: TextAlign.center,
                           style: TextStyle(color: Colors.white60),
                         ),
