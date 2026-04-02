@@ -361,15 +361,17 @@ class InfoCard extends StatelessWidget {
   Widget build(BuildContext context) {
     return GestureDetector(
       onTap: () {
-        setState(() {
           switch (title) {
       case "Lv.1":
       case "Purchase VIP":
-        return const VipPage();
-      default:
-        return const VipPage();
+        Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (_) => const VipPage(),
+    ),
+  );
+              break;
           }
-        });
       },
       child: Container(
       padding: const EdgeInsets.symmetric(vertical: 18),
