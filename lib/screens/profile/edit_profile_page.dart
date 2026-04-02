@@ -140,6 +140,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
               child: const Text("Yes",
                   style: TextStyle(color: Colors.pinkAccent)),
               onPressed: () {
+                Navigator.pop(context);
+                
                 // 🔄 Return updated data
                 Navigator.pop(context, {
                   "name": nameController.text,
@@ -200,8 +202,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           radius: 45,
                           backgroundImage: _image != null
                               ? FileImage(_image!)
-                              : NetworkImage(widget.imageUrl)
-                                  as ImageProvider,
+                              : AssetImage(widget.imageUrl) as ImageProvider,
                         ),
                         Container(
                           padding: const EdgeInsets.all(6),
