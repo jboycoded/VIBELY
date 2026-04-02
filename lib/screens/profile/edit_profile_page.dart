@@ -10,6 +10,7 @@ class EditProfilePage extends StatefulWidget {
   final String country;
   final String bio;
   final String imageUrl;
+  final File? imageFile;
 
   const EditProfilePage({
     super.key,
@@ -18,6 +19,7 @@ class EditProfilePage extends StatefulWidget {
     required this.country,
     required this.bio,
     required this.imageUrl,
+    this.imageFile,
   });
 
   @override
@@ -51,6 +53,8 @@ class _EditProfilePageState extends State<EditProfilePage> {
     ageController = TextEditingController(text: widget.age.toString());
     countryController = TextEditingController(text: widget.country);
     bioController = TextEditingController(text: widget.bio);
+
+    _image = widget.imageFile;
   }
 
   // 📸 IMAGE PICKER
