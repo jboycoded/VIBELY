@@ -1,3 +1,5 @@
+import 'dart:io';
+
 class UserModel {
   String name;
   String userID;
@@ -14,6 +16,6 @@ class UserModel {
     required this.bio,
     required this.country,
     required this.imageUrl,
-    this.imageFile = null,
+    this.imageFile,
   });
 }
