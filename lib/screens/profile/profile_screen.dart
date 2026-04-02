@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 
 import '../coins/coins_page.dart';
 import 'followers_tab_page.dart';
+import 'vip_page.dart';
 import 'edit_profile_page.dart';
 import '../settings/settings_page.dart';
 import '../../models/user_model.dart';
@@ -358,7 +359,19 @@ class InfoCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
+    return GestureDetector(
+      onTap: () {
+        setState(() {
+          switch (title) {
+      case "Lv.1":
+      case "Purchase VIP":
+        return const VipPage();
+      default:
+        return const VipPage();
+          }
+        });
+      },
+      child: Container(
       padding: const EdgeInsets.symmetric(vertical: 18),
       decoration: BoxDecoration(
         gradient: const LinearGradient(
@@ -376,7 +389,8 @@ class InfoCard extends StatelessWidget {
           Text(title, style: const TextStyle(color: Colors.white)),
         ],
       ),
-    );
+    ),
+      );
   }
 }
 
