@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+ 
 import '../coins/coins_page.dart';
 import 'followers_tab_page.dart';
 import 'vip_page.dart';
