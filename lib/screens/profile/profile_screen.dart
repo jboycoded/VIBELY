@@ -4,6 +4,7 @@ import '../coins/coins_page.dart';
 import 'followers_tab_page.dart';
 import 'vip_page.dart';
 import 'edit_profile_page.dart';
+import 'wallet_page.dart';
 import '../settings/settings_page.dart';
 import '../../models/user_model.dart';
 
