@@ -140,15 +140,14 @@ class _EditProfilePageState extends State<EditProfilePage> {
               child: const Text("Yes",
                   style: TextStyle(color: Colors.pinkAccent)),
               onPressed: () {
-                Navigator.pop(context);
-
                 // 🔄 Return updated data
                 Navigator.pop(context, {
                   "name": nameController.text,
                   "age": int.parse(ageController.text),
                   "country": countryController.text,
                   "bio": bioController.text,
-                  "image": _image ?? widget.imageUrl,
+                  "imageFile": _image, // File?
+                  "imageUrl": widget.imageUrl, // fallback
                 });
               },
             ),
