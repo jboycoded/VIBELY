@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../widgets/vibely_background.dart';
+import '../vibely_background.dart';
 
 class SettingsPage extends StatefulWidget {
   const SettingsPage({super.key});
