@@ -34,6 +34,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       country: user.country,
       bio: user.bio,
       imageUrl: user.imageUrl,
+      imageFile: user.imageFile,
     ),
   ),
 );
