@@ -9,38 +9,73 @@ class DailyBonusPage extends StatefulWidget {
 }
 
 class _DailyBonusPageState extends State<DailyBonusPage> {
-  int streak = 3;
+  int currentDay = 3;
   bool claimedToday = false;
 
-  void claimReward() {
-    if (claimedToday) return;
-
-    setState(() {
-      claimedToday = true;
-      streak++;
-    });
-
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text("Reward claimed 🎉")),
-    );
-  }
+  final rewards = [50, 100, 150, 200, 300, 500, 1000];
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: VibelyBackground(
         child: Column(
-          mainAxisAlignment: MainAxisAlignment.center,
           children: [
 
-            Text("🔥 Streak: $streak",
-                style: const TextStyle(color: Colors.white)),
+            const SizedBox(height: 50),
+
+            const Text("Daily Bonus",
+                style: TextStyle(color: Colors.white, fontSize: 22)),
 
             const SizedBox(height: 20),
 
-            ElevatedButton(
-              onPressed: claimReward,
-              child: Text(claimedToday ? "Claimed" : "Claim Reward"),
+            /// 📅 STREAK GRID
+            Expanded(
+              child: GridView.builder(
+                padding: const EdgeInsets.all(20),
+                itemCount: rewards.length,
+                gridDelegate:
+                    const SliverGridDelegateWithFixedCrossAxisCount(
+                        crossAxisCount: 4),
+                itemBuilder: (_, i) {
+                  bool isActive = i == currentDay - 1;
+                  bool isUnlocked = i < currentDay;
+
+                  return Container(
+                    margin: const EdgeInsets.all(6),
+                    decoration: BoxDecoration(
+                      color: isUnlocked
+                          ? Colors.pinkAccent.withOpacity(0.2)
+                          : Colors.white.withOpacity(0.05),
+                      borderRadius: BorderRadius.circular(12),
+                      border: isActive
+                          ? Border.all(color: Colors.pinkAccent)
+                          : null,
+                    ),
+                    child: Center(
+                      child: Text(
+                        "${rewards[i]}",
+                        style: const TextStyle(color: Colors.white),
+                      ),
+                    ),
+                  );
+                },
+              ),
+            ),
+
+            /// 🎁 CLAIM BUTTON
+            Padding(
+              padding: const EdgeInsets.all(20),
+              child: ElevatedButton(
+                onPressed: claimedToday
+                    ? null
+                    : () {
+                        setState(() {
+                          claimedToday = true;
+                          currentDay++;
+                        });
+                      },
+                child: Text(claimedToday ? "Claimed" : "Claim Reward"),
+              ),
             )
           ],
         ),
