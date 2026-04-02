@@ -271,7 +271,24 @@ Text(
 
   /// 📂 REUSABLE MENU ITEM
   Widget buildMenuItem(IconData icon, String title) {
-    return Padding(
+    return GestureDetector(
+      onTap: () {
+          switch (title) {
+      case "Creator Center":
+      case "Event Center":   
+      case "Wallet":
+        Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (_) => const WalletPage(),
+    ),
+  );
+              break;
+      case "Daily Bonus":
+      case "Inventory":    
+          }
+      },
+     child: Padding(
       padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 6),
       child: Container(
         padding: const EdgeInsets.symmetric(horizontal: 15, vertical: 16),
@@ -293,7 +310,8 @@ Text(
           ],
         ),
       ),
-    );
+    ),
+     );
   }
 }
 
