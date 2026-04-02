@@ -1,11 +1,18 @@
 import 'package:flutter/material.dart';
  
-import '../coins/coins_page.dart';
 import 'followers_tab_page.dart';
 import 'vip_page.dart';
 import 'edit_profile_page.dart';
 import 'wallet_page.dart';
+import 'daily_bonus_page.dart';
+import 'inventory_page.dart';
+import 'level_page.dart';
+
 import '../settings/settings_page.dart';
+import '../coins/coins_page.dart';
+import '../creator/creator_center_page.dart';
+import '../events/event_center_page.dart';
+
 import '../../models/user_model.dart';
 
 class ProfileScreen extends StatefulWidget {
@@ -275,7 +282,21 @@ Text(
       onTap: () {
           switch (title) {
       case "Creator Center":
-      case "Event Center":   
+            Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (_) => const CreatorCenterPage(),
+    ),
+  );
+              break;
+      case "Event Center":
+            Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (_) => const EventCenterPage(),
+    ),
+  );
+              break;
       case "Wallet":
         Navigator.push(
     context,
@@ -285,7 +306,21 @@ Text(
   );
               break;
       case "Daily Bonus":
-      case "Inventory":    
+            Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (_) => const DailyBonusPage(),
+    ),
+  );
+              break;
+      case "Inventory":
+            Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (_) => const InventoryPage(),
+    ),
+  );
+              break;
           }
       },
      child: Padding(
@@ -382,6 +417,13 @@ class InfoCard extends StatelessWidget {
       onTap: () {
           switch (title) {
       case "Lv.1":
+            Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (_) => const LevelPage(),
+    ),
+  );
+              break;
       case "Purchase VIP":
         Navigator.push(
     context,
