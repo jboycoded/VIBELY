@@ -33,7 +33,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
       age: user.age,
       country: user.country,
       bio: user.bio,
-      imageUrl: user.image,
+      imageUrl: user.imageUrl,
     ),
   ),
 );
@@ -44,7 +44,11 @@ if (result != null && mounted) {
     user.age = result["age"];
     user.country = result["country"];
     user.bio = result["bio"];
-    user.image = result["image"];
+    if (result["imageFile"] != null) {
+      user.imageFile = result["imageFile"]; // File
+    } else {
+      user.imageUrl = result["imageUrl"]; // String
+    }
   });
 }
                               };
@@ -89,13 +93,20 @@ if (result != null && mounted) {
                           children: [
                             /// ✏️ EDIT PROFILE ICON
                             IconButton(
-                              onPressed: editProfile,
+                              onPressed: () => editProfile(),
                               icon: const Icon(Icons.edit, color: Colors.white),
                             ),
 
                             /// ⚙️ SETTINGS ICON
                             IconButton(
-                              onPressed: () {},
+                              onPressed: () {
+                                Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (_) => const SettingsPage(),
+    ),
+  );
+                              },
                               icon: const Icon(Icons.settings, color: Colors.white),
                             ),
                           ],
@@ -126,11 +137,11 @@ if (result != null && mounted) {
                                 ],
                               ),
                             ),
-                            child: const CircleAvatar(
+                            child: CircleAvatar(
                               radius: 50,
-                              backgroundImage: AssetImage(
-                                user.imageUrl,
-                              ),
+                              backgroundImage: user.imageFile != null
+      ? FileImage(user.imageFile!)
+      : AssetImage(user.imageUrl) as ImageProvider,
                             ),
                           ),
 
@@ -149,7 +160,7 @@ if (result != null && mounted) {
                       const SizedBox(height: 12),
 
                       /// NAME
-const Text(
+Text(
   user.name,
   style: TextStyle(
     color: Colors.white,
@@ -163,7 +174,7 @@ const SizedBox(height: 5),
 /// 🌍 AGE + COUNTRY (NEW)
 Row(
   mainAxisAlignment: MainAxisAlignment.center,
-  children: const [
+  children: [
     Icon(Icons.cake, size: 14, color: Colors.white70),
     SizedBox(width: 5),
     Text(user.age.toString(), style: TextStyle(color: Colors.white70)),
@@ -179,7 +190,7 @@ Row(
 const SizedBox(height: 5),
 
 /// 🆔 USER ID
-const Text(
+Text(
   user.userID,
   style: TextStyle(color: Colors.white70),
 ),
@@ -187,7 +198,7 @@ const Text(
                       const SizedBox(height: 10),
 
                       /// 🧾 BIO (NEW)
-                      const Padding(
+                      Padding(
                         padding: EdgeInsets.symmetric(horizontal: 30),
                         child: Text(
                           user.bio,
