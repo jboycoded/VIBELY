@@ -12,6 +12,6 @@ class UserModel {
     required this.age,
     required this.bio,
     required this.country,
-    required this.imageUrl;
+    required this.imageUrl,
   });
 }
