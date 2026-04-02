@@ -51,7 +51,7 @@ if (result != null && mounted) {
     }
   });
 }
-                              };
+                              }
 
   @override
   Widget build(BuildContext context) {
