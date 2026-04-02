@@ -24,7 +24,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
     imageUrl: "assets/images/streamer1.jpg",
     );
 
-  Future<void> editProfile async {
+  Future<void> editProfile() async {
   final result = await Navigator.push(
   context,
   MaterialPageRoute(
