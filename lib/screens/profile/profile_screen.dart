@@ -6,10 +6,10 @@ import 'edit_profile_page.dart';
 import '../settings/settings_page.dart';
 import '../../models/user_model.dart';
 
-class ProfileScreen extends StatelessWidget {
+class ProfileScreen extends StatefulWidget {
   const ProfileScreen({super.key});
 
-  override
+  @override
   State<ProfileScreen> createState() => _ProfileScreenState();
 }
 
@@ -23,6 +23,31 @@ class _ProfileScreenState extends State<ProfileScreen> {
     bio: "Live streamer | Chill vibes 🎧 | Night streams 🌙",
     imageUrl: "assets/images/streamer1.jpg",
     );
+
+  Future<void> editProfile async {
+  final result = await Navigator.push(
+  context,
+  MaterialPageRoute(
+    builder: (_) => EditProfilePage(
+      name: user.name,
+      age: user.age,
+      country: user.country,
+      bio: user.bio,
+      imageUrl: user.image,
+    ),
+  ),
+);
+
+if (result != null && mounted) {
+  setState(() {
+    user.name = result["name"];
+    user.age = result["age"];
+    user.country = result["country"];
+    user.bio = result["bio"];
+    user.image = result["image"];
+  });
+}
+                              };
 
   @override
   Widget build(BuildContext context) {
@@ -64,30 +89,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
                           children: [
                             /// ✏️ EDIT PROFILE ICON
                             IconButton(
-                              onPressed: () {
-                                final result = await Navigator.push(
-  context,
-  MaterialPageRoute(
-    builder: (_) => EditProfilePage(
-      name: user.name,
-      age: user.age,
-      country: user.country,
-      bio: user.bio,
-      imageUrl: user.image,
-    ),
-  ),
-);
-
-if (result != null) {
-  setState(() {
-    user.name = result["name"];
-    user.age = result["age"];
-    user.country = result["country"];
-    user.bio = result["bio"];
-    user.image = result["image"];
-  });
-}
-                              },
+                              onPressed: editProfile,
                               icon: const Icon(Icons.edit, color: Colors.white),
                             ),
 
