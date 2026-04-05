@@ -11,60 +11,114 @@ class LevelPage extends StatefulWidget {
 class _LevelPageState extends State<LevelPage> {
   int level = 5;
   int xp = 320;
-  int nextLevelXp = 500;
+  int nextXp = 500;
 
-  double get progress => xp / nextLevelXp;
+  double get progress => xp / nextXp;
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
       body: VibelyBackground(
-        child: Padding(
-          padding: const EdgeInsets.all(20),
-          child: Column(
-            children: [
+        child: SafeArea(
+          child: Padding(
+            padding: const EdgeInsets.all(16),
+            child: Column(
+              children: [
 
-              const SizedBox(height: 40),
-
-              /// 🏆 LEVEL DISPLAY
-              Text("Level $level",
-                  style: const TextStyle(
-                      color: Colors.white, fontSize: 28)),
-
-              const SizedBox(height: 20),
-
-              /// 📊 PROGRESS BAR
-              LinearProgressIndicator(
-                value: progress,
-                minHeight: 10,
-              ),
-
-              const SizedBox(height: 10),
-
-              Text("$xp / $nextLevelXp XP",
-                  style: const TextStyle(color: Colors.white70)),
-
-              const SizedBox(height: 30),
-
-              /// 🎁 REWARDS
-              const Align(
-                alignment: Alignment.centerLeft,
-                child: Text("Next Rewards",
-                    style: TextStyle(color: Colors.white)),
-              ),
-
-              const SizedBox(height: 10),
-
-              Expanded(
-                child: ListView(
-                  children: const [
-                    RewardTile("100 Coins"),
-                    RewardTile("Exclusive Frame"),
-                    RewardTile("VIP Trial"),
+                /// 🔙 HEADER
+                Row(
+                  children: [
+                    IconButton(
+                      onPressed: () => Navigator.pop(context),
+                      icon: const Icon(Icons.arrow_back, color: Colors.white),
+                    ),
+                    const Text("Levels",
+                        style: TextStyle(color: Colors.white, fontSize: 20)),
                   ],
                 ),
-              )
-            ],
+
+                const SizedBox(height: 20),
+
+                /// 🏆 CURRENT LEVEL
+                Text("Level $level",
+                    style: const TextStyle(
+                        color: Colors.white,
+                        fontSize: 28,
+                        fontWeight: FontWeight.bold)),
+
+                const SizedBox(height: 15),
+
+                /// 📊 PROGRESS
+                AnimatedContainer(
+                  duration: const Duration(milliseconds: 500),
+                  child: LinearProgressIndicator(
+                    value: progress,
+                    minHeight: 12,
+                    backgroundColor: Colors.white12,
+                  ),
+                ),
+
+                const SizedBox(height: 10),
+
+                Text("$xp / $nextXp XP",
+                    style: const TextStyle(color: Colors.white70)),
+
+                const SizedBox(height: 25),
+
+                /// 🎁 NEXT REWARDS
+                Container(
+                  padding: const EdgeInsets.all(14),
+                  decoration: BoxDecoration(
+                    color: Colors.white.withOpacity(0.08),
+                    borderRadius: BorderRadius.circular(14),
+                  ),
+                  child: const Row(
+                    mainAxisAlignment: MainAxisAlignment.spaceAround,
+                    children: [
+                      RewardIcon("💰"),
+                      RewardIcon("🎁"),
+                      RewardIcon("👑"),
+                    ],
+                  ),
+                ),
+
+                const SizedBox(height: 20),
+
+                /// 📜 LEVEL LIST
+                Expanded(
+                  child: ListView.builder(
+                    itemCount: 20,
+                    itemBuilder: (_, i) {
+                      int lvl = i + 1;
+                      bool unlocked = lvl <= level;
+
+                      return Container(
+                        margin: const EdgeInsets.only(bottom: 10),
+                        padding: const EdgeInsets.all(14),
+                        decoration: BoxDecoration(
+                          color: Colors.white.withOpacity(0.07),
+                          borderRadius: BorderRadius.circular(12),
+                        ),
+                        child: Row(
+                          children: [
+                            Text("Lv $lvl",
+                                style: const TextStyle(color: Colors.white)),
+
+                            const Spacer(),
+
+                            unlocked
+                                ? const Icon(Icons.check,
+                                    color: Colors.green)
+                                : const Icon(Icons.lock,
+                                    color: Colors.white38),
+                          ],
+                        ),
+                      );
+                    },
+                  ),
+                ),
+              ],
+            ),
           ),
         ),
       ),
@@ -72,22 +126,12 @@ class _LevelPageState extends State<LevelPage> {
   }
 }
 
-class RewardTile extends StatelessWidget {
-  final String reward;
-
-  const RewardTile(this.reward, {super.key});
+class RewardIcon extends StatelessWidget {
+  final String emoji;
+  const RewardIcon(this.emoji, {super.key});
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      margin: const EdgeInsets.only(bottom: 10),
-      padding: const EdgeInsets.all(14),
-      decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.08),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Text(reward,
-          style: const TextStyle(color: Colors.white)),
-    );
+    return Text(emoji, style: const TextStyle(fontSize: 24));
   }
 }
