@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../vibely_background.dart';
+import '../../widgets/vibely_design.dart';
 
 class InventoryPage extends StatefulWidget {
   const InventoryPage({super.key});
@@ -33,7 +34,7 @@ class _InventoryPageState extends State<InventoryPage>
           child: Column(
             children: [
 
-              header("Inventory"),
+              vibelyHeader("Inventory"),
 
               TabBar(
                 controller: tab,
@@ -77,7 +78,7 @@ class _InventoryPageState extends State<InventoryPage>
 
         return Container(
           margin: const EdgeInsets.all(8),
-          decoration: glassBox(
+          decoration: vibelyGlassBox(
             border: item["active"]
                 ? Border.all(color: Colors.pinkAccent)
                 : null,
