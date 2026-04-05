@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../screens/streaming/viewer_live_screen.dart';
+import '../screens/streaming/live_screen.dart';
 
 class ExploreCategory extends StatelessWidget {
   const ExploreCategory({super.key});
@@ -33,7 +33,7 @@ Widget buildGrid(BuildContext context, List<Map<String, String>> streams) {
         onTap: () {
           Navigator.push(
             context,
-            MaterialPageRoute(builder: (context) => const ViewerLiveScreen()),
+            MaterialPageRoute(builder: (context) => const LiveScreen()),
           );
         },
         child: ClipRRect(
