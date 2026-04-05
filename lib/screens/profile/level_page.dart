@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../vibely_background.dart';
+import '../../widgets/vibely_design.dart';
 
 class LevelPage extends StatefulWidget {
   const LevelPage({super.key});
@@ -25,7 +26,7 @@ class _LevelPageState extends State<LevelPage> {
             children: [
 
               /// 🔙 HEADER
-              header("Levels"),
+              vibelyHeader("Levels"),
 
               const SizedBox(height: 20),
 
@@ -72,7 +73,7 @@ class _LevelPageState extends State<LevelPage> {
                     return Container(
                       margin: const EdgeInsets.only(bottom: 10),
                       padding: const EdgeInsets.all(14),
-                      decoration: glassBox(),
+                      decoration: vibelyGlassBox(),
                       child: Row(
                         children: [
                           Text("Level $lvl",
