@@ -5,35 +5,37 @@ class CreatorCenterPage extends StatefulWidget {
   const CreatorCenterPage({super.key});
 
   @override
-  State<CreatorCenterPage> createState() => _CreatorCenterPageState();
+  State<CreatorCenterPage> createState() =>
+      _CreatorCenterPageState();
 }
 
-class _CreatorCenterPageState extends State<CreatorCenterPage> {
-  int selectedFilter = 0;
-
+class _CreatorCenterPageState
+    extends State<CreatorCenterPage> {
+  int selected = 0;
   final filters = ["Today", "Week", "Month"];
 
-  Map<String, Map<String, int>> data = {
-    "Today": {"earnings": 5400, "streams": 3, "followers": 20},
-    "Week": {"earnings": 25400, "streams": 12, "followers": 120},
-    "Month": {"earnings": 102000, "streams": 40, "followers": 540},
+  final data = {
+    "Today": {"earnings": 5400, "streams": 3},
+    "Week": {"earnings": 25400, "streams": 12},
+    "Month": {"earnings": 102000, "streams": 40},
   };
 
   @override
   Widget build(BuildContext context) {
-    final current = data[filters[selectedFilter]]!;
+    final current = data[filters[selected]]!;
 
     return Scaffold(
+      backgroundColor: Colors.transparent,
       body: VibelyBackground(
         child: SafeArea(
           child: SingleChildScrollView(
-            child: Padding(
-              padding: const EdgeInsets.all(16),
-              child: Column(
-                children: [
+            child: Column(
+              children: [
 
-                  /// 🔙 HEADER
-                  Row(
+                /// 🔙 HEADER
+                Padding(
+                  padding: const EdgeInsets.symmetric(horizontal: 8),
+                  child: Row(
                     children: [
                       IconButton(
                         onPressed: () =>
@@ -44,106 +46,105 @@ class _CreatorCenterPageState extends State<CreatorCenterPage> {
                       const Text("Creator Center",
                           style: TextStyle(
                               color: Colors.white,
-                              fontSize: 20)),
+                              fontSize: 20,
+                              fontWeight: FontWeight.bold)),
                     ],
                   ),
+                ),
 
-                  const SizedBox(height: 10),
+                const SizedBox(height: 10),
 
-                  /// 🔘 FILTERS
-                  Row(
-                    mainAxisAlignment:
-                        MainAxisAlignment.spaceAround,
-                    children: List.generate(filters.length, (i) {
-                      bool active = i == selectedFilter;
+                /// 🔘 FILTERS
+                Row(
+                  mainAxisAlignment:
+                      MainAxisAlignment.spaceEvenly,
+                  children: List.generate(filters.length, (i) {
+                    bool active = i == selected;
 
-                      return GestureDetector(
-                        onTap: () =>
-                            setState(() => selectedFilter = i),
-                        child: Container(
-                          padding: const EdgeInsets.symmetric(
-                              horizontal: 14, vertical: 8),
-                          decoration: BoxDecoration(
-                            color: active
-                                ? Colors.pinkAccent
-                                    .withOpacity(0.2)
-                                : Colors.white.withOpacity(0.05),
-                            borderRadius:
-                                BorderRadius.circular(12),
-                          ),
-                          child: Text(filters[i],
-                              style: TextStyle(
-                                  color: active
-                                      ? Colors.pinkAccent
-                                      : Colors.white70)),
+                    return GestureDetector(
+                      onTap: () =>
+                          setState(() => selected = i),
+                      child: Container(
+                        padding: const EdgeInsets.symmetric(
+                            horizontal: 16, vertical: 8),
+                        decoration: BoxDecoration(
+                          color: active
+                              ? Colors.pinkAccent
+                                  .withOpacity(0.2)
+                              : Colors.white.withOpacity(0.06),
+                          borderRadius:
+                              BorderRadius.circular(14),
                         ),
-                      );
-                    }),
-                  ),
-
-                  const SizedBox(height: 20),
-
-                  /// 💰 EARNINGS CARD
-                  Container(
-                    padding: const EdgeInsets.all(20),
-                    decoration: BoxDecoration(
-                      gradient: const LinearGradient(
-                        colors: [
-                          Color(0xFF7B3BFF),
-                          Color(0xFFFF4D8D)
-                        ],
+                        child: Text(filters[i],
+                            style: TextStyle(
+                                color: active
+                                    ? Colors.pinkAccent
+                                    : Colors.white70)),
                       ),
-                      borderRadius: BorderRadius.circular(20),
-                    ),
-                    child: Column(
-                      children: [
-                        const Text("Total Earnings",
-                            style:
-                                TextStyle(color: Colors.white70)),
-                        const SizedBox(height: 10),
-                        Text("₦${current["earnings"]}",
-                            style: const TextStyle(
-                                fontSize: 26,
-                                fontWeight: FontWeight.bold,
-                                color: Colors.white)),
+                    );
+                  }),
+                ),
+
+                const SizedBox(height: 20),
+
+                /// 💰 EARNINGS CARD
+                Container(
+                  margin: const EdgeInsets.symmetric(
+                      horizontal: 16),
+                  padding: const EdgeInsets.all(20),
+                  decoration: BoxDecoration(
+                    gradient: const LinearGradient(
+                      colors: [
+                        Color(0xFF7B3BFF),
+                        Color(0xFFFF4D8D)
                       ],
                     ),
+                    borderRadius: BorderRadius.circular(20),
                   ),
-
-                  const SizedBox(height: 20),
-
-                  /// 📊 STATS
-                  Row(
-                    mainAxisAlignment:
-                        MainAxisAlignment.spaceBetween,
+                  child: Column(
                     children: [
-                      statBox("Streams", current["streams"]),
-                      statBox("Followers", current["followers"]),
+                      const Text("Earnings",
+                          style: TextStyle(
+                              color: Colors.white70)),
+                      const SizedBox(height: 8),
+                      Text("₦${current["earnings"]}",
+                          style: const TextStyle(
+                              color: Colors.white,
+                              fontSize: 26,
+                              fontWeight:
+                                  FontWeight.bold)),
                     ],
                   ),
+                ),
 
-                  const SizedBox(height: 20),
+                const SizedBox(height: 20),
 
-                  /// 🎬 ACTION BUTTONS
-                  Row(
+                /// 📊 STATS
+                Row(
+                  children: [
+                    statCard(
+                        "Streams", "${current["streams"]}"),
+                    statCard("Fans", "120"),
+                  ],
+                ),
+
+                const SizedBox(height: 20),
+
+                /// 🎬 ACTIONS
+                Padding(
+                  padding:
+                      const EdgeInsets.symmetric(horizontal: 16),
+                  child: Row(
                     children: [
-                      Expanded(
-                        child: ElevatedButton(
-                          onPressed: () {},
-                          child: const Text("Go Live"),
-                        ),
-                      ),
+                      expandedButton("Go Live"),
                       const SizedBox(width: 10),
-                      Expanded(
-                        child: ElevatedButton(
-                          onPressed: () {},
-                          child: const Text("Withdraw"),
-                        ),
-                      ),
+                      expandedButton("Withdraw"),
                     ],
                   ),
-                ],
-              ),
+                ),
+
+                const SizedBox(height: 20),
+              ],
             ),
           ),
         ),
@@ -151,25 +152,58 @@ class _CreatorCenterPageState extends State<CreatorCenterPage> {
     );
   }
 
-  Widget statBox(String title, int? value) {
+  Widget statCard(String title, String value) {
     return Expanded(
       child: Container(
-        margin: const EdgeInsets.all(4),
+        margin: const EdgeInsets.all(6),
         padding: const EdgeInsets.all(16),
         decoration: BoxDecoration(
           color: Colors.white.withOpacity(0.08),
-          borderRadius: BorderRadius.circular(14),
+          borderRadius: BorderRadius.circular(16),
         ),
         child: Column(
           children: [
-            Text("$value",
-                style:
-                    const TextStyle(color: Colors.white)),
-            const SizedBox(height: 5),
+            Text(value,
+                style: const TextStyle(
+                    color: Colors.white,
+                    fontWeight: FontWeight.bold)),
+            const SizedBox(height: 6),
             Text(title,
                 style: const TextStyle(
                     color: Colors.white54, fontSize: 12)),
           ],
+        ),
+      ),
+    );
+  }
+
+  Widget expandedButton(String text) {
+    return Expanded(
+      child: Container(
+        decoration: BoxDecoration(
+          gradient: const LinearGradient(
+            colors: [
+              Color(0xFFFF4D8D),
+              Color(0xFF7B3BFF)
+            ],
+          ),
+          borderRadius: BorderRadius.circular(14),
+        ),
+        child: Material(
+          color: Colors.transparent,
+          child: InkWell(
+            borderRadius: BorderRadius.circular(14),
+            onTap: () {},
+            child: Padding(
+              padding: const EdgeInsets.all(14),
+              child: Center(
+                child: Text(text,
+                    style: const TextStyle(
+                        color: Colors.white,
+                        fontWeight: FontWeight.bold)),
+              ),
+            ),
+          ),
         ),
       ),
     );
