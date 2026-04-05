@@ -32,7 +32,7 @@ class PopularCategory extends StatelessWidget {
           onTap: () {
             Navigator.push(
               context,
-              MaterialPageRoute(builder: (context) => const ViewerLiveScreen()),
+              MaterialPageRoute(builder: (context) => const LiveScreen()),
             );
           },
           child: ClipRRect(
