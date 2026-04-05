@@ -33,7 +33,7 @@ class _FollowersPageState extends State<FollowersPage>
           child: Column(
             children: [
 
-              vibelyHeader("Connections"),
+              vibelyHeader(context, "Connections"),
 
               TabBar(
                 controller: tab,
