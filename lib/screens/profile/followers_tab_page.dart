@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../vibely_background.dart';
+import '../../widgets/vibely_design.dart';
 
 class FollowersPage extends StatefulWidget {
   const FollowersPage({super.key});
@@ -32,7 +33,7 @@ class _FollowersPageState extends State<FollowersPage>
           child: Column(
             children: [
 
-              header("Connections"),
+              vibelyHeader("Connections"),
 
               TabBar(
                 controller: tab,
@@ -73,13 +74,13 @@ class _FollowersPageState extends State<FollowersPage>
         return Container(
           margin: const EdgeInsets.only(bottom: 10),
           padding: const EdgeInsets.all(12),
-          decoration: glassBox(),
+          decoration: vibelyGlassBox(),
           child: Row(
             children: [
               Text(user["name"],
                   style: const TextStyle(color: Colors.white)),
               const Spacer(),
-              gradientButton(user["following"] ? "Following" : "Follow")
+              vibelyGradientButton(user["following"] ? "Following" : "Follow")
             ],
           ),
         );
