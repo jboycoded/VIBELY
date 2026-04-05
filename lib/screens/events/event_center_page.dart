@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../vibely_background.dart';
+import '../../widgets/vibely_design.dart';
 
 class EventCenterPage extends StatefulWidget {
   const EventCenterPage({super.key});
@@ -27,7 +28,7 @@ class _EventCenterPageState extends State<EventCenterPage>
           child: Column(
             children: [
 
-              header("Event Center"),
+              vibelyHeader("Event Center"),
 
               TabBar(
                 controller: tab,
@@ -63,7 +64,7 @@ class _EventCenterPageState extends State<EventCenterPage>
         return Container(
           margin: const EdgeInsets.only(bottom: 10),
           padding: const EdgeInsets.all(14),
-          decoration: glassBox(),
+          decoration: vibelyGlassBox(),
           child: Row(
             children: [
               Text("#${i + 1}",
