@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import '../screens/streaming/viewer_live_screen.dart';
+import '../screens/streaming/live_screen.dart';
 
 class PopularCategory extends StatelessWidget {
   const PopularCategory({super.key});
