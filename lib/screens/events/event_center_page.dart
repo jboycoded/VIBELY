@@ -28,7 +28,7 @@ class _EventCenterPageState extends State<EventCenterPage>
           child: Column(
             children: [
 
-              vibelyHeader("Event Center"),
+              vibelyHeader(context, "Event Center"),
 
               TabBar(
                 controller: tab,
