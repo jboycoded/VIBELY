@@ -34,7 +34,7 @@ class _InventoryPageState extends State<InventoryPage>
           child: Column(
             children: [
 
-              vibelyHeader("Inventory"),
+              vibelyHeader(context, "Inventory"),
 
               TabBar(
                 controller: tab,
