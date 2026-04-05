@@ -10,75 +10,32 @@ class FollowersPage extends StatefulWidget {
 
 class _FollowersPageState extends State<FollowersPage>
     with SingleTickerProviderStateMixin {
-  late TabController controller;
+  late TabController tab;
 
   List<Map<String, dynamic>> users = [
     {"name": "Alice", "following": true},
     {"name": "John", "following": false},
-    {"name": "Sophia", "following": true},
-    {"name": "Daniel", "following": false},
   ];
-
-  String query = "";
 
   @override
   void initState() {
-    controller = TabController(length: 3, vsync: this);
+    tab = TabController(length: 3, vsync: this);
     super.initState();
-  }
-
-  List<Map<String, dynamic>> filtered() {
-    return users
-        .where((u) =>
-            u["name"].toLowerCase().contains(query.toLowerCase()))
-        .toList();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
+      backgroundColor: Colors.transparent,
       body: VibelyBackground(
         child: SafeArea(
           child: Column(
             children: [
 
-              /// 🔙 HEADER
-              Row(
-                children: [
-                  IconButton(
-                    onPressed: () => Navigator.pop(context),
-                    icon:
-                        const Icon(Icons.arrow_back, color: Colors.white),
-                  ),
-                  const Text("Connections",
-                      style:
-                          TextStyle(color: Colors.white, fontSize: 20)),
-                ],
-              ),
+              header("Connections"),
 
-              /// 🔍 SEARCH
-              Padding(
-                padding: const EdgeInsets.all(12),
-                child: TextField(
-                  onChanged: (val) =>
-                      setState(() => query = val),
-                  decoration: InputDecoration(
-                    hintText: "Search...",
-                    hintStyle:
-                        const TextStyle(color: Colors.white54),
-                    filled: true,
-                    fillColor: Colors.white.withOpacity(0.08),
-                    border: OutlineInputBorder(
-                      borderRadius: BorderRadius.circular(14),
-                      borderSide: BorderSide.none,
-                    ),
-                  ),
-                ),
-              ),
-
-              /// 🔘 TABS
               TabBar(
-                controller: controller,
+                controller: tab,
                 tabs: const [
                   Tab(text: "Followers"),
                   Tab(text: "Following"),
@@ -88,11 +45,14 @@ class _FollowersPageState extends State<FollowersPage>
 
               Expanded(
                 child: TabBarView(
-                  controller: controller,
+                  controller: tab,
                   children: [
                     buildList(),
                     buildList(),
-                    buildLikes(),
+                    const Center(
+                      child: Text("No Likes Yet",
+                          style: TextStyle(color: Colors.white)),
+                    )
                   ],
                 ),
               )
@@ -104,34 +64,26 @@ class _FollowersPageState extends State<FollowersPage>
   }
 
   Widget buildList() {
-    final list = filtered();
-
     return ListView.builder(
-      itemCount: list.length,
+      padding: const EdgeInsets.all(16),
+      itemCount: users.length,
       itemBuilder: (_, i) {
-        final user = list[i];
+        final user = users[i];
 
-        return ListTile(
-          title: Text(user["name"],
-              style: const TextStyle(color: Colors.white)),
-          trailing: ElevatedButton(
-            onPressed: () {
-              setState(() {
-                user["following"] = !user["following"];
-              });
-            },
-            child: Text(
-                user["following"] ? "Following" : "Follow"),
+        return Container(
+          margin: const EdgeInsets.only(bottom: 10),
+          padding: const EdgeInsets.all(12),
+          decoration: glassBox(),
+          child: Row(
+            children: [
+              Text(user["name"],
+                  style: const TextStyle(color: Colors.white)),
+              const Spacer(),
+              gradientButton(user["following"] ? "Following" : "Follow")
+            ],
           ),
         );
       },
-    );
-  }
-
-  Widget buildLikes() {
-    return const Center(
-      child: Text("Liked your profile ❤️",
-          style: TextStyle(color: Colors.white)),
     );
   }
 }
