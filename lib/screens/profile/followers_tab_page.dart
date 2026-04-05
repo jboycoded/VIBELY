@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-
 import '../vibely_background.dart';
 
 class FollowersPage extends StatefulWidget {
@@ -11,165 +10,90 @@ class FollowersPage extends StatefulWidget {
 
 class _FollowersPageState extends State<FollowersPage>
     with SingleTickerProviderStateMixin {
-  late TabController _tabController;
+  late TabController controller;
 
-  final users = [
-    {"name": "Jessica", "followers": "5.2K", "following": false},
-    {"name": "Alex", "followers": "3.1K", "following": true},
-    {"name": "Lena", "followers": "2.1K", "following": false},
+  List<Map<String, dynamic>> users = [
+    {"name": "Alice", "following": true},
+    {"name": "John", "following": false},
+    {"name": "Sophia", "following": true},
+    {"name": "Daniel", "following": false},
   ];
+
+  String query = "";
 
   @override
   void initState() {
-    _tabController = TabController(length: 2, vsync: this);
+    controller = TabController(length: 3, vsync: this);
     super.initState();
+  }
+
+  List<Map<String, dynamic>> filtered() {
+    return users
+        .where((u) =>
+            u["name"].toLowerCase().contains(query.toLowerCase()))
+        .toList();
   }
 
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      backgroundColor: Colors.black,
       body: VibelyBackground(
         child: SafeArea(
           child: Column(
             children: [
-              // 🔙 Header
-              Padding(
-                padding: const EdgeInsets.all(16),
-                child: Row(
-                  children: const [
-                    Icon(Icons.arrow_back, color: Colors.white),
-                    SizedBox(width: 12),
-                    Text(
-                      "Connections",
-                      style: TextStyle(
-                          color: Colors.white,
-                          fontSize: 20,
-                          fontWeight: FontWeight.bold),
-                    ),
-                  ],
-                ),
+
+              /// 🔙 HEADER
+              Row(
+                children: [
+                  IconButton(
+                    onPressed: () => Navigator.pop(context),
+                    icon:
+                        const Icon(Icons.arrow_back, color: Colors.white),
+                  ),
+                  const Text("Connections",
+                      style:
+                          TextStyle(color: Colors.white, fontSize: 20)),
+                ],
               ),
 
-              // 🔘 Tabs
+              /// 🔍 SEARCH
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Container(
-                  padding: const EdgeInsets.all(4),
-                  decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(25),
-                  ),
-                  child: Row(
-                    children: [
-                      tabButton("Followers", 0),
-                      tabButton("Following", 1),
-                    ],
-                  ),
-                ),
-              ),
-
-              const SizedBox(height: 12),
-
-              // 🔍 Search Bar
-              Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 16),
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 12),
-                  decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.1),
-                    borderRadius: BorderRadius.circular(16),
-                  ),
-                  child: const TextField(
-                    style: TextStyle(color: Colors.white),
-                    decoration: InputDecoration(
-                      hintText: "Search...",
-                      hintStyle: TextStyle(color: Colors.white54),
-                      border: InputBorder.none,
-                      icon: Icon(Icons.search, color: Colors.white54),
+                padding: const EdgeInsets.all(12),
+                child: TextField(
+                  onChanged: (val) =>
+                      setState(() => query = val),
+                  decoration: InputDecoration(
+                    hintText: "Search...",
+                    hintStyle:
+                        const TextStyle(color: Colors.white54),
+                    filled: true,
+                    fillColor: Colors.white.withOpacity(0.08),
+                    border: OutlineInputBorder(
+                      borderRadius: BorderRadius.circular(14),
+                      borderSide: BorderSide.none,
                     ),
                   ),
                 ),
               ),
 
-              const SizedBox(height: 16),
+              /// 🔘 TABS
+              TabBar(
+                controller: controller,
+                tabs: const [
+                  Tab(text: "Followers"),
+                  Tab(text: "Following"),
+                  Tab(text: "Likes"),
+                ],
+              ),
 
-              // 📋 List
               Expanded(
-                child: ListView.builder(
-                  padding: const EdgeInsets.symmetric(horizontal: 16),
-                  itemCount: users.length,
-                  itemBuilder: (_, index) {
-                    final user = users[index];
-
-                    return Container(
-                      margin: const EdgeInsets.only(bottom: 12),
-                      padding: const EdgeInsets.all(12),
-                      decoration: BoxDecoration(
-                        color: Colors.white.withOpacity(0.08),
-                        borderRadius: BorderRadius.circular(16),
-                      ),
-                      child: Row(
-                        children: [
-                          const CircleAvatar(
-                            radius: 24,
-                            backgroundImage: AssetImage(
-                                "assets/images/streamer1.jpg",
-                              ),
-                          ),
-
-                          const SizedBox(width: 12),
-
-                          Expanded(
-                            child: Column(
-                              crossAxisAlignment:
-                                  CrossAxisAlignment.start,
-                              children: [
-                                Text(
-                                  user["name"] as String,
-                                  style: const TextStyle(
-                                      color: Colors.white,
-                                      fontWeight: FontWeight.bold),
-                                ),
-                                Text(
-                                  "${user["followers"]} followers",
-                                  style: const TextStyle(
-                                      color: Colors.white54),
-                                ),
-                              ],
-                            ),
-                          ),
-
-                          // 🔥 Gradient Button
-                          Container(
-                            padding: const EdgeInsets.symmetric(
-                                horizontal: 14, vertical: 8),
-                            decoration: BoxDecoration(
-                              gradient: user["following"] as bool
-                                  ? null
-                                  : const LinearGradient(
-                                      colors: [
-                                        Colors.pinkAccent,
-                                        Colors.purple
-                                      ],
-                                    ),
-                              color: user["following"] as bool
-                                  ? Colors.white24
-                                  : null,
-                              borderRadius: BorderRadius.circular(20),
-                            ),
-                            child: Text(
-                              user["following"] as bool
-                                  ? "Following"
-                                  : "Follow",
-                              style:
-                                  const TextStyle(color: Colors.white),
-                            ),
-                          )
-                        ],
-                      ),
-                    );
-                  },
+                child: TabBarView(
+                  controller: controller,
+                  children: [
+                    buildList(),
+                    buildList(),
+                    buildLikes(),
+                  ],
                 ),
               )
             ],
@@ -179,28 +103,35 @@ class _FollowersPageState extends State<FollowersPage>
     );
   }
 
-  Widget tabButton(String text, int index) {
-    final isActive = _tabController.index == index;
+  Widget buildList() {
+    final list = filtered();
 
-    return Expanded(
-      child: GestureDetector(
-        onTap: () {
-          setState(() => _tabController.index = index);
-        },
-        child: Container(
-          padding: const EdgeInsets.symmetric(vertical: 10),
-          decoration: BoxDecoration(
-            gradient: isActive
-                ? const LinearGradient(
-                    colors: [Colors.pinkAccent, Colors.purple])
-                : null,
-            borderRadius: BorderRadius.circular(20),
-          ),
-          alignment: Alignment.center,
-          child: Text(text,
+    return ListView.builder(
+      itemCount: list.length,
+      itemBuilder: (_, i) {
+        final user = list[i];
+
+        return ListTile(
+          title: Text(user["name"],
               style: const TextStyle(color: Colors.white)),
-        ),
-      ),
+          trailing: ElevatedButton(
+            onPressed: () {
+              setState(() {
+                user["following"] = !user["following"];
+              });
+            },
+            child: Text(
+                user["following"] ? "Following" : "Follow"),
+          ),
+        );
+      },
+    );
+  }
+
+  Widget buildLikes() {
+    return const Center(
+      child: Text("Liked your profile ❤️",
+          style: TextStyle(color: Colors.white)),
     );
   }
 }
