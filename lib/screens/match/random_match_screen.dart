@@ -39,7 +39,7 @@ class _RandomMatchScreenState extends State<RandomMatchScreen>
   void startMatch() {
   setState(() => isSearching = true);
 
-  Future.delayed(const Duration(seconds: 2), () {
+  Future.delayed(Duration(seconds: 2), () {
     setState(() => isSearching = false);
 
     Navigator.push(
@@ -51,7 +51,7 @@ class _RandomMatchScreenState extends State<RandomMatchScreen>
   });
 }
     /// simulate search delay
-    Future.delayed(const Duration(seconds: 3), () {
+    Future.delayed(Duration(seconds: 3), () {
       setState(() {
         isSearching = false;
       });
