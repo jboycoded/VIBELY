@@ -20,7 +20,7 @@ class LiveInputBar extends StatelessWidget {
                   color: Colors.white.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(30),
                 ),
-                Row(
+                child: Row(
                 children:[ const Text(
                   "Say something...",
                   style: TextStyle(color: Colors.white70),
