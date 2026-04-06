@@ -52,6 +52,7 @@ class _ReactionsOverlayState extends State<ReactionsOverlay>
         ...hearts,
 
         /// TAP AREA
+        /*
         Positioned.fill(
   child: IgnorePointer( // ✅ THIS FIXES SCROLLING
     ignoring: false,
@@ -61,7 +62,7 @@ class _ReactionsOverlayState extends State<ReactionsOverlay>
       child: Container(color: Colors.transparent),
     ),
   ),
-)
+)*/
       ],
     );
   }
