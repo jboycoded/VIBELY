@@ -81,11 +81,11 @@ class _LivestreamsState extends State<Livestreams> {
                 child: ListView(
                   scrollDirection: Axis.horizontal,
                   children: [
-                    categoryButton("Popular"),
-                    categoryButton("Nearby"),
-                    categoryButton("Featured"),
+                    categoryButton("Trending 🔥"),
+                    categoryButton("Around You 📍"),
+                    categoryButton("Spotlight 🌟"),
                     categoryButton("Following"),
-                    categoryButton("Explore"),
+                    categoryButton("Discover ✨"),
                   ],
                 ),
               ),
