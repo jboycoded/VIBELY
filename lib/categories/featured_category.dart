@@ -67,7 +67,7 @@ class FeaturedLiveCard extends StatelessWidget {
                   child: const Row(
                     mainAxisSize: MainAxisSize.min,
                     children: [
-                      Icon(Icons.wifi_tethering, color: Colors.purple,
+                      Icon(Icons.wifi_tethering, color: Colors.purple),
                       SizedBox(width: 10),
                       Text(
                         "Tap to watch LIVE",
