@@ -15,7 +15,7 @@ class LiveChatSection extends StatelessWidget {
           child: Container(
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
-              color: Colors.black.withOpacity(0.25), // ✅ darker again
+              color: Colors.white.withOpacity(0.1), // ✅ darker again
               borderRadius: BorderRadius.circular(20),
             ),
             child: ListView(
