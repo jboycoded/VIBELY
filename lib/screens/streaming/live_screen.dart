@@ -6,6 +6,7 @@ import '../../widgets/livestream_widgets/live_right_actions.dart';
 import '../../widgets/livestream_widgets/live_chat_section.dart';
 import '../../widgets/livestream_widgets/live_input_bar.dart';
 import '../../widgets/livestream_widgets/reactions_overlay.dart';
+import '../../widgets/livestream_widgets/gift_quick_bar.dart';
 
 class LiveScreen extends StatelessWidget {
   const LiveScreen({super.key});
@@ -65,6 +66,14 @@ class LiveScreen extends StatelessWidget {
             bottom: 90,
             child: LiveChatSection(),
           ),
+
+          // Horizontal scrollable gifts
+          const Positioned(
+  left: 10,
+  right: 10,
+  bottom: 70,
+  child: GiftQuickBar(),
+),
 
           /// ✍ INPUT
           const Positioned(
