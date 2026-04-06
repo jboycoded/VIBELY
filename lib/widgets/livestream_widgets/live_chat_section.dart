@@ -10,9 +10,7 @@ class LiveChatSection extends StatelessWidget {
       height: 200, // ✅ fixed height
       child: ClipRRect(
         borderRadius: BorderRadius.circular(20),
-        child: BackdropFilter(
-          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-          child: Container(
+        child: Container(
             padding: const EdgeInsets.all(10),
             decoration: BoxDecoration(
               color: Colors.white.withOpacity(0.05), // ✅ darker again
@@ -39,7 +37,6 @@ class LiveChatSection extends StatelessWidget {
               ],
             ),
           ),
-        ),
       ),
     );
   }
