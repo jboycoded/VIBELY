@@ -1,6 +1,8 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
 
+import 'video_call_screen.dart';
+
 class RandomMatchScreen extends StatefulWidget {
   const RandomMatchScreen({super.key});
 
@@ -35,10 +37,19 @@ class _RandomMatchScreenState extends State<RandomMatchScreen>
   }
 
   void startMatch() {
-    setState(() {
-      isSearching = true;
-    });
+  setState(() => isSearching = true);
 
+  Future.delayed(const Duration(seconds: 2), () {
+    setState(() => isSearching = false);
+
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => const VideoCallScreen(),
+      ),
+    );
+  });
+}
     /// simulate search delay
     Future.delayed(const Duration(seconds: 3), () {
       setState(() {
