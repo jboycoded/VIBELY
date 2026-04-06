@@ -50,15 +50,6 @@ class _RandomMatchScreenState extends State<RandomMatchScreen>
     );
   });
 }
-    /// simulate search delay
-    Future.delayed(Duration(seconds: 3), () {
-      setState(() {
-        isSearching = false;
-      });
-
-      /// TODO: Navigate to match screen / video call
-    });
-  }
 
   @override
   Widget build(BuildContext context) {
