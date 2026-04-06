@@ -28,40 +28,39 @@ class LiveTopBar extends StatelessWidget {
               /// NAME + (future subtitle space)
               Expanded(
   child: Row(
-    crossAxisAlignment: CrossAxisAlignment.start,
-    children: [
-      /// NAME + FUTURE TEXT
-      Column(
-        crossAxisAlignment: CrossAxisAlignment.start,
-        children: const [
-          Text(
-            "Cydknee",
-            style: TextStyle(color: Colors.white),
-          ),
-          SizedBox(height: 4),
-          Text(
-            "Live vibes 🔥", // placeholder
-            style: TextStyle(
-              color: Colors.white70,
-              fontSize: 12,
-            ),
-          ),
-        ],
-      ),
-
-      const SizedBox(width: 6),
-
-      /// ➕ FOLLOW BUTTON (aligned with column)
-      Container(
-        padding: const EdgeInsets.all(5),
-        decoration: const BoxDecoration(
-          color: Colors.purple,
-          shape: BoxShape.circle,
+  crossAxisAlignment: CrossAxisAlignment.center, // ✅ FIX
+  children: [
+    Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: const [
+        Text(
+          "Cydknee",
+          style: TextStyle(color: Colors.white),
         ),
-        child: const Icon(Icons.add, size: 14, color: Colors.white),
+        SizedBox(height: 4),
+        Text(
+          "Live vibes 🔥",
+          style: TextStyle(
+            color: Colors.white70,
+            fontSize: 12,
+          ),
+        ),
+      ],
+    ),
+
+    const SizedBox(width: 6),
+
+    /// ➕ FOLLOW BUTTON (now centered)
+    Container(
+      padding: const EdgeInsets.all(5),
+      decoration: const BoxDecoration(
+        color: Colors.purple,
+        shape: BoxShape.circle,
       ),
-    ],
-  ),
+      child: const Icon(Icons.add, size: 14, color: Colors.white),
+    ),
+  ],
+),
 ),
 
               _liveBadge(),
