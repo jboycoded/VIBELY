@@ -6,82 +6,115 @@ class FeaturedCategory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final streams = [
-      {"name": "Alice", "viewers": "1.2K", "image": "assets/images/stream2.jpg"},
-      {"name": "Bob", "viewers": "900", "image": "assets/images/stream3.jpg"},
-      {"name": "Charlie", "viewers": "650", "image": "assets/images/stream4.jpg"},
-      {"name": "Diana", "viewers": "420", "image": "assets/images/stream1.jpg"},
-      {"name": "Alice", "viewers": "1.2K", "image": "assets/images/stream2.jpg"},
-      {"name": "Bob", "viewers": "900", "image": "assets/images/stream3.jpg"},
-      {"name": "Charlie", "viewers": "650", "image": "assets/images/stream4.jpg"},
-      {"name": "Diana", "viewers": "420", "image": "assets/images/stream1.jpg"},
-    ];
-
-    return buildGrid(context, streams);
+    return PageView.builder(
+      scrollDirection: Axis.vertical,
+      itemCount: 5,
+      itemBuilder: (context, index) {
+        return const FeaturedLiveCard();
+      },
+    );
   }
 }
 
-Widget buildGrid(BuildContext context, List<Map<String, String>> streams) {
-  return GridView.builder(
-    padding: const EdgeInsets.all(12),
-    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-      crossAxisCount: 2,
-      childAspectRatio: 0.75,
-      crossAxisSpacing: 8,
-      mainAxisSpacing: 8,
-    ),
-    itemCount: streams.length,
-    itemBuilder: (context, index) {
-      final stream = streams[index];
-      return GestureDetector(
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const LiveScreen()),
-          );
-        },
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(16),
-          child: Stack(
+class FeaturedLiveCard extends StatelessWidget {
+  const FeaturedLiveCard({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+        /// BACKGROUND IMAGE
+        Positioned.fill(
+          child: Image.asset(
+            "assets/images/streamer1.jpg",
+            fit: BoxFit.cover,
+          ),
+        ),
+
+        /// OVERLAY
+        Container(color: Colors.black.withOpacity(0.4)),
+
+        /// CONTENT
+        Padding(
+          padding: const EdgeInsets.all(20),
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.start,
             children: [
-              Positioned.fill(
-                child: Image.asset(stream["image"]!, fit: BoxFit.cover),
+              const SizedBox(height: 40),
+
+              /// TITLE
+              const Text(
+                "Spotlight 🌟",
+                style: TextStyle(
+                  color: Colors.white,
+                  fontSize: 28,
+                  fontWeight: FontWeight.bold,
+                ),
               ),
-              Positioned(
-                top: 10,
-                left: 10,
+
+              const Spacer(),
+
+              /// CENTER BUTTON
+              Center(
                 child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
+                  padding: const EdgeInsets.symmetric(
+                      horizontal: 22, vertical: 12),
                   decoration: BoxDecoration(
-                    color: Colors.red,
-                    borderRadius: BorderRadius.circular(10),
+                    borderRadius: BorderRadius.circular(30),
+                    border: Border.all(color: Colors.white24),
+                    color: Colors.black.withOpacity(0.3),
                   ),
-                  child: const Text("LIVE", style: TextStyle(color: Colors.white, fontSize: 12)),
+                  child: const Row(
+                    mainAxisSize: MainAxisSize.min,
+                    children: [
+                      Icon(Icons.wifi_tethering, color: Colors.purple,
+                      SizedBox(width: 10),
+                      Text(
+                        "Tap to watch LIVE",
+                        style: TextStyle(color: Colors.white),
+                      ),
+                    ],
+                  ),
                 ),
               ),
-              Positioned(
-                top: 10,
-                right: 10,
-                child: Row(
-                  children: [
-                    const Icon(Icons.remove_red_eye, color: Colors.white, size: 16),
-                    const SizedBox(width: 4),
-                    Text(stream["viewers"]!, style: const TextStyle(color: Colors.white)),
-                  ],
-                ),
+
+              const Spacer(),
+
+              /// USER INFO
+              Row(
+                children: const [
+                  Text(
+                    "Moni 💵",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 18,
+                    ),
+                  ),
+                  SizedBox(width: 10),
+                  Icon(Icons.remove_red_eye, color: Colors.white),
+                  SizedBox(width: 5),
+                  Text("532", style: TextStyle(color: Colors.white)),
+                ],
               ),
-              Positioned(
-                bottom: 10,
-                left: 10,
-                child: Text(
-                  stream["name"]!,
-                  style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-                ),
-              ),
+
+              Container(
+  padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
+  decoration: BoxDecoration(
+    color: Colors.black.withOpacity(0.3), // 👈 Makes text "pop" over video
+    borderRadius: BorderRadius.circular(20),
+  ),
+  child: Text(
+    "Topic: Flutter Live Session",
+    maxLines: 1,
+    overflow: TextOverflow.ellipsis,
+    style: TextStyle(color: Colors.white),
+  ),
+)
             ],
           ),
         ),
-      );
-    },
-  );
+      ],
+    );
+  }
 }
