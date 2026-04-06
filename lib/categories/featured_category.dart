@@ -42,6 +42,7 @@ class FeaturedLiveCard extends StatelessWidget {
             children: [
               const SizedBox(height: 40),
 
+              /*
               /// TITLE
               const Text(
                 "Spotlight 🌟",
@@ -51,11 +52,22 @@ class FeaturedLiveCard extends StatelessWidget {
                   fontWeight: FontWeight.bold,
                 ),
               ),
+              */
 
               const Spacer(),
 
               /// CENTER BUTTON
               Center(
+                GestureDetector(
+                  onTap: () {
+        // TODO: navigate to live screen
+        Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (_) => const LiveScreen(),
+    ),
+  );
+      },
                 child: Container(
                   padding: const EdgeInsets.symmetric(
                       horizontal: 22, vertical: 12),
@@ -75,6 +87,7 @@ class FeaturedLiveCard extends StatelessWidget {
                       ),
                     ],
                   ),
+                ),
                 ),
               ),
 
