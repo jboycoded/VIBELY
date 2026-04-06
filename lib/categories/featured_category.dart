@@ -58,7 +58,7 @@ class FeaturedLiveCard extends StatelessWidget {
 
               /// CENTER BUTTON
               Center(
-                GestureDetector(
+                child: GestureDetector(
                   onTap: () {
         // TODO: navigate to live screen
         Navigator.push(
@@ -88,13 +88,14 @@ class FeaturedLiveCard extends StatelessWidget {
                     ],
                   ),
                 ),
-                ),
+                  ),
               ),
 
               const Spacer(),
 
               /// USER INFO
               Row(
+                crossAxisAlignment: CrossAxisAlignment.center,
                 children: const [
                   Text(
                     "Moni 💵",
