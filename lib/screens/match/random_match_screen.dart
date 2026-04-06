@@ -36,20 +36,25 @@ class _RandomMatchScreenState extends State<RandomMatchScreen>
     super.dispose();
   }
 
-  void startMatch() {
-  setState(() => isSearching = true);
+    void startMatch() {
+    setState(() => isSearching = true);
 
-  Future.delayed(Duration(seconds: 2), () {
-    setState(() => isSearching = false);
+    // This simulates the search delay and then navigates
+    Future.delayed(const Duration(seconds: 3), () {
+      // Check if the user is still on this screen and still searching
+      if (!mounted || !isSearching) return;
 
-    Navigator.push(
-      context,
-      MaterialPageRoute(
-        builder: (_) => const VideoCallScreen(),
-      ),
-    );
-  });
-}
+      setState(() => isSearching = false);
+
+      Navigator.push(
+        context,
+        MaterialPageRoute(
+          builder: (_) => const VideoCallScreen(),
+        ),
+      );
+    });
+  } // <--- Only ONE closing brace here
+
 
   @override
   Widget build(BuildContext context) {
