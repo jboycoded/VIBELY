@@ -32,7 +32,15 @@ class _NearbyTile extends StatelessWidget {
         subtitle: const Text("2km away",
             style: TextStyle(color: Colors.white70)),
         trailing: const Icon(Icons.play_arrow, color: Colors.white),
-        onTap: () {},
+        onTap: () {
+          // TODO: navigate to live screen
+        Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (_) => const LiveScreen(),
+    ),
+  );
+        },
       ),
     );
   }
