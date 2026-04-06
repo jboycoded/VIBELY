@@ -6,32 +6,38 @@ class LiveChatSection extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ClipRRect(
-      borderRadius: BorderRadius.circular(20),
-      child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-        child: Container(
-          padding: const EdgeInsets.all(10),
-          decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.08),
-            borderRadius: BorderRadius.circular(20),
-          ),
-          child: Column(
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: const [
-              _chat("Johnson", "joined"),
-              _chat("successful", "good morning"),
-              _chat("Anna", "you look amazing 😍"),
-              _chat("Johnson", "joined"),
-              _chat("successful", "good morning"),
-              _chat("Anna", "you look amazing 😍"),
-              _chat("Johnson", "joined"),
-              _chat("successful", "good morning"),
-              _chat("Anna", "you look amazing 😍"),
-              _chat("Johnson", "joined"),
-              _chat("successful", "good morning"),
-              _chat("Anna", "you look amazing 😍"),
-            ],
+    return SizedBox(
+      height: 200, // ✅ fixed height
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(20),
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+          child: Container(
+            padding: const EdgeInsets.all(10),
+            decoration: BoxDecoration(
+              color: Colors.black.withOpacity(0.25), // ✅ darker again
+              borderRadius: BorderRadius.circular(20),
+            ),
+            child: ListView(
+              reverse: true, // latest at bottom
+              children: const [
+                _chat("Johnson", "joined"),
+                _chat("successful", "good morning"),
+                _chat("Anna", "you look amazing 😍"),
+                _chat("Mike", "🔥🔥🔥"),
+                _chat("Peace", "hello 👋"),
+                _chat("Johnson", "joined"),
+                _chat("successful", "good morning"),
+                _chat("Anna", "you look amazing 😍"),
+                _chat("Mike", "🔥🔥🔥"),
+                _chat("Peace", "hello 👋"),
+                _chat("Johnson", "joined"),
+                _chat("successful", "good morning"),
+                _chat("Anna", "you look amazing 😍"),
+                _chat("Mike", "🔥🔥🔥"),
+                _chat("Peace", "hello 👋"),
+              ],
+            ),
           ),
         ),
       ),
