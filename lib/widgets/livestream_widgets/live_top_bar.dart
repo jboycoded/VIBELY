@@ -11,7 +11,7 @@ class LiveTopBar extends StatelessWidget {
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
         child: Container(
-          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
+          padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 10),
           decoration: BoxDecoration(
             color: Colors.white.withOpacity(0.08),
             borderRadius: BorderRadius.circular(30),
@@ -19,28 +19,39 @@ class LiveTopBar extends StatelessWidget {
           ),
           child: Row(
             children: [
-              Container(
-  decoration: BoxDecoration(
-    shape: BoxShape.circle,
-    boxShadow: [
-      BoxShadow(
-        color: Colors.purple.withOpacity(0.6),
-        blurRadius: 10,
-      ),
-    ],
-  ),
-  child: const CircleAvatar(
-    backgroundImage: AssetImage("assets/images/streamer1.jpg"),
-  ),
-),
+              const CircleAvatar(
+                backgroundImage:
+                    AssetImage("assets/images/streamer1.jpg"),
+              ),
               const SizedBox(width: 10),
 
-              const Expanded(
-                child: Text(
-                  "Cydknee",
-                  style: TextStyle(color: Colors.white),
+              /// NAME + (future subtitle space)
+              Expanded(
+                child: Column(
+                  crossAxisAlignment: CrossAxisAlignment.start,
+                  children: [
+                        const Text(
+                          "Cydknee",
+                          style: TextStyle(color: Colors.white),
+                        ),
+                        const SizedBox(height: 2),
+
+                    /// (Empty space for your future text)
+                    const SizedBox(height: 12),
+                  ],
                 ),
-              ),
+              ),     
+l
+              /// ➕ FOLLOW BUTTON
+              Container(
+                          padding: const EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                            color: Colors.purple,
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(Icons.add,
+                              color: Colors.white, size: 14),
+                        ),
 
               _liveBadge(),
               const SizedBox(width: 10),
@@ -51,14 +62,11 @@ class LiveTopBar extends StatelessWidget {
 
               const SizedBox(width: 10),
 
-              Container(
-                padding: const EdgeInsets.all(6),
-                decoration: BoxDecoration(
-                  color: Colors.purple,
-                  shape: BoxShape.circle,
-                ),
-                child: const Icon(Icons.add, color: Colors.white, size: 18),
-              )
+              /// ❌ EXIT BUTTON
+              GestureDetector(
+                onTap: () => Navigator.pop(context),
+                child: const Icon(Icons.close, color: Colors.white),
+              ),
             ],
           ),
         ),
