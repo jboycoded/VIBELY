@@ -63,7 +63,7 @@ class LiveScreen extends StatelessWidget {
           const Positioned(
             left: 10,
             right: 80,
-            bottom: 90,
+            bottom: 140,
             child: LiveChatSection(),
           ),
 
