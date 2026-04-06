@@ -19,10 +19,20 @@ class LiveTopBar extends StatelessWidget {
           ),
           child: Row(
             children: [
-              const CircleAvatar(
-                backgroundImage: const Image.asset(
-                    "assets/images/streamer1.jpg"),
-              ),
+              Container(
+  decoration: BoxDecoration(
+    shape: BoxShape.circle,
+    boxShadow: [
+      BoxShadow(
+        color: Colors.purple.withOpacity(0.6),
+        blurRadius: 10,
+      ),
+    ],
+  ),
+  child: const CircleAvatar(
+    backgroundImage: AssetImage("assets/images/streamer1.jpg"),
+  ),
+),
               const SizedBox(width: 10),
 
               const Expanded(
