@@ -46,10 +46,21 @@ class _FollowTile extends StatelessWidget {
         title: const Text("Following User",
             style: TextStyle(color: Colors.white)),
         trailing: ElevatedButton(
-          onPressed: () {},
+          onPressed: () {
+            // TODO: navigate to live screen
+        Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (_) => const LiveScreen(),
+    ),
+  );
+          },
           style: ElevatedButton.styleFrom(
               backgroundColor: const Color(0xFF9C27B0)),
-          child: const Text("Join"),
+          child: const Text(
+            "Join",
+          style: TextStyle(color: Colors.white)
+          ),
         ),
       ),
     );
