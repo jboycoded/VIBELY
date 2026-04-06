@@ -6,82 +6,52 @@ class FollowingCategory extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final streams = [
-      {"name": "Ivy", "viewers": "980", "image": "assets/images/stream4.jpg"},
-      {"name": "Jack", "viewers": "430", "image": "assets/images/stream1.jpg"},
-      {"name": "Kara", "viewers": "670", "image": "assets/images/stream2.jpg"},
-      {"name": "Leo", "viewers": "210", "image": "assets/images/stream3.jpg"},
-      {"name": "Ivy", "viewers": "980", "image": "assets/images/stream4.jpg"},
-      {"name": "Jack", "viewers": "430", "image": "assets/images/stream1.jpg"},
-      {"name": "Kara", "viewers": "670", "image": "assets/images/stream2.jpg"},
-      {"name": "Leo", "viewers": "210", "image": "assets/images/stream3.jpg"},
-    ];
-
-    return buildGrid(context, streams);
+    return ListView.builder(
+      padding: const EdgeInsets.all(12),
+      itemCount: 10,
+      itemBuilder: (_, index) => _FollowTile(),
+    );
   }
 }
 
-Widget buildGrid(BuildContext context, List<Map<String, String>> streams) {
-  return GridView.builder(
-    padding: const EdgeInsets.all(12),
-    gridDelegate: const SliverGridDelegateWithFixedCrossAxisCount(
-      crossAxisCount: 2,
-      childAspectRatio: 0.75,
-      crossAxisSpacing: 8,
-      mainAxisSpacing: 8,
-    ),
-    itemCount: streams.length,
-    itemBuilder: (context, index) {
-      final stream = streams[index];
-      return GestureDetector(
-        onTap: () {
-          Navigator.push(
-            context,
-            MaterialPageRoute(builder: (context) => const LiveScreen()),
-          );
-        },
-        child: ClipRRect(
-          borderRadius: BorderRadius.circular(16),
-          child: Stack(
-            children: [
-              Positioned.fill(
-                child: Image.asset(stream["image"]!, fit: BoxFit.cover),
-              ),
-              Positioned(
-                top: 10,
-                left: 10,
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 4),
-                  decoration: BoxDecoration(
-                    color: Colors.red,
-                    borderRadius: BorderRadius.circular(10),
-                  ),
-                  child: const Text("LIVE", style: TextStyle(color: Colors.white, fontSize: 12)),
+class _FollowTile extends StatelessWidget {
+  @override
+  Widget build(BuildContext context) {
+    return Card(
+      color: Colors.white.withOpacity(0.05),
+      shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(15)),
+      margin: const EdgeInsets.only(bottom: 10),
+      child: ListTile(
+        leading: Stack(
+          children: [
+            const CircleAvatar(
+              backgroundImage:
+                  AssetImage("assets/images/streamer1.jpg"),
+            ),
+            Positioned(
+              bottom: 0,
+              right: 0,
+              child: Container(
+                height: 10,
+                width: 10,
+                decoration: const BoxDecoration(
+                  color: Colors.green,
+                  shape: BoxShape.circle,
                 ),
               ),
-              Positioned(
-                top: 10,
-                right: 10,
-                child: Row(
-                  children: [
-                    const Icon(Icons.remove_red_eye, color: Colors.white, size: 16),
-                    const SizedBox(width: 4),
-                    Text(stream["viewers"]!, style: const TextStyle(color: Colors.white)),
-                  ],
-                ),
-              ),
-              Positioned(
-                bottom: 10,
-                left: 10,
-                child: Text(
-                  stream["name"]!,
-                  style: const TextStyle(color: Colors.white, fontWeight: FontWeight.bold),
-                ),
-              ),
-            ],
-          ),
+            )
+          ],
         ),
-      );
-    },
-  );
+        title: const Text("Following User",
+            style: TextStyle(color: Colors.white)),
+        trailing: ElevatedButton(
+          onPressed: () {},
+          style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(0xFF9C27B0)),
+          child: const Text("Join"),
+        ),
+      ),
+    );
+  }
 }
