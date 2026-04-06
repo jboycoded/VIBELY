@@ -20,10 +20,23 @@ class LiveInputBar extends StatelessWidget {
                   color: Colors.white.withOpacity(0.1),
                   borderRadius: BorderRadius.circular(30),
                 ),
-                child: const Text(
+                Row(
+                children:[ const Text(
                   "Say something...",
                   style: TextStyle(color: Colors.white70),
                 ),
+                          Spacer(), // <--- This pushes everything after it to the end
+                         Container(
+                          padding: const EdgeInsets.all(5),
+                          decoration: BoxDecoration(
+                            color: Colors.purple,
+                            shape: BoxShape.circle,
+                          ),
+                          child: const Icon(Icons.send,
+                              color: Colors.white, size: 14),
+                        ),
+                          ],
+                  ),
               ),
             ),
           ),
@@ -32,7 +45,7 @@ class LiveInputBar extends StatelessWidget {
 
         _icon(Icons.emoji_emotions),
         const SizedBox(width: 8),
-        _icon(Icons.card_giftcard),
+        _icon(Icons.menu),
       ],
     );
   }
