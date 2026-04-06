@@ -13,12 +13,21 @@ class LiveChatSection extends StatelessWidget {
         child: Container(
           padding: const EdgeInsets.all(10),
           decoration: BoxDecoration(
-            color: Colors.black.withOpacity(0.2),
+            color: Colors.white.withOpacity(0.08),
             borderRadius: BorderRadius.circular(20),
           ),
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.start,
             children: const [
+              _chat("Johnson", "joined"),
+              _chat("successful", "good morning"),
+              _chat("Anna", "you look amazing 😍"),
+              _chat("Johnson", "joined"),
+              _chat("successful", "good morning"),
+              _chat("Anna", "you look amazing 😍"),
+              _chat("Johnson", "joined"),
+              _chat("successful", "good morning"),
+              _chat("Anna", "you look amazing 😍"),
               _chat("Johnson", "joined"),
               _chat("successful", "good morning"),
               _chat("Anna", "you look amazing 😍"),
