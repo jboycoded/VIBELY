@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
-import 'live_screen.dart';
- 
-// Import category widgets
+
+// Categories
 import '../../categories/popular_category.dart';
 import '../../categories/featured_category.dart';
 import '../../categories/nearby_category.dart';
@@ -16,13 +15,34 @@ class Livestreams extends StatefulWidget {
 }
 
 class _LivestreamsState extends State<Livestreams> {
-  String selectedCategory = "Popular";
+  final List<String> categories = [
+    "Trending 🔥",
+    "Around You 📍",
+    "Spotlight 🌟",
+    "Following",
+    "Discover ✨",
+  ];
+
+  late PageController _pageController;
+  int selectedIndex = 0;
+
+  @override
+  void initState() {
+    super.initState();
+    _pageController = PageController();
+  }
+
+  @override
+  void dispose() {
+    _pageController.dispose();
+    super.dispose();
+  }
 
   @override
   Widget build(BuildContext context) {
     return Stack(
       children: [
-        // Background Image
+        /// BACKGROUND
         Container(
           decoration: const BoxDecoration(
             image: DecorationImage(
@@ -31,22 +51,25 @@ class _LivestreamsState extends State<Livestreams> {
             ),
           ),
         ),
-        // Dark overlay
-        Container(color: Colors.black.withOpacity(0.5)),
+
+        /// DARK OVERLAY
+        Container(color: Colors.black.withOpacity(0.6)),
 
         SafeArea(
           child: Column(
             children: [
               /// TOP BAR
               Padding(
-                padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: [
-                    // Logo
+                    /// LOGO
                     Row(
                       children: [
-                        Image.asset("assets/images/vibely_icon.jpg", height: 28),
+                        Image.asset("assets/images/vibely_icon.jpg",
+                            height: 28),
                         const SizedBox(width: 8),
                         const Text(
                           "VIBELY",
@@ -58,7 +81,8 @@ class _LivestreamsState extends State<Livestreams> {
                         ),
                       ],
                     ),
-                    // Search + Filter
+
+                    /// ACTIONS
                     Row(
                       children: [
                         IconButton(
@@ -66,7 +90,8 @@ class _LivestreamsState extends State<Livestreams> {
                           onPressed: () {},
                         ),
                         IconButton(
-                          icon: const Icon(Icons.notifications, color: Colors.white),
+                          icon: const Icon(Icons.notifications,
+                              color: Colors.white),
                           onPressed: () {},
                         ),
                       ],
@@ -75,26 +100,37 @@ class _LivestreamsState extends State<Livestreams> {
                 ),
               ),
 
-              /// CATEGORY BUTTONS
+              /// CATEGORY TABS
               SizedBox(
-                height: 40,
-                child: ListView(
+                height: 45,
+                child: ListView.builder(
                   scrollDirection: Axis.horizontal,
-                  children: [
-                    categoryButton("Trending 🔥"),
-                    categoryButton("Around You 📍"),
-                    categoryButton("Spotlight 🌟"),
-                    categoryButton("Following"),
-                    categoryButton("Discover ✨"),
-                  ],
+                  itemCount: categories.length,
+                  itemBuilder: (context, index) {
+                    return categoryButton(categories[index], index);
+                  },
                 ),
               ),
 
               const SizedBox(height: 10),
 
-              /// LIVE STREAM GRID (Modular)
+              /// PAGE VIEW (SWIPE)
               Expanded(
-                child: getSelectedCategoryWidget(),
+                child: PageView(
+                  controller: _pageController,
+                  onPageChanged: (index) {
+                    setState(() {
+                      selectedIndex = index;
+                    });
+                  },
+                  children: const [
+                    PopularCategory(),
+                    NearbyCategory(),
+                    FeaturedCategory(),
+                    FollowingCategory(),
+                    ExploreCategory(),
+                  ],
+                ),
               ),
             ],
           ),
@@ -103,61 +139,50 @@ class _LivestreamsState extends State<Livestreams> {
     );
   }
 
-  /// Returns widget for selected category
-  Widget getSelectedCategoryWidget() {
-    switch (selectedCategory) {
-      case "Popular":
-        return const PopularCategory();
-      case "Featured":
-        return const FeaturedCategory();
-      case "Nearby":
-        return const NearbyCategory();
-      case "Following":
-        return const FollowingCategory();
-      case "Explore":
-        return const ExploreCategory();
-      default:
-        return const PopularCategory();
-    }
-  }
-
-  /// CATEGORY BUTTON
-  Widget categoryButton(String text) {
-    final bool isSelected = selectedCategory == text;
+  Widget categoryButton(String text, int index) {
+    final isSelected = selectedIndex == index;
 
     return GestureDetector(
       onTap: () {
-        setState(() {
-          selectedCategory = text;
-        });
+        setState(() => selectedIndex = index);
+
+        _pageController.animateToPage(
+          index,
+          duration: const Duration(milliseconds: 300),
+          curve: Curves.easeInOut,
+        );
       },
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 6),
         child: AnimatedContainer(
           duration: const Duration(milliseconds: 250),
-          padding: const EdgeInsets.symmetric(horizontal: 18, vertical: 8),
+          padding:
+              const EdgeInsets.symmetric(horizontal: 18, vertical: 10),
           decoration: BoxDecoration(
-            color: isSelected ? const Color(0xFF9C27B0) : const Color(0xFF1A1435),
-            borderRadius: BorderRadius.circular(20),
+            color: isSelected
+                ? const Color(0xFF9C27B0)
+                : Colors.white.withOpacity(0.08),
+            borderRadius: BorderRadius.circular(25),
+            border: Border.all(color: Colors.white12),
             boxShadow: isSelected
                 ? [
                     BoxShadow(
-                      color: const Color(0xFF9C27B0).withOpacity(0.5),
-                      blurRadius: 8,
+                      color: const Color(0xFF9C27B0).withOpacity(0.6),
+                      blurRadius: 12,
                     )
                   ]
                 : [],
           ),
-          alignment: Alignment.center,
           child: Text(
             text,
             style: TextStyle(
               color: Colors.white,
-              fontWeight: isSelected ? FontWeight.bold : FontWeight.normal,
+              fontWeight:
+                  isSelected ? FontWeight.bold : FontWeight.normal,
             ),
           ),
         ),
       ),
     );
   }
-}        
+}
