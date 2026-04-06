@@ -110,7 +110,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _goLiveButton() {
     return Positioned(
-      bottom: 32,
+      bottom: 26,
       left: MediaQuery.of(context).size.width / 2 - 30,
       child: GestureDetector(
         onTap: () {
