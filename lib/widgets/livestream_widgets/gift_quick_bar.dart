@@ -6,12 +6,18 @@ class GiftQuickBar extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final gifts = [
-      "🎁",
-      "💜",
-      "🔥",
-      "🌹",
-      "👑",
-      "💎",
+      {"icon": "🎁", "price": 10},
+      {"icon": "💜", "price": 5},
+      {"icon": "🔥", "price": 20},
+      {"icon": "🌹", "price": 15},
+      {"icon": "👑", "price": 50},
+      {"icon": "💎", "price": 100},
+      {"icon": "🎁", "price": 10},
+      {"icon": "💜", "price": 5},
+      {"icon": "🔥", "price": 20},
+      {"icon": "🌹", "price": 15},
+      {"icon": "👑", "price": 50},
+      {"icon": "💎", "price": 100},
     ];
 
     return SizedBox(
@@ -20,24 +26,32 @@ class GiftQuickBar extends StatelessWidget {
         scrollDirection: Axis.horizontal,
         itemCount: gifts.length,
         itemBuilder: (context, index) {
+          final gift = gifts[index];
+
           return Padding(
-            padding: const EdgeInsets.symmetric(horizontal: 6),
+            padding: const EdgeInsets.symmetric(horizontal: 8),
             child: GestureDetector(
-              onTap: () {
-                /// trigger gift animation later
-              },
-              child: Container(
-                width: 50,
-                decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(0.1),
-                  borderRadius: BorderRadius.circular(15),
-                ),
-                child: Center(
-                  child: Text(
-                    gifts[index],
-                    style: const TextStyle(fontSize: 22),
+              onTap: () {},
+              child: Column(
+                mainAxisAlignment: MainAxisAlignment.center,
+                children: [
+                  /// 🎁 ICON (no background)
+                  Text(
+                    gift["icon"].toString(),
+                    style: const TextStyle(fontSize: 24),
                   ),
-                ),
+
+                  const SizedBox(height: 4),
+
+                  /// 💰 PRICE
+                  Text(
+                    "${gift["price"]}",
+                    style: const TextStyle(
+                      color: Colors.white70,
+                      fontSize: 12,
+                    ),
+                  ),
+                ],
               ),
             ),
           );
