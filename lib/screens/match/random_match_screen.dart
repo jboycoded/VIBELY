@@ -1,3 +1,4 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
 
 class RandomMatchScreen extends StatefulWidget {
@@ -7,177 +8,122 @@ class RandomMatchScreen extends StatefulWidget {
   State<RandomMatchScreen> createState() => _RandomMatchScreenState();
 }
 
-class _RandomMatchScreenState extends State<RandomMatchScreen> {
+class _RandomMatchScreenState extends State<RandomMatchScreen>
+    with SingleTickerProviderStateMixin {
+  bool isSearching = false;
 
-  int userCoins = 1200; // User coin balance
+  late AnimationController _controller;
+  late Animation<double> _scaleAnim;
 
-  // Function for Next Match button
-  void nextMatch() {
+  @override
+  void initState() {
+    super.initState();
 
-    int cost = 30;
+    _controller =
+        AnimationController(vsync: this, duration: const Duration(seconds: 1));
 
-    if(userCoins < cost){
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(content: Text("Not enough coins")),
-      );
-      return;
-    }
+    _scaleAnim =
+        Tween<double>(begin: 1, end: 1.2).animate(_controller);
 
+    _controller.repeat(reverse: true);
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    super.dispose();
+  }
+
+  void startMatch() {
     setState(() {
-      userCoins -= cost;
+      isSearching = true;
     });
 
-    ScaffoldMessenger.of(context).showSnackBar(
-      const SnackBar(content: Text("Matching...")),
-    );
+    /// simulate search delay
+    Future.delayed(const Duration(seconds: 3), () {
+      setState(() {
+        isSearching = false;
+      });
 
-    // Later: connect to backend / matching algorithm
+      /// TODO: Navigate to match screen / video call
+    });
   }
 
   @override
   Widget build(BuildContext context) {
-
-    return Scaffold(
-
-      body: Stack(
-
-        children: [
-
-          /// BACKGROUND
-          Container(
-            decoration: const BoxDecoration(
-              image: DecorationImage(
-                image: AssetImage("assets/images/login_bg.png"),
-                fit: BoxFit.cover,
-              ),
+    return Stack(
+      children: [
+        /// BACKGROUND
+        Container(
+          decoration: const BoxDecoration(
+            image: DecorationImage(
+              image: AssetImage("assets/images/login_bg.png"),
+              fit: BoxFit.cover,
             ),
           ),
+        ),
 
-          Container(
-            color: Colors.black.withOpacity(0.4),
-          ),
+        /// DARK OVERLAY
+        Container(color: Colors.black.withOpacity(0.6)),
 
-          SafeArea(
+        SafeArea(
+          child: Column(
+            children: [
+              /// TOP BAR
+              Padding(
+                padding:
+                    const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                  children: const [
+                    Text(
+                      "Random Match",
+                      style: TextStyle(
+                        color: Colors.white,
+                        fontSize: 22,
+                        fontWeight: FontWeight.bold,
+                      ),
+                    ),
+                    Icon(Icons.tune, color: Colors.white),
+                  ],
+                ),
+              ),
 
-            child: Padding(
+              const Spacer(),
 
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-
-              child: Column(
-
+              /// CENTER CONTENT
+              Column(
                 children: [
-
-                  /// TOP BAR
-                  Row(
-
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
-                    children: [
-
-                      IconButton(
-                        icon: const Icon(Icons.arrow_back,color: Colors.white),
-                        onPressed: (){
-                          Navigator.pop(context);
-                        },
-                      ),
-
-                      const Text(
-                        "Random Match",
-                        style: TextStyle(color: Colors.white,fontSize:18),
-                      ),
-
-                      Row(
-                        children: [
-
-                          const Icon(Icons.monetization_on,color: Colors.orange),
-
-                          const SizedBox(width:4),
-
-                          Text(
-                            "$userCoins",
-                            style: const TextStyle(color: Colors.white),
-                          )
-
-                        ],
-                      )
-
-                    ],
-                  ),
-
-                  const SizedBox(height:20),
-
-                  const Text(
-                    "Matching...",
-                    style: TextStyle(color: Colors.white70,fontSize:18),
-                  ),
-
-                  const SizedBox(height:20),
-
-                  /// MAIN PROFILE IMAGE
-                  Container(
-
-                    height: 350,
-                    width: double.infinity,
-
-                    decoration: BoxDecoration(
-                      borderRadius: BorderRadius.circular(20),
-                      image: const DecorationImage(
-                        image: AssetImage("assets/images/stream1.jpg"),
-                        fit: BoxFit.cover,
-                      ),
+                  /// USER AVATAR (ANIMATED)
+                  ScaleTransition(
+                    scale: _scaleAnim,
+                    child: const CircleAvatar(
+                      radius: 70,
+                      backgroundImage:
+                          AssetImage("assets/images/streamer1.jpg"),
                     ),
                   ),
 
-                  const SizedBox(height:20),
+                  const SizedBox(height: 20),
 
-                  /// USER INFO
-                  Row(
-
-                    mainAxisAlignment: MainAxisAlignment.spaceBetween,
-
-                    children: [
-
-                      const Text(
-                        "Emma, 21 💎 1,660",
-                        style: TextStyle(color: Colors.white),
-                      ),
-
-                      const Text(
-                        "Jack, 22 💜",
-                        style: TextStyle(color: Colors.white70),
-                      )
-
-                    ],
+                  Text(
+                    isSearching
+                        ? "Searching for a match..."
+                        : "Find someone to vibe with",
+                    style: const TextStyle(
+                      color: Colors.white,
+                      fontSize: 18,
+                    ),
                   ),
 
-                  const Spacer(),
+                  const SizedBox(height: 30),
 
-                  /// GIFT BUTTONS
-                  Row(
-
-                    mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-
-                    children: [
-
-                      giftButton("x1"),
-                      giftButton("30"),
-                      giftButton("240"),
-
-                    ],
-                  ),
-
-                  const SizedBox(height:20),
-
-                  /// NEXT MATCH BUTTON
+                  /// MATCH BUTTON
                   GestureDetector(
-
-                    onTap: nextMatch,
-
+                    onTap: startMatch,
                     child: Container(
-
-                      height: 55,
-                      width: double.infinity,
-
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 40, vertical: 15),
                       decoration: BoxDecoration(
                         borderRadius: BorderRadius.circular(30),
                         gradient: const LinearGradient(
@@ -186,55 +132,86 @@ class _RandomMatchScreenState extends State<RandomMatchScreen> {
                             Color(0xFFFF4D8D),
                           ],
                         ),
+                        boxShadow: [
+                          BoxShadow(
+                            color:
+                                const Color(0xFF9C27B0).withOpacity(0.6),
+                            blurRadius: 15,
+                          )
+                        ],
                       ),
-
-                      child: const Center(
-                        child: Text(
-                          "Next Match",
-                          style: TextStyle(
-                            color: Colors.white,
-                            fontSize: 18,
-                            fontWeight: FontWeight.bold,
-                          ),
+                      child: Text(
+                        isSearching ? "Matching..." : "Start Matching",
+                        style: const TextStyle(
+                          color: Colors.white,
+                          fontWeight: FontWeight.bold,
                         ),
                       ),
                     ),
                   ),
 
-                  const SizedBox(height:20),
+                  const SizedBox(height: 20),
 
+                  /// CANCEL BUTTON
+                  if (isSearching)
+                    TextButton(
+                      onPressed: () {
+                        setState(() {
+                          isSearching = false;
+                        });
+                      },
+                      child: const Text(
+                        "Cancel",
+                        style: TextStyle(color: Colors.white70),
+                      ),
+                    ),
                 ],
               ),
-            ),
-          )
-        ],
-      ),
+
+              const Spacer(),
+
+              /// BOTTOM OPTIONS (FILTERS)
+              Padding(
+                padding: const EdgeInsets.only(bottom: 30),
+                child: Row(
+                  mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+                  children: [
+                    _filterButton(Icons.male, "Male"),
+                    _filterButton(Icons.female, "Female"),
+                    _filterButton(Icons.public, "Global"),
+                  ],
+                ),
+              ),
+            ],
+          ),
+        ),
+      ],
     );
   }
 
-  /// GIFT BUTTON
-  Widget giftButton(String text){
-
-    return Container(
-
-      padding: const EdgeInsets.symmetric(horizontal:20,vertical:12),
-
-      decoration: BoxDecoration(
-        color: const Color(0xFF1B1534),
-        borderRadius: BorderRadius.circular(20),
-      ),
-
-      child: Row(
-        children: [
-          const Icon(Icons.favorite,color: Colors.pink),
-          const SizedBox(width:6),
-          Text(
-            text,
-            style: const TextStyle(color: Colors.white),
-          )
-        ],
+  Widget _filterButton(IconData icon, String label) {
+    return ClipRRect(
+      borderRadius: BorderRadius.circular(25),
+      child: BackdropFilter(
+        filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
+        child: Container(
+          padding:
+              const EdgeInsets.symmetric(horizontal: 15, vertical: 10),
+          decoration: BoxDecoration(
+            color: Colors.white.withOpacity(0.08),
+            borderRadius: BorderRadius.circular(25),
+            border: Border.all(color: Colors.white12),
+          ),
+          child: Row(
+            children: [
+              Icon(icon, color: Colors.white70, size: 18),
+              const SizedBox(width: 5),
+              Text(label,
+                  style: const TextStyle(color: Colors.white70)),
+            ],
+          ),
+        ),
       ),
     );
   }
-
 }
