@@ -266,7 +266,7 @@ Text(
                   buildMenuItem(Icons.inventory, "Inventory"), // renamed
                   
 
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 80),
                 ],
               ),
             ),
