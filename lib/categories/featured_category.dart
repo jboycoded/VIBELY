@@ -41,19 +41,6 @@ class FeaturedLiveCard extends StatelessWidget {
             crossAxisAlignment: CrossAxisAlignment.start,
             children: [
               const SizedBox(height: 40),
-
-              /*
-              /// TITLE
-              const Text(
-                "Spotlight 🌟",
-                style: TextStyle(
-                  color: Colors.white,
-                  fontSize: 28,
-                  fontWeight: FontWeight.bold,
-                ),
-              ),
-              */
-
               const Spacer(),
 
               /// CENTER BUTTON
@@ -94,7 +81,9 @@ class FeaturedLiveCard extends StatelessWidget {
               const Spacer(),
 
               /// USER INFO
-              Row(
+              Container(
+                padding: const EdgeInsets.symmetric(horizontal: 12),
+              child: Row(
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: const [
                   Text(
@@ -111,6 +100,7 @@ class FeaturedLiveCard extends StatelessWidget {
                   Text("532", style: TextStyle(color: Colors.white)),
                 ],
               ),
+                ),
 
               Container(
   padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 6),
