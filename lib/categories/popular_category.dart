@@ -67,8 +67,8 @@ class _LiveCard extends StatelessWidget {
 
             /// VIEWERS
             Positioned(
-              bottom: 10,
-              left: 10,
+              top: 10,
+              right: 10,
               child: Row(
                 children: const [
                   Icon(Icons.remove_red_eye,
@@ -79,6 +79,22 @@ class _LiveCard extends StatelessWidget {
                 ],
               ),
             ),
+
+            /// HOST NAME
+            Positioned(
+              bottom: 10,
+              left: 10,
+              child: Text(
+                    "Legend",
+                    style: TextStyle(
+                      color: Colors.white,
+                      fontWeight: FontWeight.bold,
+                      fontSize: 10,
+                    ),
+                maxLines: 1,
+                overflow: TextOverflow.ellipsis,
+                  ),
+              ),
           ],
         ),
       ),
