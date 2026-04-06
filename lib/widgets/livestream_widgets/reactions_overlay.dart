@@ -53,11 +53,15 @@ class _ReactionsOverlayState extends State<ReactionsOverlay>
 
         /// TAP AREA
         Positioned.fill(
-          child: GestureDetector(
-            onTap: _addHeart,
-            child: Container(color: Colors.transparent),
-          ),
-        )
+  child: IgnorePointer( // ✅ THIS FIXES SCROLLING
+    ignoring: false,
+    child: GestureDetector(
+      behavior: HitTestBehavior.translucent,
+      onTap: _addHeart,
+      child: Container(color: Colors.transparent),
+    ),
+  ),
+)
       ],
     );
   }
