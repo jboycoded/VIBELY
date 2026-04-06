@@ -42,7 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
           Align(
             alignment: Alignment.bottomCenter,
             child: Padding(
-              padding: const EdgeInsets.only(bottom: 20),
+              padding: const EdgeInsets.only(bottom: 15),
               child: _buildNavBar(),
             ),
           ),
@@ -58,9 +58,9 @@ class _HomeScreenState extends State<HomeScreen> {
     return ClipRRect(
       borderRadius: BorderRadius.circular(35),
       child: BackdropFilter(
-        filter: ImageFilter.blur(sigmaX: 20, sigmaY: 20),
+        filter: ImageFilter.blur(sigmaX: 15, sigmaY: 15),
         child: Container(
-          height: 75,
+          height: 60,
           margin: const EdgeInsets.symmetric(horizontal: 20),
           padding: const EdgeInsets.symmetric(horizontal: 15),
           decoration: BoxDecoration(
@@ -110,7 +110,7 @@ class _HomeScreenState extends State<HomeScreen> {
 
   Widget _goLiveButton() {
     return Positioned(
-      bottom: 35,
+      bottom: 32,
       left: MediaQuery.of(context).size.width / 2 - 30,
       child: GestureDetector(
         onTap: () {
@@ -122,7 +122,7 @@ class _HomeScreenState extends State<HomeScreen> {
           );
         },
         child: Container(
-          height: 60,
+          height: 50,
           width: 60,
           decoration: BoxDecoration(
             shape: BoxShape.circle,
