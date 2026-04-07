@@ -11,8 +11,8 @@ class LocalPreview extends StatelessWidget {
       child: BackdropFilter(
         filter: ImageFilter.blur(sigmaX: 6, sigmaY: 6),
         child: Container(
-          width: 110,
-          height: 150,
+          width: 120,
+          height: 160,
           decoration: BoxDecoration(
             color: Colors.black.withOpacity(0.4),
             borderRadius: BorderRadius.circular(16),
