@@ -7,6 +7,7 @@ import 'widgets/controls.dart';
 import 'widgets/chat_overlay.dart';
 import 'widgets/input_bar.dart';
 import 'widgets/gift_overlay.dart';
+import 'widgets/floating_hearts.dart';
 
 class VideoCallScreen extends StatefulWidget {
   const VideoCallScreen({super.key});
@@ -16,6 +17,8 @@ class VideoCallScreen extends StatefulWidget {
 }
 
 class _VideoCallScreenState extends State<VideoCallScreen> {
+  final GlobalKey<_FloatingHeartsState> heartKey = GlobalKey();
+  
   bool isMuted = false;
   bool cameraOff = false;
 
@@ -86,6 +89,10 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
             onEnd: endCall,
             onSkip: skipUser,
           ),
+
+          FloatingHearts(key: heartKey),
+          //Trigger on double tap or a button
+          //heartKey.currentState?.addHeart();
         ],
       ),
     );
