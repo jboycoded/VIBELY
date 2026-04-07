@@ -43,4 +43,7 @@ class _NearbyTile extends StatelessWidget {
     );
   }
 },
+        ),
+      ),
+  }
 }
