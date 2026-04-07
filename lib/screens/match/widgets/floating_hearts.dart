@@ -10,7 +10,7 @@ class FloatingHearts extends StatefulWidget {
 
 class FloatingHeartsState extends State<FloatingHearts>
     with TickerProviderStateMixin {
-  final List<Widget> hearts = [];
+  final List<_HeartItem> hearts = [];
   final Random random = Random();
 
   void addHeart() {
@@ -19,31 +19,67 @@ class FloatingHeartsState extends State<FloatingHearts>
       duration: const Duration(seconds: 2),
     );
 
-    final animation = Tween<double>(begin: 0, end: 1).animate(controller);
+    final animation = CurvedAnimation(
+      parent: controller,
+      curve: Curves.easeOut,
+    );
 
-    final heart = AnimatedBuilder(
+    final heart = _HeartItem(
+      controller: controller,
       animation: animation,
-      builder: (context, child) {
-        return Positioned(
-          bottom: 80 + animation.value * 200,
-          left: random.nextDouble() * 200,
-          child: Opacity(
-            opacity: 1 - animation.value,
-            child: const Icon(Icons.favorite, color: Colors.pink, size: 30),
-          ),
-        );
-      },
+      startX: random.nextDouble() * 250,
+      curveOffset: random.nextDouble() * 40,
     );
 
     setState(() => hearts.add(heart));
 
     controller.forward().then((_) {
       controller.dispose();
+      setState(() => hearts.remove(heart));
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    return Stack(children: hearts);
+    return Stack(
+      children: hearts.map((h) {
+        return AnimatedBuilder(
+          animation: h.animation,
+          builder: (_, __) {
+            final t = h.animation.value;
+
+            return Positioned(
+              bottom: 80 + t * 220,
+              left: h.startX + sin(t * pi * 2) * h.curveOffset,
+              child: Opacity(
+                opacity: 1 - t,
+                child: Transform.scale(
+                  scale: 0.8 + (t * 0.5),
+                  child: const Icon(
+                    Icons.favorite,
+                    color: Colors.pink,
+                    size: 30,
+                  ),
+                ),
+              ),
+            );
+          },
+        );
+      }).toList(),
+    );
   }
+}
+
+class _HeartItem {
+  final AnimationController controller;
+  final Animation<double> animation;
+  final double startX;
+  final double curveOffset;
+
+  _HeartItem({
+    required this.controller,
+    required this.animation,
+    required this.startX,
+    required this.curveOffset,
+  });
 }
