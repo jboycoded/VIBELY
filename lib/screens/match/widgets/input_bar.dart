@@ -1,4 +1,3 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 
 class InputBar extends StatelessWidget {
@@ -15,46 +14,36 @@ class InputBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Positioned(
-      bottom: 20,
-      left: 10,
-      right: 10,
-      child: Row(
-        children: [
-          Expanded(
-            child: ClipRRect(
+    return Row(
+      children: [
+        Expanded(
+          child: Container(
+            padding: const EdgeInsets.symmetric(horizontal: 12),
+            decoration: BoxDecoration(
+              color: Colors.white10,
               borderRadius: BorderRadius.circular(30),
-              child: BackdropFilter(
-                filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-                child: Container(
-                  padding: const EdgeInsets.symmetric(horizontal: 15),
-                  decoration: BoxDecoration(
-                    color: Colors.white.withOpacity(0.08),
-                    borderRadius: BorderRadius.circular(30),
-                  ),
-                  child: TextField(
-                    controller: controller,
-                    style: const TextStyle(color: Colors.white),
-                    decoration: const InputDecoration(
-                      hintText: "Type a message...",
-                      hintStyle: TextStyle(color: Colors.white70),
-                      border: InputBorder.none,
-                    ),
-                  ),
-                ),
+            ),
+            child: TextField(
+              controller: controller,
+              style: const TextStyle(color: Colors.white),
+              decoration: const InputDecoration(
+                border: InputBorder.none,
+                hintText: 'Send a message...',
+                hintStyle: TextStyle(color: Colors.white54),
               ),
             ),
           ),
-          IconButton(
-            icon: const Icon(Icons.send, color: Colors.white),
-            onPressed: onSend,
-          ),
-          IconButton(
-            icon: const Icon(Icons.card_giftcard, color: Colors.pink),
-            onPressed: onGift,
-          ),
-        ],
-      ),
+        ),
+        const SizedBox(width: 8),
+        IconButton(
+          icon: const Icon(Icons.card_giftcard, color: Colors.pinkAccent),
+          onPressed: onGift,
+        ),
+        IconButton(
+          icon: const Icon(Icons.send, color: Colors.white),
+          onPressed: onSend,
+        ),
+      ],
     );
   }
 }
