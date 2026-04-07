@@ -5,7 +5,7 @@ class FloatingHearts extends StatefulWidget {
   const FloatingHearts({super.key});
 
   @override
-  State<FloatingHearts> createState() => _FloatingHeartsState();
+  State<FloatingHearts> createState() => FloatingHeartsState();
 }
 
 class FloatingHeartsState extends State<FloatingHearts> {
