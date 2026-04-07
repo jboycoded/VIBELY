@@ -17,7 +17,7 @@ class VideoCallScreen extends StatefulWidget {
 }
 
 class _VideoCallScreenState extends State<VideoCallScreen> {
-  final GlobalKey<_FloatingHeartsState> heartKey = GlobalKey();
+  final GlobalKey<FloatingHeartsState> heartKey = GlobalKey();
   
   bool isMuted = false;
   bool cameraOff = false;
