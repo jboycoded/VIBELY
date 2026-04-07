@@ -5,9 +5,9 @@ class VideoBackground extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Positioned.fill(
+    return SizedBox.expand(
       child: Image.asset(
-        "assets/images/streamer1.jpg",
+        'assets/images/streamer1.jpg',
         fit: BoxFit.cover,
       ),
     );
@@ -19,6 +19,17 @@ class DarkOverlay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(color: Colors.black.withOpacity(0.3));
+    return Container(
+      decoration: BoxDecoration(
+        gradient: LinearGradient(
+          begin: Alignment.topCenter,
+          end: Alignment.bottomCenter,
+          colors: [
+            Colors.black.withOpacity(0.2),
+            Colors.black.withOpacity(0.6),
+          ],
+        ),
+      ),
+    );
   }
 }
