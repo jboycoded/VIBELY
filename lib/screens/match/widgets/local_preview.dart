@@ -5,19 +5,18 @@ class LocalPreview extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Positioned(
-      top: 100,
-      right: 16,
+    return Container(
+      width: 90,
+      height: 120,
+      decoration: BoxDecoration(
+        borderRadius: BorderRadius.circular(16),
+        border: Border.all(color: Colors.pinkAccent, width: 2),
+      ),
       child: ClipRRect(
-        borderRadius: BorderRadius.circular(15),
-        child: Container(
-          height: 140,
-          width: 100,
-          color: Colors.black,
-          child: Image.asset(
-            "assets/images/streamer1.jpg",
-            fit: BoxFit.cover,
-          ),
+        borderRadius: BorderRadius.circular(14),
+        child: Image.asset(
+          'assets/images/streamer1.jpg',
+          fit: BoxFit.cover,
         ),
       ),
     );
