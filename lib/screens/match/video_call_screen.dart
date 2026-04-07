@@ -106,7 +106,7 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
               Positioned(
                 left: 12,
                 right: 12,
-                bottom: 110,
+                bottom: 130,
                 child: ChatOverlay(
                   messages: messages,
                   scrollController: scrollController,
