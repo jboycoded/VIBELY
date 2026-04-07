@@ -18,7 +18,20 @@ class ChatOverlay extends StatelessWidget {
         controller: scrollController,
         itemCount: messages.length,
         itemBuilder: (context, index) {
-          return _bubble(messages[index]);
+          return TweenAnimationBuilder(
+            duration: const Duration(milliseconds: 300),
+            tween: Tween(begin: 20.0, end: 0.0),
+            builder: (context, value, child) {
+              return Transform.translate(
+                offset: Offset(0, value),
+                child: Opacity(
+                  opacity: 1 - (value / 20),
+                  child: child,
+                ),
+              );
+            },
+            child: _bubble(messages[index]),
+          );
         },
       ),
     );
@@ -32,7 +45,10 @@ class ChatOverlay extends StatelessWidget {
         color: Colors.black54,
         borderRadius: BorderRadius.circular(16),
       ),
-      child: Text(text),
+      child: Text(
+        text,
+        style: const TextStyle(color: Colors.white),
+      ),
     );
   }
 }
