@@ -1,4 +1,6 @@
+import 'dart:ui';
 import 'package:flutter/material.dart';
+import 'package:flutter/services.dart';
 
 class Controls extends StatelessWidget {
   final bool isMuted;
@@ -33,31 +35,52 @@ class Controls extends StatelessWidget {
   }
 
   Widget _btn(IconData icon, VoidCallback onTap, bool active) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Container(
-        width: 50,
-        height: 50,
-        decoration: BoxDecoration(
-          color: active ? Colors.red : Colors.white12,
-          shape: BoxShape.circle,
+    return _ScaleButton(
+      onTap: () {
+        HapticFeedback.lightImpact();
+        onTap();
+      },
+      child: ClipRRect(
+        borderRadius: BorderRadius.circular(30),
+        child: BackdropFilter(
+          filter: ImageFilter.blur(sigmaX: 12, sigmaY: 12),
+          child: Container(
+            width: 52,
+            height: 52,
+            decoration: BoxDecoration(
+              color: active
+                  ? Colors.red.withOpacity(0.6)
+                  : Colors.white.withOpacity(0.08),
+              shape: BoxShape.circle,
+              border: Border.all(color: Colors.white24),
+            ),
+            child: Icon(icon, color: Colors.white),
+          ),
         ),
-        child: Icon(icon, color: Colors.white),
       ),
     );
   }
 
   Widget _mainBtn(VoidCallback onTap) {
-    return GestureDetector(
-      onTap: onTap,
+    return _ScaleButton(
+      onTap: () {
+        HapticFeedback.mediumImpact();
+        onTap();
+      },
       child: Container(
-        width: 60,
-        height: 60,
-        decoration: const BoxDecoration(
+        width: 68,
+        height: 68,
+        decoration: BoxDecoration(
           shape: BoxShape.circle,
-          gradient: LinearGradient(
+          gradient: const LinearGradient(
             colors: [Colors.pink, Colors.purple],
           ),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.pink.withOpacity(0.7),
+              blurRadius: 20,
+            ),
+          ],
         ),
         child: const Icon(Icons.arrow_upward, color: Colors.white),
       ),
@@ -65,16 +88,48 @@ class Controls extends StatelessWidget {
   }
 
   Widget _endBtn(VoidCallback onTap) {
-    return GestureDetector(
-      onTap: onTap,
+    return _ScaleButton(
+      onTap: () {
+        HapticFeedback.heavyImpact();
+        onTap();
+      },
       child: Container(
-        width: 55,
-        height: 55,
+        width: 58,
+        height: 58,
         decoration: const BoxDecoration(
           color: Colors.red,
           shape: BoxShape.circle,
         ),
         child: const Icon(Icons.call_end, color: Colors.white),
+      ),
+    );
+  }
+}
+
+class _ScaleButton extends StatefulWidget {
+  final Widget child;
+  final VoidCallback onTap;
+
+  const _ScaleButton({required this.child, required this.onTap});
+
+  @override
+  State<_ScaleButton> createState() => _ScaleButtonState();
+}
+
+class _ScaleButtonState extends State<_ScaleButton> {
+  double scale = 1;
+
+  @override
+  Widget build(BuildContext context) {
+    return GestureDetector(
+      onTapDown: (_) => setState(() => scale = 0.9),
+      onTapUp: (_) => setState(() => scale = 1),
+      onTapCancel: () => setState(() => scale = 1),
+      onTap: widget.onTap,
+      child: AnimatedScale(
+        duration: const Duration(milliseconds: 120),
+        scale: scale,
+        child: widget.child,
       ),
     );
   }
