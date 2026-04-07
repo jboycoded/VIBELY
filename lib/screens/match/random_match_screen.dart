@@ -14,6 +14,10 @@ class _RandomMatchScreenState extends State<RandomMatchScreen>
     with SingleTickerProviderStateMixin {
   bool isSearching = false;
 
+  /// 💰 COIN SYSTEM
+  int coins = 500;
+  final int matchCost = 50;
+
   late AnimationController _controller;
   late Animation<double> _scaleAnim;
 
@@ -36,15 +40,28 @@ class _RandomMatchScreenState extends State<RandomMatchScreen>
     super.dispose();
   }
 
-    void startMatch() {
+  void startMatch() {
+    /// 🚫 CHECK COINS FIRST
+    if (coins < matchCost) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          content: Text("Not enough coins"),
+          backgroundColor: Colors.red,
+        ),
+      );
+      return;
+    }
+
     setState(() => isSearching = true);
 
-    // This simulates the search delay and then navigates
     Future.delayed(const Duration(seconds: 3), () {
-      // Check if the user is still on this screen and still searching
       if (!mounted || !isSearching) return;
 
-      setState(() => isSearching = false);
+      /// 💸 DEDUCT COINS
+      setState(() {
+        coins -= matchCost;
+        isSearching = false;
+      });
 
       Navigator.push(
         context,
@@ -53,8 +70,7 @@ class _RandomMatchScreenState extends State<RandomMatchScreen>
         ),
       );
     });
-  } // <--- Only ONE closing brace here
-
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -82,9 +98,10 @@ class _RandomMatchScreenState extends State<RandomMatchScreen>
                     const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
-                  children: const [
+                  children: [
                     const SizedBox(width: 50),
-                    Text(
+
+                    const Text(
                       "Random Match",
                       style: TextStyle(
                         color: Colors.white,
@@ -92,7 +109,27 @@ class _RandomMatchScreenState extends State<RandomMatchScreen>
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-                    Icon(Icons.tune, color: Colors.white),
+
+                    /// 💰 COIN DISPLAY
+                    Container(
+                      padding: const EdgeInsets.symmetric(
+                          horizontal: 12, vertical: 6),
+                      decoration: BoxDecoration(
+                        color: Colors.black.withOpacity(0.3),
+                        borderRadius: BorderRadius.circular(20),
+                      ),
+                      child: Row(
+                        children: [
+                          const Icon(Icons.monetization_on,
+                              color: Colors.amber, size: 18),
+                          const SizedBox(width: 5),
+                          Text(
+                            "$coins",
+                            style: const TextStyle(color: Colors.white),
+                          ),
+                        ],
+                      ),
+                    ),
                   ],
                 ),
               ),
@@ -158,7 +195,18 @@ class _RandomMatchScreenState extends State<RandomMatchScreen>
                     ),
                   ),
 
-                  const SizedBox(height: 20),
+                  const SizedBox(height: 15),
+
+                  /// 💰 MATCH COST
+                  Text(
+                    "Cost per match: $matchCost coins",
+                    style: const TextStyle(
+                      color: Colors.white70,
+                      fontSize: 14,
+                    ),
+                  ),
+
+                  const SizedBox(height: 10),
 
                   /// CANCEL BUTTON
                   if (isSearching)
