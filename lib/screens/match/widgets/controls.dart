@@ -20,43 +20,46 @@ class Controls extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Positioned(
-      bottom: 80,
-      left: 0,
-      right: 0,
-      child: Column(
-        children: [
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              _btn(isMuted ? Icons.mic_off : Icons.mic, onMute),
-              _endBtn(onEnd),
-              _btn(cameraOff ? Icons.videocam_off : Icons.videocam, onCamera),
-            ],
-          ),
-          const SizedBox(height: 15),
-          Row(
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              _glass(Icons.skip_next, "Skip", onSkip),
-            ],
-          ),
-        ],
+    return Row(
+      mainAxisAlignment: MainAxisAlignment.spaceEvenly,
+      children: [
+        _btn(Icons.mic, onMute, isMuted),
+        _btn(Icons.videocam, onCamera, cameraOff),
+        _mainBtn(onSkip),
+        _btn(Icons.more_horiz, () {}, false),
+        _endBtn(onEnd),
+      ],
+    );
+  }
+
+  Widget _btn(IconData icon, VoidCallback onTap, bool active) {
+    return GestureDetector(
+      onTap: onTap,
+      child: Container(
+        width: 50,
+        height: 50,
+        decoration: BoxDecoration(
+          color: active ? Colors.red : Colors.white12,
+          shape: BoxShape.circle,
+        ),
+        child: Icon(icon, color: Colors.white),
       ),
     );
   }
 
-  Widget _btn(IconData icon, VoidCallback onTap) {
+  Widget _mainBtn(VoidCallback onTap) {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        height: 55,
-        width: 55,
-        decoration: BoxDecoration(
+        width: 60,
+        height: 60,
+        decoration: const BoxDecoration(
           shape: BoxShape.circle,
-          color: Colors.white.withOpacity(0.1),
+          gradient: LinearGradient(
+            colors: [Colors.pink, Colors.purple],
+          ),
         ),
-        child: Icon(icon, color: Colors.white),
+        child: const Icon(Icons.arrow_upward, color: Colors.white),
       ),
     );
   }
@@ -65,26 +68,13 @@ class Controls extends StatelessWidget {
     return GestureDetector(
       onTap: onTap,
       child: Container(
-        height: 65,
-        width: 65,
+        width: 55,
+        height: 55,
         decoration: const BoxDecoration(
-          shape: BoxShape.circle,
           color: Colors.red,
+          shape: BoxShape.circle,
         ),
         child: const Icon(Icons.call_end, color: Colors.white),
-      ),
-    );
-  }
-
-  Widget _glass(IconData icon, String label, VoidCallback onTap) {
-    return GestureDetector(
-      onTap: onTap,
-      child: Column(
-        children: [
-          Icon(icon, color: Colors.white),
-          const SizedBox(height: 5),
-          Text(label, style: const TextStyle(color: Colors.white70)),
-        ],
       ),
     );
   }
