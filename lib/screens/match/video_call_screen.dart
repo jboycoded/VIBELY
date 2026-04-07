@@ -18,7 +18,7 @@ class VideoCallScreen extends StatefulWidget {
 
 class _VideoCallScreenState extends State<VideoCallScreen> {
   final GlobalKey<FloatingHeartsState> heartKey = GlobalKey();
-  
+
   bool isMuted = false;
   bool cameraOff = false;
 
@@ -44,9 +44,11 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
     controller.clear();
 
     Future.delayed(const Duration(milliseconds: 100), () {
-      scrollController.jumpTo(
-        scrollController.position.maxScrollExtent,
-      );
+      if (scrollController.hasClients) {
+        scrollController.jumpTo(
+          scrollController.position.maxScrollExtent,
+        );
+      }
     });
   }
 
@@ -56,44 +58,79 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
 
   @override
   Widget build(BuildContext context) {
+    final bottomInset = MediaQuery.of(context).viewInsets.bottom;
+
     return GestureDetector(
+      onTap: () => FocusScope.of(context).unfocus(),
+      onDoubleTap: () => heartKey.currentState?.addHeart(),
       onVerticalDragEnd: (details) {
-        if (details.primaryVelocity! < -300) skipUser();
+        if (details.primaryVelocity != null &&
+            details.primaryVelocity! < -300) {
+          skipUser();
+        }
       },
-      child: Stack(
-        children: [
-          const VideoBackground(),
+      child: Scaffold(
+        resizeToAvoidBottomInset: false,
+        backgroundColor: Colors.black,
+        body: Stack(
+          children: [
+            /// 🎥 VIDEO
+            const VideoBackground(),
 
-          const DarkOverlay(),
+            /// 🌑 DARK GRADIENT OVERLAY
+            const DarkOverlay(),
 
-          const TopBar(),
+            /// 🔝 TOP BAR
+            const SafeArea(child: TopBar()),
 
-          const LocalPreview(),
+            /// 📹 LOCAL PREVIEW (small camera)
+            const Positioned(
+              top: 90,
+              right: 16,
+              child: LocalPreview(),
+            ),
 
-          ChatOverlay(
-            messages: messages,
-            scrollController: scrollController,
-          ),
+            /// 💬 CHAT + INPUT (GROUPED TOGETHER)
+            Positioned(
+              left: 16,
+              right: 16,
+              bottom: 110 + bottomInset,
+              child: Column(
+                crossAxisAlignment: CrossAxisAlignment.start,
+                children: [
+                  ChatOverlay(
+                    messages: messages,
+                    scrollController: scrollController,
+                  ),
+                  const SizedBox(height: 10),
+                  InputBar(
+                    controller: controller,
+                    onSend: sendMessage,
+                    onGift: sendGift,
+                  ),
+                ],
+              ),
+            ),
 
-          InputBar(
-            controller: controller,
-            onSend: sendMessage,
-            onGift: sendGift,
-          ),
+            /// 🎮 CONTROLS (BOTTOM)
+            Positioned(
+              left: 0,
+              right: 0,
+              bottom: 20 + bottomInset,
+              child: Controls(
+                isMuted: isMuted,
+                cameraOff: cameraOff,
+                onMute: toggleMute,
+                onCamera: toggleCamera,
+                onEnd: endCall,
+                onSkip: skipUser,
+              ),
+            ),
 
-          Controls(
-            isMuted: isMuted,
-            cameraOff: cameraOff,
-            onMute: toggleMute,
-            onCamera: toggleCamera,
-            onEnd: endCall,
-            onSkip: skipUser,
-          ),
-
-          FloatingHearts(key: heartKey),
-          //Trigger on double tap or a button
-          //heartKey.currentState?.addHeart();
-        ],
+            /// ❤️ FLOATING HEARTS
+            FloatingHearts(key: heartKey),
+          ],
+        ),
       ),
     );
   }
