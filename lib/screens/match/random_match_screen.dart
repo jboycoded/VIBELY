@@ -83,6 +83,7 @@ class _RandomMatchScreenState extends State<RandomMatchScreen>
                 child: Row(
                   mainAxisAlignment: MainAxisAlignment.spaceBetween,
                   children: const [
+                    const SizedBox(width: 50),
                     Text(
                       "Random Match",
                       style: TextStyle(
