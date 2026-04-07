@@ -157,14 +157,4 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
   }
 }
 
-/// 🔹 Dark overlay widget
-class DarkOverlay extends StatelessWidget {
-  const DarkOverlay({super.key});
 
-  @override
-  Widget build(BuildContext context) {
-    return Container(
-      color: Colors.black.withOpacity(0.3),
-    );
-  }
-}
