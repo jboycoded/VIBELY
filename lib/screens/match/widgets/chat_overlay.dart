@@ -12,21 +12,27 @@ class ChatOverlay extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Positioned(
-      left: 10,
-      right: 10,
-      bottom: 120,
-      height: 180,
+    return SizedBox(
+      height: 120,
       child: ListView.builder(
         controller: scrollController,
         itemCount: messages.length,
-        itemBuilder: (_, index) {
-          return Text(
-            messages[index],
-            style: const TextStyle(color: Colors.white),
-          );
+        itemBuilder: (context, index) {
+          return _bubble(messages[index]);
         },
       ),
+    );
+  }
+
+  Widget _bubble(String text) {
+    return Container(
+      margin: const EdgeInsets.only(bottom: 6),
+      padding: const EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        color: Colors.black54,
+        borderRadius: BorderRadius.circular(16),
+      ),
+      child: Text(text),
     );
   }
 }
