@@ -8,7 +8,7 @@ class FloatingHearts extends StatefulWidget {
   State<FloatingHearts> createState() => _FloatingHeartsState();
 }
 
-class _FloatingHeartsState extends State<FloatingHearts> {
+class FloatingHeartsState extends State<FloatingHearts> {
   final List<Widget> hearts = [];
 
   void addHeart() {
