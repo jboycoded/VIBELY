@@ -89,7 +89,7 @@ class _LiveCard extends StatelessWidget {
                     style: TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.bold,
-                      fontSize: 15,
+                      fontSize: 12,
                     ),
                 maxLines: 1,
                 overflow: TextOverflow.ellipsis,
