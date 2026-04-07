@@ -17,7 +17,8 @@ class VideoCallScreen extends StatefulWidget {
 }
 
 class _VideoCallScreenState extends State<VideoCallScreen> {
-  final GlobalKey<FloatingHeartsState> heartKey = GlobalKey();
+  final GlobalKey<FloatingHeartsState> heartKey =
+      GlobalKey<FloatingHeartsState>();
 
   bool isMuted = false;
   bool cameraOff = false;
@@ -58,80 +59,112 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
 
   @override
   Widget build(BuildContext context) {
-    final bottomInset = MediaQuery.of(context).viewInsets.bottom;
+    final size = MediaQuery.of(context).size;
 
-    return GestureDetector(
-      onTap: () => FocusScope.of(context).unfocus(),
-      onDoubleTap: () => heartKey.currentState?.addHeart(),
-      onVerticalDragEnd: (details) {
-        if (details.primaryVelocity != null &&
-            details.primaryVelocity! < -300) {
-          skipUser();
-        }
-      },
-      child: Scaffold(
-        resizeToAvoidBottomInset: false,
-        backgroundColor: Colors.black,
-        body: Stack(
-          children: [
-            /// 🎥 VIDEO
-            const VideoBackground(),
+    return Scaffold(
+      resizeToAvoidBottomInset: true,
+      body: SafeArea(
+        child: GestureDetector(
+          onDoubleTap: () => heartKey.currentState?.addHeart(),
+          onVerticalDragEnd: (details) {
+            if (details.primaryVelocity != null &&
+                details.primaryVelocity! < -300) {
+              skipUser();
+            }
+          },
+          child: Stack(
+            children: [
+              /// 🔹 Background (FULL SCREEN)
+              const Positioned.fill(child: VideoBackground()),
 
-            /// 🌑 DARK GRADIENT OVERLAY
-            const DarkOverlay(),
+              /// 🔹 Dark overlay for readability
+              const Positioned.fill(child: DarkOverlay()),
 
-            /// 🔝 TOP BAR
-            const SafeArea(child: TopBar()),
-
-            /// 📹 LOCAL PREVIEW (small camera)
-            const Positioned(
-              top: 90,
-              right: 16,
-              child: LocalPreview(),
-            ),
-
-            /// 💬 CHAT + INPUT (GROUPED TOGETHER)
-            Positioned(
-              left: 16,
-              right: 16,
-              bottom: 110 + bottomInset,
-              child: Column(
-                crossAxisAlignment: CrossAxisAlignment.start,
-                children: [
-                  ChatOverlay(
-                    messages: messages,
-                    scrollController: scrollController,
-                  ),
-                  const SizedBox(height: 10),
-                  InputBar(
-                    controller: controller,
-                    onSend: sendMessage,
-                    onGift: sendGift,
-                  ),
-                ],
+              /// 🔹 Top Bar (Safe & constrained)
+              const Positioned(
+                top: 10,
+                left: 10,
+                right: 10,
+                child: TopBar(),
               ),
-            ),
 
-            /// 🎮 CONTROLS (BOTTOM)
-            Positioned(
-              left: 0,
-              right: 0,
-              bottom: 20 + bottomInset,
-              child: Controls(
-                isMuted: isMuted,
-                cameraOff: cameraOff,
-                onMute: toggleMute,
-                onCamera: toggleCamera,
-                onEnd: endCall,
-                onSkip: skipUser,
+              /// 🔹 Remote video placeholder (center area safe)
+              Positioned.fill(
+                child: Center(
+                  child: Container(), // replace with video later
+                ),
               ),
-            ),
 
-            /// ❤️ FLOATING HEARTS
-            FloatingHearts(key: heartKey),
-          ],
+              /// 🔹 Local preview (top-right corner safe)
+              Positioned(
+                top: 70,
+                right: 16,
+                child: const LocalPreview(),
+              ),
+
+              /// 🔹 Chat overlay (above input)
+              Positioned(
+                left: 12,
+                right: 12,
+                bottom: 110,
+                child: ChatOverlay(
+                  messages: messages,
+                  scrollController: scrollController,
+                ),
+              ),
+
+              /// 🔹 Input bar (bottom safe)
+              Positioned(
+                left: 12,
+                right: 12,
+                bottom: 60,
+                child: InputBar(
+                  controller: controller,
+                  onSend: sendMessage,
+                  onGift: sendGift,
+                ),
+              ),
+
+              /// 🔹 Controls (BOTTOM CENTER SAFE)
+              Positioned(
+                left: 0,
+                right: 0,
+                bottom: 0,
+                child: Padding(
+                  padding: const EdgeInsets.only(bottom: 10),
+                  child: Controls(
+                    isMuted: isMuted,
+                    cameraOff: cameraOff,
+                    onMute: toggleMute,
+                    onCamera: toggleCamera,
+                    onEnd: endCall,
+                    onSkip: skipUser,
+                  ),
+                ),
+              ),
+
+              /// 🔹 Floating hearts (CLIPPED TO SCREEN)
+              Positioned.fill(
+                child: ClipRect(
+                  child: FloatingHearts(key: heartKey),
+                ),
+              ),
+            ],
+          ),
         ),
       ),
+    );
+  }
+}
+
+/// 🔹 Dark overlay widget
+class DarkOverlay extends StatelessWidget {
+  const DarkOverlay({super.key});
+
+  @override
+  Widget build(BuildContext context) {
+    return Container(
+      color: Colors.black.withOpacity(0.3),
     );
   }
 }
