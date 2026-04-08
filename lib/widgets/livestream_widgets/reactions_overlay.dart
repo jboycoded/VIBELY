@@ -30,6 +30,7 @@ class ReactionsOverlayState extends State<ReactionsOverlay>
     final item = ReactionItem(
       id: id,
       emoji: emoji,
+      asset: asset,
       animation: animation,
       controller: controller,
       startX: 0.7 + _random.nextDouble() * 0.2, // right side
@@ -55,10 +56,10 @@ class ReactionsOverlayState extends State<ReactionsOverlay>
   }
 
   /// 🔥 MULTI BURST (FOR GIFTS)
-  void burstReactions({String emoji = "🎁", int count = 6}) {
+  void burstReactions({String? emoji, String? asset, int count = 6}) {
     for (int i = 0; i < count; i++) {
       Future.delayed(Duration(milliseconds: i * 120), () {
-        addReaction(emoji: emoji);
+        addReaction(emoji: emoji, asset: asset);
       });
     }
   }
@@ -141,6 +142,8 @@ final String? asset;
 
   ReactionItem({
     required this.id,
+    this.emoji,
+    this.asset,
     required this.animation,
     required this.controller,
     required this.startX,
