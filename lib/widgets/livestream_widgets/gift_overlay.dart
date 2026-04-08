@@ -4,10 +4,10 @@ class GiftOverlay extends StatefulWidget {
   const GiftOverlay({super.key});
 
   @override
-  State<GiftOverlay> createState() => _GiftOverlayState();
+  State<GiftOverlay> createState() => GiftOverlayState();
 }
 
-class _GiftOverlayState extends State<GiftOverlay>
+class GiftOverlayState extends State<GiftOverlay>
     with TickerProviderStateMixin {
   String? currentGift;
   late AnimationController controller;
