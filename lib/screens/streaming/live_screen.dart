@@ -25,7 +25,7 @@ class _LiveScreenState extends State<LiveScreen>
 with WidgetsBindingObserver {
 
   /// variables for internet connectivity
-  late Stream<ConnectivityResult> connectivityStream;
+  late Stream<List<ConnectivityResult>> connectivityStream; 
   bool isConnected = true;
   
   /// 🧠 CORE STATE
@@ -54,22 +54,22 @@ with WidgetsBindingObserver {
     /// 🌐 INTERNET LISTENER
   connectivityStream = Connectivity().onConnectivityChanged;
 
-  connectivityStream.listen((result) {
-    final hasConnection = result != ConnectivityResult.none;
+  connectivityStream.listen((results) {
+  final hasConnection =
+      results.any((r) => r != ConnectivityResult.none);
 
-    if (hasConnection != isConnected) {
-      setState(() {
-        isConnected = hasConnection;
-      });
+  if (hasConnection != isConnected) {
+    setState(() {
+      isConnected = hasConnection;
+    });
 
-      if (!hasConnection) {
-        showSnack("❌ No Internet Connection");
-      } else {
-        showSnack("✅ Back Online");
-      }
+    if (!hasConnection) {
+      showSnack("❌ No Internet Connection");
+    } else {
+      showSnack("✅ Back Online");
     }
-  });
   }
+});
 
   Future<void> _mockInitialize() async {
   setState(() {
@@ -195,7 +195,7 @@ with WidgetsBindingObserver {
           ),
         ),
       ),
-    ),
+    );
   }
 
   Widget _loadingOverlay() {
@@ -214,7 +214,7 @@ with WidgetsBindingObserver {
           ],
         ),
       ),
-    ),
+    );
   }
 
   Widget _endedOverlay() {
@@ -236,7 +236,7 @@ with WidgetsBindingObserver {
           ],
         ),
       ),
-    ),
+    );
   }
 
   /// ✍ Send Message
@@ -401,8 +401,6 @@ void didChangeAppLifecycleState(AppLifecycleState state) {
           ),
 
           /// 💬 CHAT
-          Positioned(
-            le   /// 💬 CHAT
           Positioned(
             left: 10,
             right: 80,
