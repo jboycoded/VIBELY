@@ -36,7 +36,7 @@ with WidgetsBindingObserver {
   List<CommentModel> comments = [];
   bool isMockMode = true;
   bool streamEnded = false;
-  bool isLoading = false;
+  bool isLoading = true;
 
   Timer? viewerTimer;
   Timer? chatTimer;
@@ -76,9 +76,6 @@ with WidgetsBindingObserver {
     }
 
   Future<void> _mockInitialize() async {
-  setState(() {
-    isLoading = true;
-  });
 
   /// Simulate API delay
   await Future.delayed(
@@ -204,7 +201,7 @@ with WidgetsBindingObserver {
 
   Widget _loadingOverlay() {
   return Container(
-      color: Colors.black.withOpacity(0.7),
+      color: Colors.black,
       child: Center(
         child: Column(
           mainAxisSize: MainAxisSize.min,
@@ -260,19 +257,30 @@ with WidgetsBindingObserver {
     });
   }
 
+  void showBigGiftAnimation(GiftModel gift) {
+  /// 💥 BIG animation
+  giftKey.currentState?.showGift(gift.asset);
+    
+  }
+
   /// 🎁 Send Gift
   void sendGift(GiftModel gift) {
     if (!isConnected) return;
-  
-    //TODO: REMEMBER TO USE IT FOR AN IMAGE ASSET LATER
-    //reactionsKey.currentState?.burstReactions(
-  //asset: gift.asset,
-  //count: 8, );
 
-    reactionsKey.currentState?.burstReactions(
+    if (gift.isBigGift){
+      showBigGiftAnimation(gift);
+      } else {
+      /// Small floating burst
+    gift.isImage
+    ? reactionsKey.currentState?.burstReactions(
+    asset: gift.asset,
+    count: 8, 
+    )
+      : reactionsKey.currentState?.burstReactions(
   emoji: gift.asset,
   count: 8,
 );
+    }
     
     // Later: animation + backend
     showSnack("Gift t sent: ${gift.asset}");
@@ -452,7 +460,10 @@ void didChangeAppLifecycleState(AppLifecycleState state) {
           /// ❤️ REACTIONS
           const ReactionsOverlay(),
 
-            Positioned.fill(child: _buildOverlay()),
+          AnimatedSwitcher(
+  duration: const Duration(milliseconds: 300),
+  child: Positioned.fill(child: _buildOverlay()),
+            ),
  
         ],
       ),
