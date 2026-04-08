@@ -14,7 +14,7 @@ class _ReactionsOverlayState extends State<ReactionsOverlay>
   final Random _random = Random();
 
   /// ❤️ PUBLIC METHOD (CALL THIS TO ADD REACTION)
-  void addReaction({String emoji = "❤️"}) {
+  void addReaction({String? emoji, String? asset}) {
     final id = DateTime.now().millisecondsSinceEpoch;
 
     final controller = AnimationController(
@@ -71,31 +71,54 @@ class _ReactionsOverlayState extends State<ReactionsOverlay>
           return AnimatedBuilder(
             animation: reaction.animation,
             builder: (context, child) {
-              final progress = reaction.animation.value;
+  final progress = reaction.animation.value;
 
-              final y = MediaQuery.of(context).size.height *
-                  (1 - progress); // bottom → top
+  final screenHeight = MediaQuery.of(context).size.height;
+  final screenWidth = MediaQuery.of(context).size.width;
 
-              final x = MediaQuery.of(context).size.width *
-                  (reaction.startX +
-                      (reaction.endX - reaction.startX) * progress);
+  /// 🌊 CURVED FLOAT (sine wave)
+  final curveOffset = sin(progress * pi * 2) * 20;
 
-              final opacity = 1 - progress;
+  final x = screenWidth *
+      (reaction.startX +
+          (reaction.endX - reaction.startX) * progress) +
+      curveOffset;
 
-              return Positioned(
-                left: x,
-                bottom: y,
-                child: Opacity(
-                  opacity: opacity,
-                  child: Transform.rotate(
-                    angle: reaction.rotation * progress,
-                    child: Text(
-                      reaction.emoji,
-                      style: TextStyle(fontSize: reaction.size),
-                    ),
-                  ),
+  final y = screenHeight * (1 - progress);
+
+  /// ✨ SCALE (pop in → float → fade)
+  double scale;
+  if (progress < 0.2) {
+    scale = 0.5 + (progress * 2.5); // pop in
+  } else {
+    scale = 1.0 - (progress * 0.3); // slight shrink
+  }
+
+  final opacity = 1 - progress;
+
+  return Positioned(
+    left: x,
+    bottom: y,
+    child: Opacity(
+      opacity: opacity,
+      child: Transform.rotate(
+        angle: reaction.rotation * progress,
+        child: Transform.scale(
+          scale: scale,
+          child: reaction.asset != null
+              ? Image.asset(
+                  reaction.asset!,
+                  width: reaction.size,
+                  height: reaction.size,
+                )
+              : Text(
+                  reaction.emoji ?? "❤️",
+                  style: TextStyle(fontSize: reaction.size),
                 ),
-              );
+        ),
+      ),
+    ),
+  );
             },
           );
         }).toList(),
@@ -107,7 +130,8 @@ class _ReactionsOverlayState extends State<ReactionsOverlay>
 /// 🧠 INTERNAL MODEL
 class _ReactionItem {
   final int id;
-  final String emoji;
+  final String? emoji;
+final String? asset;
   final Animation<double> animation;
   final AnimationController controller;
   final double startX;
@@ -117,7 +141,6 @@ class _ReactionItem {
 
   _ReactionItem({
     required this.id,
-    required this.emoji,
     required this.animation,
     required this.controller,
     required this.startX,
