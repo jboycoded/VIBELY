@@ -5,10 +5,10 @@ class ReactionsOverlay extends StatefulWidget {
   const ReactionsOverlay({super.key});
 
   @override
-  State<ReactionsOverlay> createState() => _ReactionsOverlayState();
+  State<ReactionsOverlay> createState() => ReactionsOverlayState();
 }
 
-class _ReactionsOverlayState extends State<ReactionsOverlay>
+class ReactionsOverlayState extends State<ReactionsOverlay>
     with TickerProviderStateMixin {
   final List<_ReactionItem> _reactions = [];
   final Random _random = Random();
