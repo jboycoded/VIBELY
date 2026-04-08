@@ -48,7 +48,7 @@ class GiftQuickBar extends StatelessWidget {
                   : Text(
                     gift.asset,
                     style: const TextStyle(fontSize: 24),
-                  )
+                  ),
                   const SizedBox(height: 4),
                   Text(
                     "${gift.coins}",
