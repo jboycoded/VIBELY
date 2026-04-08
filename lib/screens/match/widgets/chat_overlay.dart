@@ -40,7 +40,7 @@ class ChatOverlay extends StatelessWidget {
                   );
                 },
                 // Updated to use the RichText style
-                child: _chatStyle(messages[index]),
+                child: _chatStyle(messages[messages.length - 1 - index]),
               );
             },
           ),
