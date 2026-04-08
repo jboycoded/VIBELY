@@ -2,7 +2,18 @@ import 'dart:ui';
 import 'package:flutter/material.dart';
 
 class LiveTopBar extends StatelessWidget {
-  const LiveTopBar({super.key});
+  final String name;
+  final String title;
+  final int viewers;
+  final VoidCallback onClose;
+
+  const LiveTopBar({
+    super.key,
+    required this.name,
+    required this.title,
+    required this.viewers,
+    required this.onClose,
+  });
 
   @override
   Widget build(BuildContext context) {
@@ -19,62 +30,76 @@ class LiveTopBar extends StatelessWidget {
           ),
           child: Row(
             children: [
+              /// 👤 PROFILE IMAGE (can be dynamic later)
               const CircleAvatar(
-                backgroundImage:
-                    AssetImage("assets/images/streamer1.jpg"),
+                backgroundImage: AssetImage("assets/images/streamer1.jpg"),
               ),
               const SizedBox(width: 10),
 
-              /// NAME + (future subtitle space)
+              /// 🧾 NAME + TITLE
               Expanded(
-  child: Row(
-  crossAxisAlignment: CrossAxisAlignment.center, // ✅ FIX
-  children: [
-    Column(
-      crossAxisAlignment: CrossAxisAlignment.start,
-      children: const [
-        Text(
-          "Cydknee",
-          style: TextStyle(color: Colors.white),
-        ),
-        SizedBox(height: 4),
-        Text(
-          "Live vibes 🔥",
-          style: TextStyle(
-            color: Colors.white70,
-            fontSize: 12,
-          ),
-        ),
-      ],
-    ),
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.center,
+                  children: [
+                    Column(
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          name,
+                          style: const TextStyle(color: Colors.white),
+                        ),
+                        const SizedBox(height: 4),
+                        Text(
+                          title,
+                          style: const TextStyle(
+                            color: Colors.white70,
+                            fontSize: 12,
+                          ),
+                        ),
+                      ],
+                    ),
 
-    const SizedBox(width: 6),
+                    const SizedBox(width: 6),
 
-    /// ➕ FOLLOW BUTTON (now centered)
-    Container(
-      padding: const EdgeInsets.all(5),
-      decoration: const BoxDecoration(
-        color: Colors.purple,
-        shape: BoxShape.circle,
-      ),
-      child: const Icon(Icons.add, size: 14, color: Colors.white),
-    ),
-  ],
-),
-),
+                    /// ➕ FOLLOW BUTTON
+                    GestureDetector(
+                      onTap: () {
+                        // later: follow logic
+                      },
+                      child: Container(
+                        padding: const EdgeInsets.all(5),
+                        decoration: const BoxDecoration(
+                          color: Colors.purple,
+                          shape: BoxShape.circle,
+                        ),
+                        child: const Icon(
+                          Icons.add,
+                          size: 14,
+                          color: Colors.white,
+                        ),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
 
+              /// 🔴 LIVE BADGE
               _liveBadge(),
               const SizedBox(width: 10),
 
+              /// 👁️ VIEWERS
               const Icon(Icons.remove_red_eye, color: Colors.white70),
               const SizedBox(width: 4),
-              const Text("534", style: TextStyle(color: Colors.white)),
+              Text(
+                viewers.toString(),
+                style: const TextStyle(color: Colors.white),
+              ),
 
               const SizedBox(width: 10),
 
-              /// ❌ EXIT BUTTON
+              /// ❌ EXIT BUTTON (NOW CONTROLLED BY PARENT)
               GestureDetector(
-                onTap: () => Navigator.pop(context),
+                onTap: onClose,
                 child: const Icon(Icons.close, color: Colors.white),
               ),
             ],
