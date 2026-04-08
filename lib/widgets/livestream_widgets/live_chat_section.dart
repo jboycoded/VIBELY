@@ -48,12 +48,19 @@ class _LiveChatSectionState extends State<LiveChatSection> {
 
           /// 💬 EMPTY STATE
           child: widget.comments.isEmpty
-              ? const Center(
-                  child: Text(
-                    "No messages yet...",
-                    style: TextStyle(color: Colors.white54),
-                  ),
-                )
+    ? Center(
+        child: Container(
+          padding: const EdgeInsets.all(12),
+          decoration: BoxDecoration(
+            color: Colors.white.withOpacity(0.05),
+            borderRadius: BorderRadius.circular(12),
+          ),
+          child: const Text(
+            "No messages yet...",
+            style: TextStyle(color: Colors.white54),
+          ),
+        ),
+      )
 
               /// 💬 CHAT LIST
               : ListView.builder(
