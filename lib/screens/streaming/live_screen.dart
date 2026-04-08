@@ -14,6 +14,7 @@ import '../../widgets/livestream_widgets/live_chat_section.dart';
 import '../../widgets/livestream_widgets/live_input_bar.dart';
 import '../../widgets/livestream_widgets/reactions_overlay.dart';
 import '../../widgets/livestream_widgets/gift_quick_bar.dart';
+import '../../widgets/livestream_widgets/gift_overlay.dart';
 
 class LiveScreen extends StatefulWidget {
   const LiveScreen({super.key});
@@ -24,8 +25,8 @@ class LiveScreen extends StatefulWidget {
 
 class _LiveScreenState extends State<LiveScreen> 
 with WidgetsBindingObserver {
-  final GlobalKey<_GiftOverlayState> giftKey = GlobalKey();
-  final GlobalKey<_ReactionsOverlayState> reactionsKey = GlobalKey();
+  final GlobalKey<GiftOverlayState> giftKey = GlobalKey();
+  final GlobalKey<ReactionsOverlayState> reactionsKey = GlobalKey();
 
   /// variables for internet connectivity
   late Stream<List<ConnectivityResult>> connectivityStream; 
