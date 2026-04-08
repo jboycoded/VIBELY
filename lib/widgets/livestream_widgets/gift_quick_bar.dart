@@ -19,7 +19,7 @@ class GiftQuickBar extends StatelessWidget {
       GiftModel(name: "Crown", coins: 50, asset: "👑"),
       GiftModel(name: "Diamond", coins: 100, asset: "💎"),
       GiftModel(name: "Yellow gift", coins: 500, asset: "assets/gifts/yellow_gift.png", isImage: true),
-      GiftModel(name: "Red gift", coins: 500, asset: "assets/gifts/red_gift.png", isImage: true),
+      GiftModel(name: "Red gift", coins: 500, asset: "assets/gifts/red_gift.png", isImage: true, isBigGift: true),
     ];
 
     return SizedBox(
