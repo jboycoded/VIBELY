@@ -18,6 +18,8 @@ class GiftQuickBar extends StatelessWidget {
       GiftModel(name: "Rose", coins: 15, asset: "🌹"),
       GiftModel(name: "Crown", coins: 50, asset: "👑"),
       GiftModel(name: "Diamond", coins: 100, asset: "💎"),
+      GiftModel(name: "Yellow gift", coins: 500, asset: "assets/gifts/yellow_gift.png", isImage: true),
+      GiftModel(name: "Red gift", coins: 500, asset: "assets/gifts/red_gift.png", isImage: true),
     ];
 
     return SizedBox(
@@ -37,10 +39,16 @@ class GiftQuickBar extends StatelessWidget {
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  Text(
+                  gift.isImage
+                  ? Image.asset(
+  gift.asset, // e.g., "assets/images/rocket.png"
+  height: 24,
+  width: 24,
+)
+                  : Text(
                     gift.asset,
                     style: const TextStyle(fontSize: 24),
-                  ),
+                  )
                   const SizedBox(height: 4),
                   Text(
                     "${gift.coins}",
