@@ -70,6 +70,7 @@ with WidgetsBindingObserver {
     }
   }
 });
+    }
 
   Future<void> _mockInitialize() async {
   setState(() {
