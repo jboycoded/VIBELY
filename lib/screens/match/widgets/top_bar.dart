@@ -51,7 +51,7 @@ class TopBar extends StatelessWidget {
   Widget _actions() {
     return Row(
       children: [
-        //_glassIcon(Icons.exit),
+        //_glassIcon(Icons.report),
         const SizedBox(width: 10),
         _glassIcon(Icons.exit),
       ],
