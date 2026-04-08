@@ -1,23 +1,23 @@
 import 'package:flutter/material.dart';
+import '../../models/gift.dart';
 
 class GiftQuickBar extends StatelessWidget {
-  const GiftQuickBar({super.key});
+  final Function(GiftModel) onGiftTap;
+
+  const GiftQuickBar({
+    super.key,
+    required this.onGiftTap,
+  });
 
   @override
   Widget build(BuildContext context) {
-    final gifts = [
-      {"icon": "🎁", "price": 10},
-      {"icon": "💜", "price": 5},
-      {"icon": "🔥", "price": 20},
-      {"icon": "🌹", "price": 15},
-      {"icon": "👑", "price": 50},
-      {"icon": "💎", "price": 100},
-      {"icon": "🎁", "price": 10},
-      {"icon": "💜", "price": 5},
-      {"icon": "🔥", "price": 20},
-      {"icon": "🌹", "price": 15},
-      {"icon": "👑", "price": 50},
-      {"icon": "💎", "price": 100},
+    final List<GiftModel> gifts = [
+      GiftModel(name: "Gift Box", coins: 10, asset: "🎁"),
+      GiftModel(name: "Heart", coins: 5, asset: "💜"),
+      GiftModel(name: "Fire", coins: 20, asset: "🔥"),
+      GiftModel(name: "Rose", coins: 15, asset: "🌹"),
+      GiftModel(name: "Crown", coins: 50, asset: "👑"),
+      GiftModel(name: "Diamond", coins: 100, asset: "💎"),
     ];
 
     return SizedBox(
@@ -31,21 +31,19 @@ class GiftQuickBar extends StatelessWidget {
           return Padding(
             padding: const EdgeInsets.symmetric(horizontal: 8),
             child: GestureDetector(
-              onTap: () {},
+              onTap: () => onGiftTap(gift),
+
+              /// 🔥 Visual feedback (tap feel)
               child: Column(
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  /// 🎁 ICON (no background)
                   Text(
-                    gift["icon"].toString(),
+                    gift.asset,
                     style: const TextStyle(fontSize: 24),
                   ),
-
                   const SizedBox(height: 4),
-
-                  /// 💰 PRICE
                   Text(
-                    "${gift["price"]}",
+                    "${gift.coins}",
                     style: const TextStyle(
                       color: Colors.white70,
                       fontSize: 12,
