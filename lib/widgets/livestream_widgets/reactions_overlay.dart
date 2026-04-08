@@ -10,7 +10,7 @@ class ReactionsOverlay extends StatefulWidget {
 
 class ReactionsOverlayState extends State<ReactionsOverlay>
     with TickerProviderStateMixin {
-  final List<_ReactionItem> _reactions = [];
+  final List<ReactionItem> reactions = [];
   final Random _random = Random();
 
   /// ❤️ PUBLIC METHOD (CALL THIS TO ADD REACTION)
@@ -27,7 +27,7 @@ class ReactionsOverlayState extends State<ReactionsOverlay>
       curve: Curves.easeOut,
     );
 
-    final item = _ReactionItem(
+    final item = ReactionItem(
       id: id,
       emoji: emoji,
       animation: animation,
@@ -39,7 +39,7 @@ class ReactionsOverlayState extends State<ReactionsOverlay>
     );
 
     setState(() {
-      _reactions.add(item);
+      reactions.add(item);
     });
 
     controller.forward();
@@ -48,7 +48,7 @@ class ReactionsOverlayState extends State<ReactionsOverlay>
       if (status == AnimationStatus.completed) {
         controller.dispose();
         setState(() {
-          _reactions.removeWhere((e) => e.id == id);
+          reactions.removeWhere((e) => e.id == id);
         });
       }
     });
@@ -67,7 +67,7 @@ class ReactionsOverlayState extends State<ReactionsOverlay>
   Widget build(BuildContext context) {
     return IgnorePointer(
       child: Stack(
-        children: _reactions.map((reaction) {
+        children: reactions.map((reaction) {
           return AnimatedBuilder(
             animation: reaction.animation,
             builder: (context, child) {
@@ -128,7 +128,7 @@ class ReactionsOverlayState extends State<ReactionsOverlay>
 }
 
 /// 🧠 INTERNAL MODEL
-class _ReactionItem {
+class ReactionItem {
   final int id;
   final String? emoji;
 final String? asset;
@@ -139,7 +139,7 @@ final String? asset;
   final double rotation;
   final double size;
 
-  _ReactionItem({
+  ReactionItem({
     required this.id,
     required this.animation,
     required this.controller,
