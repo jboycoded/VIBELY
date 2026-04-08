@@ -24,6 +24,8 @@ class LiveScreen extends StatefulWidget {
 
 class _LiveScreenState extends State<LiveScreen> 
 with WidgetsBindingObserver {
+  final GlobalKey<_GiftOverlayState> giftKey = GlobalKey();
+  final GlobalKey<_ReactionsOverlayState> reactionsKey = GlobalKey();
 
   /// variables for internet connectivity
   late Stream<List<ConnectivityResult>> connectivityStream; 
@@ -261,9 +263,19 @@ with WidgetsBindingObserver {
   /// 🎁 Send Gift
   void sendGift(GiftModel gift) {
     if (!isConnected) return;
+  
+    //TODO: REMEMBER TO USE IT FOR AN IMAGE ASSET LATER
+    //reactionsKey.currentState?.burstReactions(
+  //asset: gift.asset,
+  //count: 8, );
+
+    reactionsKey.currentState?.burstReactions(
+  emoji: gift.asset,
+  count: 8,
+);
     
     // Later: animation + backend
-    showSnack("Gift sent: ${gift.asset}");
+    showSnack("Gift t sent: ${gift.asset}");
   }
 
   void onLike() {
@@ -274,6 +286,8 @@ with WidgetsBindingObserver {
       likes: liveStream.likes + 1,
     );
   });
+  reactionsKey.currentState?.addReaction(emoji: "❤️");
+  
 }
 
 void onShare() {
@@ -376,6 +390,9 @@ void didChangeAppLifecycleState(AppLifecycleState state) {
               ),
             ),
           ),
+
+          ReactionsOverlay(key: reactionsKey),
+          GiftOverlay(key: giftKey),
 
           /// 🔝 TOP BAR (NOW DYNAMIC)
           Positioned(
