@@ -381,18 +381,12 @@ void didChangeAppLifecycleState(AppLifecycleState state) {
 }
     
     return PopScope(
-    canPop: false, // Prevents the screen from closing automatically
-    onPopInvokedWithResult: (bool didPop, dynamic result) async {
-      if (didPop) return; // If the pop already happened, do nothing
-      exitStream();
-
-      // YOUR CUSTOM LOGIC HERE
-      //final shouldExit = await _showExitConfirmationDialog();
-
-      //if (shouldExit && context.mounted) {
-        //Navigator.of(context).pop(); // Manually close the screen
-      
-    },
+  canPop: false, 
+  // Rename from onPopInvokedWithResult to onPopInvoked
+  onPopInvoked: (bool didPop) async { 
+    if (didPop) return; 
+    exitStream();
+  },
     child: Scaffold(
       backgroundColor: Colors.black,
       body: Stack(
