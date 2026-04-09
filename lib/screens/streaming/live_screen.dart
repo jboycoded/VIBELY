@@ -461,10 +461,8 @@ void didChangeAppLifecycleState(AppLifecycleState state) {
           /// ❤️ REACTIONS
           const ReactionsOverlay(),
 
-          AnimatedSwitcher(
-  duration: const Duration(milliseconds: 300),
-  child: Positioned.fill(child: _buildOverlay()),
-            ),
+          Positioned.fill(child: _buildOverlay()),
+            
  
         ],
       ),
