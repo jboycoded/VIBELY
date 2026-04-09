@@ -371,15 +371,14 @@ void didChangeAppLifecycleState(AppLifecycleState state) {
   @override
   Widget build(BuildContext context) {
     if (isLoading) {
-    return GestureDetector{
-      onTap: () {
-        setState(() {
-          islLoading = false;
-        });
-      },
-      child: _buildOverlay(),
-    }
-    }
+  return Scaffold(
+    backgroundColor: Colors.black, // Forces the background to be black
+    body: GestureDetector(
+      onTap: () => setState(() => isLoading = false),
+      child: _buildOverlay(), // This should now show up correctly on the black background
+    ),
+  );
+}
     
     return PopScope(
     canPop: false, // Prevents the screen from closing automatically
