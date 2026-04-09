@@ -117,7 +117,7 @@ class _VideoCallScreenState extends State<VideoCallScreen> {
               Positioned(
                 left: 12,
                 right: 12,
-                bottom: 100,
+                bottom: 90,
                 child: InputBar(
                   controller: controller,
                   onSend: sendMessage,
