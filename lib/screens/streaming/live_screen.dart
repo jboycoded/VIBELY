@@ -162,7 +162,8 @@ with WidgetsBindingObserver {
     return _endedOverlay();
   }
 
-  return Container(color: Colors.red);
+  return null;
+    //Container(color: Colors.red);
   }
 
   Widget _noInternetOverlay() {
@@ -370,6 +371,7 @@ void didChangeAppLifecycleState(AppLifecycleState state) {
 
   @override
   Widget build(BuildContext context) {
+    final overlay = _buildOverlay();
   
     /*if (isLoading) {
   return Scaffold(
@@ -477,6 +479,7 @@ void didChangeAppLifecycleState(AppLifecycleState state) {
             ),
           ),
 
+          if(overlay != null)
           Positioned.fill(
             child: Scaffold(
             backgroundColor: Colors.black,
