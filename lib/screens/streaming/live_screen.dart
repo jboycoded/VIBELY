@@ -79,9 +79,9 @@ with WidgetsBindingObserver {
   Future<void> _mockInitialize() async {
 
   /// Simulate API delay
-  await Future.delayed(
+  /*await Future.delayed(
   Duration(milliseconds: 1500 + Random().nextInt(1500)),
-);
+);*/
   /// Initialize stream data
   liveStream = LiveStream(
     id: "1",
@@ -97,10 +97,11 @@ with WidgetsBindingObserver {
   startMockChat();
 
   /// Remove loading
+    /*
   if (!mounted) return;
   setState(() {
     isLoading = false;
-  });
+  });*/
   }
 
   @override
@@ -369,6 +370,17 @@ void didChangeAppLifecycleState(AppLifecycleState state) {
 
   @override
   Widget build(BuildContext context) {
+    if (isLoading) {
+    return GestureDetector{
+      onTap: () {
+        setState(() {
+          islLoading = false;
+        });
+      },
+      child: _buildOverlay(),
+    }
+    }
+    
     return PopScope(
     canPop: false, // Prevents the screen from closing automatically
     onPopInvokedWithResult: (bool didPop, dynamic result) async {
