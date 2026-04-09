@@ -55,26 +55,32 @@ with WidgetsBindingObserver {
     //_realInitialize(); // future backend
     }
 
-    /// 🌐 INTERNET LISTENER
+    /// 1. PERFORM MANUAL INITIAL CHECK
+  _checkInitialConnection();
+
+  // 2. Setup your existing listener for FUTURE changes
   connectivityStream = Connectivity().onConnectivityChanged;
-
   connectivityStream.listen((results) {
-  final hasConnection =
-      results.any((r) => r != ConnectivityResult.none);
+    _updateConnectionStatus(results);
+  });
+    }
 
+  // Separate function to check the status immediately
+Future<void> _checkInitialConnection() async {
+  final results = await Connectivity().checkConnectivity();
+  _updateConnectionStatus(results);
+}
+
+// Helper to handle both initial and stream results
+void _updateConnectionStatus(List<ConnectivityResult> results) {
+  final hasConnection = results.any((r) => r != ConnectivityResult.none);
+  
   if (hasConnection != isConnected) {
     setState(() {
       isConnected = hasConnection;
     });
-
-    if (!hasConnection) {
-      showSnack("❌ No Internet Connection");
-    } else {
-      showSnack("✅ Back Online");
-    }
   }
-});
-    }
+}
 
   Future<void> _mockInitialize() async {
 
