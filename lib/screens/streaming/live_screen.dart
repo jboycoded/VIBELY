@@ -369,7 +369,20 @@ void didChangeAppLifecycleState(AppLifecycleState state) {
 
   @override
   Widget build(BuildContext context) {
-    return Scaffold(
+    return PopScope(
+    canPop: false, // Prevents the screen from closing automatically
+    onPopInvokedWithResult: (bool didPop, dynamic result) async {
+      if (didPop) return; // If the pop already happened, do nothing
+      exitStream();
+
+      // YOUR CUSTOM LOGIC HERE
+      //final shouldExit = await _showExitConfirmationDialog();
+
+      //if (shouldExit && context.mounted) {
+        //Navigator.of(context).pop(); // Manually close the screen
+      }
+    },
+    child: Scaffold(
       backgroundColor: Colors.black,
       body: Stack(
         children: [
@@ -466,6 +479,7 @@ void didChangeAppLifecycleState(AppLifecycleState state) {
  
         ],
       ),
-    );
+    ),
+      );
   }
 }
