@@ -373,15 +373,13 @@ void didChangeAppLifecycleState(AppLifecycleState state) {
   Widget build(BuildContext context) {
     final overlay = _buildOverlay();
   
-    /*if (isLoading) {
+    if (overlay != null) {
   return Scaffold(
     backgroundColor: Colors.black, // Forces the background to be black
-    body: GestureDetector(
-      onTap: () => setState(() => isLoading = false),
-      child: _buildOverlay(), // This should now show up correctly on the black background
+    body: _buildOverlay(), // This should now show up correctly on the black background
     ),
   );
-}*/
+}
     
     return PopScope(
   canPop: false, 
@@ -479,6 +477,7 @@ void didChangeAppLifecycleState(AppLifecycleState state) {
             ),
           ),
 
+          /*
           if(overlay != null)
           Positioned.fill(
             child: Scaffold(
@@ -486,7 +485,7 @@ void didChangeAppLifecycleState(AppLifecycleState state) {
             body: _buildOverlay(),
             ),
             ),
-            
+            */
  
         ],
       ),
