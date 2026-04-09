@@ -471,9 +471,6 @@ void didChangeAppLifecycleState(AppLifecycleState state) {
             ),
           ),
 
-          /// ❤️ REACTIONS
-          const ReactionsOverlay(),
-
           Positioned.fill(child: _buildOverlay()),
             
  
