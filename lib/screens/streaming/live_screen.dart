@@ -74,12 +74,33 @@ Future<void> _checkInitialConnection() async {
 // Helper to handle both initial and stream results
 void _updateConnectionStatus(List<ConnectivityResult> results) {
   final hasConnection = results.any((r) => r != ConnectivityResult.none);
-  
+
   if (hasConnection != isConnected) {
     setState(() {
       isConnected = hasConnection;
+      
+      // If we just regained connection
+      if (hasConnection) {
+        isLoading = true; // Trigger the loading overlay again
+      }
     });
+
+    if (hasConnection) {
+      showSnack("✅ Back Online");
+      
+      // Manually run a short loading delay before showing the stream
+      Future.delayed(const Duration(seconds: 2), () {
+        if (mounted) {
+          setState(() {
+            isLoading = false; // Hide overlay after the delay
+          });
+        }
+      });
+    } else {
+      showSnack("❌ No Internet Connection");
+    }
   }
+
 }
 
   Future<void> _mockInitialize() async {
