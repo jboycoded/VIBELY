@@ -161,7 +161,7 @@ with WidgetsBindingObserver {
     return _endedOverlay();
   }
 
-  return const SizedBox.shrink();
+  return Container(color: Colors.red);
   }
 
   Widget _noInternetOverlay() {
