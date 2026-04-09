@@ -146,7 +146,7 @@ with WidgetsBindingObserver {
     });
   }
 
-  Widget _buildOverlay() {
+  Widget? _buildOverlay() {
   /// ❌ NO INTERNET (Highest Priority)
   if (!isConnected) {
     return _noInternetOverlay();
