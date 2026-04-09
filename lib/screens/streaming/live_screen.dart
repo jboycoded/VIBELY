@@ -380,7 +380,7 @@ void didChangeAppLifecycleState(AppLifecycleState state) {
 
       //if (shouldExit && context.mounted) {
         //Navigator.of(context).pop(); // Manually close the screen
-      }
+      
     },
     child: Scaffold(
       backgroundColor: Colors.black,
