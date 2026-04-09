@@ -79,9 +79,9 @@ with WidgetsBindingObserver {
   Future<void> _mockInitialize() async {
 
   /// Simulate API delay
-  /*await Future.delayed(
+  await Future.delayed(
   Duration(milliseconds: 1500 + Random().nextInt(1500)),
-);*/
+);
   /// Initialize stream data
   liveStream = LiveStream(
     id: "1",
@@ -97,11 +97,11 @@ with WidgetsBindingObserver {
   startMockChat();
 
   /// Remove loading
-    /*
+    
   if (!mounted) return;
   setState(() {
     isLoading = false;
-  });*/
+  });
   }
 
   @override
@@ -370,7 +370,8 @@ void didChangeAppLifecycleState(AppLifecycleState state) {
 
   @override
   Widget build(BuildContext context) {
-    if (isLoading) {
+  
+    /*if (isLoading) {
   return Scaffold(
     backgroundColor: Colors.black, // Forces the background to be black
     body: GestureDetector(
@@ -378,7 +379,7 @@ void didChangeAppLifecycleState(AppLifecycleState state) {
       child: _buildOverlay(), // This should now show up correctly on the black background
     ),
   );
-}
+}*/
     
     return PopScope(
   canPop: false, 
@@ -476,7 +477,12 @@ void didChangeAppLifecycleState(AppLifecycleState state) {
             ),
           ),
 
-          Positioned.fill(child: _buildOverlay()),
+          Positioned.fill(
+            child: Scaffold(
+            backgroundColor: Colors.black,
+            body: _buildOverlay(),
+            ),
+            ),
             
  
         ],
