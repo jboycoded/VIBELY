@@ -1,5 +1,5 @@
-import '../../models/live_stream.dart';
-import '../../models/comment.dart';
+import '../../../models/live_stream.dart';
+import '../../../models/comment.dart';
 
 class LiveScreenStateModel {
   LiveStream? liveStream;
