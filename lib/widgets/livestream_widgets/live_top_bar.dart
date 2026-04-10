@@ -13,6 +13,7 @@ class LiveTopBar extends StatelessWidget {
     required this.title,
     required this.viewers,
     required this.onClose,
+    required this.onHostTap,
   });
 
   @override
@@ -31,9 +32,12 @@ class LiveTopBar extends StatelessWidget {
           child: Row(
             children: [
               /// 👤 PROFILE IMAGE (can be dynamic later)
-              const CircleAvatar(
-                backgroundImage: AssetImage("assets/images/streamer1.jpg"),
-              ),
+              GestureDetector(
+  onTap: onHostTap,
+  child: const CircleAvatar(
+    backgroundImage: AssetImage("assets/images/streamer1.jpg"),
+  ),
+),
               const SizedBox(width: 10),
 
               /// 🧾 NAME + TITLE
@@ -41,8 +45,10 @@ class LiveTopBar extends StatelessWidget {
                 child: Row(
                   crossAxisAlignment: CrossAxisAlignment.center,
                   children: [
-                    Column(
-                      crossAxisAlignment: CrossAxisAlignment.start,
+                    GestureDetector(
+  onTap: onHostTap,
+  child: Column(
+    crossAxisAlignment: CrossAxisAlignment.start,
                       children: [
                         Text(
                           name,
@@ -58,6 +64,7 @@ class LiveTopBar extends StatelessWidget {
                         ),
                       ],
                     ),
+                      ),
 
                     const SizedBox(width: 6),
 
