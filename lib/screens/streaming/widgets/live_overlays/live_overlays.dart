@@ -57,7 +57,7 @@ class LiveOverlays {
     );
   }
 
-  static Widget ended(VoidCallback onExit) {
+  static Widget ended(VoidCallback onExit, BuildContext context) {
     return Container(
       color: Colors.black.withOpacity(0.85),
       child: Center(
