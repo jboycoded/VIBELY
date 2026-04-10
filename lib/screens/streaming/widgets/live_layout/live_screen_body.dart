@@ -77,7 +77,7 @@ class LiveScreenBody extends StatelessWidget {
     context,
     MaterialPageRoute(
       builder: (_) => PublicProfilePage(
-        liveStream: state.liveStream!,
+        liveStream: liveStream,
       ),
     ),
   );
