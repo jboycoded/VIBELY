@@ -1,0 +1,145 @@
+import 'package:flutter/material.dart';
+
+import '../../../../models/live_stream.dart';
+import '../../../../models/comment.dart';
+import '../../../../models/gift.dart';
+
+import '../../../../widgets/livestream_widgets/live_top_bar.dart';
+import '../../../../widgets/livestream_widgets/live_right_actions.dart';
+import '../../../../widgets/livestream_widgets/live_chat_section.dart';
+import '../../../../widgets/livestream_widgets/live_input_bar.dart';
+import '../../../../widgets/livestream_widgets/gift_quick_bar.dart';
+import '../../../../widgets/livestream_widgets/reactions_overlay.dart';
+import '../../../../widgets/livestream_widgets/gift_overlay.dart';
+
+class LiveScreenBody extends StatelessWidget {
+  final LiveStream liveStream;
+  final List<CommentModel> comments;
+
+  final VoidCallback onLike;
+  final VoidCallback onShare;
+  final VoidCallback onGiftPanel;
+  final Function(GiftModel gift) onGiftSend;
+  final Function(String message) onSendMessage;
+  final VoidCallback onExit;
+
+  final GlobalKey reactionsKey;
+  final GlobalKey giftKey;
+
+  const LiveScreenBody({
+    super.key,
+    required this.liveStream,
+    required this.comments,
+    required this.onLike,
+    required this.onShare,
+    required this.onGiftPanel,
+    required this.onGiftSend,
+    required this.onSendMessage,
+    required this.onExit,
+    required this.reactionsKey,
+    required this.giftKey,
+  });
+
+  @override
+  Widget build(BuildContext context) {
+    return Stack(
+      children: [
+
+        /// 🎥 BACKGROUND
+        Positioned.fill(
+          child: Image.asset(
+            "assets/images/streamer1.jpg",
+            fit: BoxFit.cover,
+          ),
+        ),
+
+        /// 🌑 GRADIENT
+        const _LiveGradient(),
+
+        /// 🎉 EFFECT OVERLAYS
+        ReactionsOverlay(key: reactionsKey),
+        GiftOverlay(key: giftKey),
+
+        /// 🔝 TOP BAR
+        Positioned(
+          top: 50,
+          left: 16,
+          right: 16,
+          child: LiveTopBar(
+            name: liveStream.hostName,
+            title: liveStream.title,
+            viewers: liveStream.viewers,
+            onClose: onExit,
+          ),
+        ),
+
+        /// 👉 RIGHT ACTIONS
+        Positioned(
+          right: 10,
+          bottom: 120,
+          child: LiveRightActions(
+            likes: liveStream.likes,
+            onLike: onLike,
+            onGiftTap: onGiftPanel,
+            onShare: onShare,
+          ),
+        ),
+
+        /// 💬 CHAT
+        Positioned(
+          left: 10,
+          right: 80,
+          bottom: 140,
+          child: LiveChatSection(
+            comments: comments,
+          ),
+        ),
+
+        /// 🎁 QUICK GIFTS
+        Positioned(
+          left: 10,
+          right: 10,
+          bottom: 70,
+          child: GiftQuickBar(
+            onGiftTap: onGiftSend,
+          ),
+        ),
+
+        /// ✍ INPUT
+        Positioned(
+          left: 10,
+          right: 10,
+          bottom: 20,
+          child: LiveInputBar(
+            onSend: onSendMessage,
+          ),
+        ),
+      ],
+    );
+  }
+}
+
+/// 🌑 GRADIENT WIDGET (PRIVATE)
+class _LiveGradient extends StatelessWidget {
+  const _LiveGradient();
+
+  @override
+  Widget build(BuildContext context) {
+    return Positioned.fill(
+      child: Container(
+        decoration: const BoxDecoration(
+          gradient: LinearGradient(
+            colors: [
+              Colors.black54,
+              Colors.transparent,
+              Colors.transparent,
+              Colors.black87,
+            ],
+            begin: Alignment.topCenter,
+            end: Alignment.bottomCenter,
+          ),
+        ),
+      ),
+    );
+  }
+}
