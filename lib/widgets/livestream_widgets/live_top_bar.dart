@@ -10,7 +10,6 @@ class LiveTopBar extends StatelessWidget {
 
   const LiveTopBar({
     super.key,
-    required this.hostID,
     required this.name,
     required this.title,
     required this.viewers,
