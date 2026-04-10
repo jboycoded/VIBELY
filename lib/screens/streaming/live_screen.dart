@@ -147,7 +147,7 @@ class _LiveScreenState extends State<LiveScreen>
       streamEnded: state.streamEnded,
       noInternet: LiveOverlays.noInternet(),
       loading: LiveOverlays.loading(),
-      ended: LiveOverlays.ended(exitStream),
+      ended: LiveOverlays.ended(exitStream, context),
     );
 
     return PopScope(
