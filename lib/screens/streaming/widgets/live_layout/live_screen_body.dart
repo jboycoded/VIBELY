@@ -70,6 +70,16 @@ class LiveScreenBody extends StatelessWidget {
             title: liveStream.title,
             viewers: liveStream.viewers,
             onClose: onExit,
+            onHostTap: () {
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (_) => PublicProfilePage(
+        liveStream: state.liveStream!,
+      ),
+    ),
+  );
+},
           ),
         ),
 
