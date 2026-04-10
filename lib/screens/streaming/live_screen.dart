@@ -1,20 +1,16 @@
-import 'dart:async';
-import 'dart:ui';
-import 'dart:math';
 import 'package:flutter/material.dart';
-import 'package:connectivity_plus/connectivity_plus.dart';
 
-import '../../models/live_stream.dart';
-import '../../models/comment.dart';
-import '../../models/gift.dart';
+import 'controllers/live_connectivity.dart';
+import 'controllers/live_mock_controller.dart';
+import 'controllers/live_interactions.dart';
 
-import '../../widgets/livestream_widgets/live_top_bar.dart';
-import '../../widgets/livestream_widgets/live_right_actions.dart';
-import '../../widgets/livestream_widgets/live_chat_section.dart';
-import '../../widgets/livestream_widgets/live_input_bar.dart';
-import '../../widgets/livestream_widgets/reactions_overlay.dart';
-import '../../widgets/livestream_widgets/gift_quick_bar.dart';
-import '../../widgets/livestream_widgets/gift_overlay.dart';
+import 'models/live_screen_state.dart';
+
+import 'widgets/live_layout/live_screen_body.dart';
+import 'widgets/live_overlays/live_overlays.dart';
+
+import 'utils/live_ui_helpers.dart';
+import 'mixins/live_lifecycle_mixin.dart';
 
 class LiveScreen extends StatefulWidget {
   const LiveScreen({super.key});
@@ -23,261 +19,95 @@ class LiveScreen extends StatefulWidget {
   State<LiveScreen> createState() => _LiveScreenState();
 }
 
-class _LiveScreenState extends State<LiveScreen> 
-with WidgetsBindingObserver {
-  final GlobalKey<GiftOverlayState> giftKey = GlobalKey();
-  final GlobalKey<ReactionsOverlayState> reactionsKey = GlobalKey();
+class _LiveScreenState extends State<LiveScreen>
+    with WidgetsBindingObserver, LiveLifecycleMixin {
 
-  /// variables for internet connectivity
-  late Stream<List<ConnectivityResult>> connectivityStream; 
-  bool isConnected = true;
-  
-  /// 🧠 CORE STATE
-  late LiveStream liveStream;
-  List<CommentModel> comments = [];
-  bool isMockMode = true;
-  bool streamEnded = false;
-  bool isLoading = true;
+  final LiveConnectivityController _connectivityController =
+      LiveConnectivityController();
 
-  Timer? viewerTimer;
-  Timer? chatTimer;
+  final LiveMockController _mockController =
+      LiveMockController();
+
+  final LiveScreenStateModel state = LiveScreenStateModel();
+
+  final GlobalKey giftKey = GlobalKey();
+  final GlobalKey reactionsKey = GlobalKey();
 
   @override
   void initState() {
     super.initState();
     WidgetsBinding.instance.addObserver(this);
 
-    /// Start mock systems
-    if (isMockMode) {
-    _mockInitialize();
-  } else {
-      // TODO: LATER
-    //_realInitialize(); // future backend
-    }
+    onSnack = (msg) => LiveUIHelpers.showSnack(context, msg);
 
-    /// 1. PERFORM MANUAL INITIAL CHECK
-  _checkInitialConnection();
+    _connectivityController.init(
+      onChanged: (connected) {
+        setState(() {
+          state.isLoading = connected;
+        });
 
-  // 2. Setup your existing listener for FUTURE changes
-  connectivityStream = Connectivity().onConnectivityChanged;
-  connectivityStream.listen((results) {
-    _updateConnectionStatus(results);
-  });
-    }
-
-  // Separate function to check the status immediately
-Future<void> _checkInitialConnection() async {
-  final results = await Connectivity().checkConnectivity();
-  _updateConnectionStatus(results);
-}
-
-// Helper to handle both initial and stream results
-void _updateConnectionStatus(List<ConnectivityResult> results) {
-  final hasConnection = results.any((r) => r != ConnectivityResult.none);
-
-  if (hasConnection != isConnected) {
-    setState(() {
-      isConnected = hasConnection;
-      
-      // If we just regained connection
-      if (hasConnection) {
-        isLoading = true; // Trigger the loading overlay again
-      }
-    });
-
-    if (hasConnection) {
-      showSnack("✅ Back Online");
-      
-      // Manually run a short loading delay before showing the stream
-      Future.delayed(const Duration(seconds: 2), () {
-        if (mounted) {
-          setState(() {
-            isLoading = false; // Hide overlay after the delay
+        if (connected) {
+          Future.delayed(const Duration(seconds: 2), () {
+            if (mounted) {
+              setState(() => state.isLoading = false);
+            }
           });
         }
-      });
-    } else {
-      showSnack("❌ No Internet Connection");
+      },
+      showSnack: (msg) => LiveUIHelpers.showSnack(context, msg),
+    );
+
+    if (state.isMockMode) {
+      _initMock();
     }
   }
 
-}
-
-  Future<void> _mockInitialize() async {
-
-  /// Simulate API delay
-  await Future.delayed(
-  Duration(milliseconds: 1500 + Random().nextInt(1500)),
-);
-  /// Initialize stream data
-  liveStream = LiveStream(
-    id: "1",
-    hostName: "Cydknee",
-    title: "Live vibes 🔥",
-    viewers: 534,
-    likes: 1200,
-    isLive: true,
-  );
-
-  /// Start mock systems
-  startMockViewers();
-  startMockChat();
-
-  /// Remove loading
-    
-  if (!mounted) return;
-  setState(() {
-    isLoading = false;
-  });
-  }
-
-  @override
-  void dispose() {
-    WidgetsBinding.instance.removeObserver(this);
-    
-    viewerTimer?.cancel();
-    chatTimer?.cancel();
-    super.dispose();
-  }
-
-  /// 👁️ Viewer Simulation
-  void startMockViewers() {
-    viewerTimer = Timer.periodic(const Duration(seconds: 3), (_) {
-      setState(() {
-        liveStream = liveStream.copyWith(
-          viewers: liveStream.viewers + Random().nextInt(5),
-        );
-      });
-    });
-  }
-
-  /// 💬 Chat Simulation
-  void startMockChat() {
-    final names = ["Mike", "Anna", "Peace", "John", "Alex"];
-
-    chatTimer = Timer.periodic(const Duration(seconds: 2), (_) {
-      setState(() {
-        comments.add(
-          CommentModel(
-            username: names[Random().nextInt(names.length)],
-            message: "🔥🔥🔥",
-            time: DateTime.now(),
-          ),
-        );
-
-        /// Limit to last 50 messages
-        if (comments.length > 50) {
-          comments.removeAt(0);
-        }
-      });
-    });
-  }
-
-  Widget? _buildOverlay() {
-  /// ❌ NO INTERNET (Highest Priority)
-  if (!isConnected) {
-    return _noInternetOverlay();
-  }
-
-  /// ⏳ LOADING
-  if (isLoading) {
-    return _loadingOverlay();
-  }
-
-  /// 🎬 STREAM ENDED
-  if (streamEnded) {
-    return _endedOverlay();
-  }
-
-  return null;
-    //Container(color: Colors.red);
-  }
-
-  Widget _noInternetOverlay() {
-  return BackdropFilter(
-      filter: ImageFilter.blur(sigmaX: 10, sigmaY: 10),
-      child: Container(
-        color: Colors.black.withOpacity(0.6),
-        child: Center(
-          child: Container(
-            padding: const EdgeInsets.all(20),
-            margin: const EdgeInsets.symmetric(horizontal: 30),
-            decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.08),
-              borderRadius: BorderRadius.circular(20),
-              border: Border.all(color: Colors.white.withOpacity(0.2)),
-            ),
-            child: Column(
-              mainAxisSize: MainAxisSize.min,
-              children: const [
-                Icon(Icons.wifi_off, color: Colors.white, size: 40),
-                SizedBox(height: 10),
-                Text(
-                  "No Internet Connection",
-                  style: TextStyle(color: Colors.white, fontSize: 16),
-                ),
-                SizedBox(height: 6),
-                Text(
-                  "Reconnecting...",
-                  style: TextStyle(color: Colors.white54, fontSize: 12),
-                ),
-              ],
-            ),
-          ),
-        ),
-      ),
+  Future<void> _initMock() async {
+    final stream = await _mockController.initializeMock(
+      onViewerUpdate: (count) {
+        setState(() {
+          state.liveStream =
+              state.liveStream?.copyWith(viewers: count);
+        });
+      },
+      onNewComment: (comments) {
+        setState(() {
+          state.comments = comments;
+        });
+      },
     );
-  }
 
-  Widget _loadingOverlay() {
-  return Container(
-      color: Colors.black,
-      child: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: const [
-            CircularProgressIndicator(),
-            SizedBox(height: 12),
-            Text(
-              "Joining live...",
-              style: TextStyle(color: Colors.white70),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _endedOverlay() {
-  return Container(
-      color: Colors.black.withOpacity(0.85),
-      child: Center(
-        child: Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            const Text(
-              "Live Ended",
-              style: TextStyle(color: Colors.white, fontSize: 20),
-            ),
-            const SizedBox(height: 10),
-            ElevatedButton(
-              onPressed: () => Navigator.pop(context),
-              child: const Text("Exit"),
-            )
-          ],
-        ),
-      ),
-    );
-  }
-
-  /// ✍ Send Message
-  void sendMessage(String text) {
-    if (!isConnected) return;
-    
-    if (text.trim().isEmpty) return;
+    if (!mounted) return;
 
     setState(() {
-      comments.add(
+      state.liveStream = stream;
+      state.isLoading = false;
+    });
+  }
+
+  void onLike() {
+    setState(() {
+      state.liveStream = LiveInteractions.onLike(
+        isConnected: _connectivityController.isConnected,
+        stream: state.liveStream!,
+        reactionsKey: reactionsKey,
+      );
+    });
+  }
+
+  void sendGift(gift) {
+    LiveInteractions.sendGift(
+      isConnected: _connectivityController.isConnected,
+      gift: gift,
+      giftKey: giftKey,
+      reactionsKey: reactionsKey,
+      showSnack: (msg) => LiveUIHelpers.showSnack(context, msg),
+    );
+  }
+
+  void sendMessage(String text) {
+    setState(() {
+      state.comments.add(
         CommentModel(
           username: "You",
           message: text,
@@ -287,235 +117,58 @@ void _updateConnectionStatus(List<ConnectivityResult> results) {
     });
   }
 
-  void showBigGiftAnimation(GiftModel gift) {
-  /// 💥 BIG animation
-  giftKey.currentState?.showGift(gift.asset);
-    
+  void onShare() {
+    LiveUIHelpers.showSnack(context, "Share clicked");
   }
 
-  /// 🎁 Send Gift
-  void sendGift(GiftModel gift) {
-    if (!isConnected) return;
-
-    if (gift.isBigGift){
-      showBigGiftAnimation(gift);
-      } else {
-      /// Small floating burst
-    gift.isImage
-    ? reactionsKey.currentState?.burstReactions(
-    asset: gift.asset,
-    count: 8, 
-    )
-      : reactionsKey.currentState?.burstReactions(
-  emoji: gift.asset,
-  count: 8,
-);
-    }
-    
-    // Later: animation + backend
-    showSnack("Gift t sent: ${gift.asset}");
+  void openGiftPanel() {
+    LiveUIHelpers.showSnack(context, "Open gift panel");
   }
 
-  void onLike() {
-    if (!isConnected) return;
-    
-  setState(() {
-    liveStream = liveStream.copyWith(
-      likes: liveStream.likes + 1,
-    );
-  });
-  reactionsKey.currentState?.addReaction(emoji: "❤️");
-  
-}
-
-void onShare() {
-  // later: share logic
-  showSnack("Share clicked");
-}
-
-void openGiftPanel() {
-  // later: expand gift UI or open full gift screen
-  showSnack("Open gift panel");
-}
-
-  /// ❌ Exit Handling
   void exitStream() {
-    showDialog(
-      context: context,
-      builder: (_) => AlertDialog(
-        title: const Text("Exit Live?"),
-        content: const Text("Are you sure you want to leave the stream?"),
-        actions: [
-          TextButton(
-            onPressed: () => Navigator.pop(context),
-            child: const Text("Cancel"),
-          ),
-          TextButton(
-            onPressed: () {
-              Navigator.pop(context);
-              Navigator.pop(context);
-            },
-            child: const Text("Exit"),
-          ),
-        ],
-      ),
-    );
-  }
-
-  void showSnack(String message) {
-  if (!mounted) return;
-
-  ScaffoldMessenger.of(context)
-    ..hideCurrentSnackBar()
-    ..showSnackBar(
-      SnackBar(
-        content: Text(message),
-        backgroundColor: Colors.black.withOpacity(0.8),
-        behavior: SnackBarBehavior.floating,
-        shape: RoundedRectangleBorder(
-          borderRadius: BorderRadius.circular(12),
-        ),
-      ),
-    );
+    LiveUIHelpers.showExitDialog(context);
   }
 
   @override
-void didChangeAppLifecycleState(AppLifecycleState state) {
-  if (state == AppLifecycleState.paused) {
-    showSnack("⏸ App Paused");
-
-    /// Later:
-    /// pause stream, mute audio, etc.
+  void dispose() {
+    WidgetsBinding.instance.removeObserver(this);
+    _mockController.dispose();
+    super.dispose();
   }
-
-  if (state == AppLifecycleState.resumed) {
-    showSnack("▶ App Resumed");
-
-    /// Later:
-    /// resume stream
-  }
-}
 
   @override
   Widget build(BuildContext context) {
-    final overlay = _buildOverlay();
-  
-    if (overlay != null) {
-  return Scaffold(
-    backgroundColor: Colors.black, // Forces the background to be black
-    body: _buildOverlay(), // This should now show up correctly on the black background
+    final overlay = buildLiveOverlay(
+      isConnected: _connectivityController.isConnected,
+      isLoading: state.isLoading,
+      streamEnded: state.streamEnded,
+      noInternet: LiveOverlays.noInternet(),
+      loading: LiveOverlays.loading(),
+      ended: LiveOverlays.ended(exitStream),
     );
-}
-    
+
     return PopScope(
-  canPop: false, 
-  // Rename from onPopInvokedWithResult to onPopInvoked
-  onPopInvoked: (bool didPop) async { 
-    if (didPop) return; 
-    exitStream();
-  },
-    child: Scaffold(
-      backgroundColor: Colors.black,
-      body: Stack(
-        children: [
-
-          /// 🎥 VIDEO
-          Positioned.fill(
-            child: Image.asset(
-              "assets/images/streamer1.jpg",
-              fit: BoxFit.cover,
+      canPop: false,
+      onPopInvoked: (didPop) async {
+        if (didPop) return;
+        exitStream();
+      },
+      child: Scaffold(
+        backgroundColor: Colors.black,
+        body: overlay ??
+            LiveScreenBody(
+              liveStream: state.liveStream!,
+              comments: state.comments,
+              onLike: onLike,
+              onShare: onShare,
+              onGiftPanel: openGiftPanel,
+              onGiftSend: sendGift,
+              onSendMessage: sendMessage,
+              onExit: exitStream,
+              reactionsKey: reactionsKey,
+              giftKey: giftKey,
             ),
-          ),
-
-          /// 🌑 GRADIENT
-          Positioned.fill(
-            child: Container(
-              decoration: const BoxDecoration(
-                gradient: LinearGradient(
-                  colors: [
-                    Colors.black54,
-                    Colors.transparent,
-                    Colors.transparent,
-                    Colors.black87,
-                  ],
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                ),
-              ),
-            ),
-          ),
-
-          ReactionsOverlay(key: reactionsKey),
-          GiftOverlay(key: giftKey),
-
-          /// 🔝 TOP BAR (NOW DYNAMIC)
-          Positioned(
-            top: 50,
-            left: 16,
-            right: 16,
-            child: LiveTopBar(
-              name: liveStream.hostName,
-              title: liveStream.title,
-              viewers: liveStream.viewers,
-              onClose: exitStream,
-            ),
-          ),
-
-          /// 👉 RIGHT ACTIONS
-          Positioned(
-            right: 10,
-            bottom: 120,
-            child: LiveRightActions(
-  likes: liveStream.likes,
-  onLike: onLike,
-  onGiftTap: openGiftPanel,
-  onShare: onShare,
-),
-          ),
-
-          /// 💬 CHAT
-          Positioned(
-            left: 10,
-            right: 80,
-            bottom: 140,
-            child: LiveChatSection(
-              comments: comments,
-            ),
-          ),
-
-          /// 🎁 GIFTS
-          Positioned(
-            left: 10,
-            right: 10,
-            bottom: 70,
-            child: GiftQuickBar(
-              onGiftTap: sendGift,
-            ),
-          ),
-
-          /// ✍ INPUT
-          Positioned(
-            left: 10,
-            right: 10,
-            bottom: 20,
-            child: LiveInputBar(
-              onSend: sendMessage,
-            ),
-          ),
-
-          /*
-          if(overlay != null)
-          Positioned.fill(
-            child: Scaffold(
-            backgroundColor: Colors.black,
-            body: _buildOverlay(),
-            ),
-            ),
-            */
- 
-        ],
       ),
-    ),
-      );
+    );
   }
 }
