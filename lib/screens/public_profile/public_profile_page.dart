@@ -16,25 +16,31 @@ class PublicProfilePage extends StatefulWidget {
 }
 
 class _PublicProfilePageState extends State<PublicProfilePage> {
+  // 1. Declare the variable (use 'late' since it's initialized in initState)
+  late UserModel user;
 
-  UserModel user = UserModel(
-    name: widget.liveStream.hostName,
-    userID: widget.liveStream.id,
-    age: 23,
-    country: "Nigeria",
-    bio: "Live streamer | Chill vibes 🎧 | Night streams 🌙",
-    imageUrl: "assets/images/streamer1.jpg",
+  @override
+  void initState() {
+    super.initState();
+    
+    // 2. Initialize it here where 'widget' is accessible
+    user = UserModel(
+      name: widget.liveStream.hostName,
+      userID: widget.liveStream.id,
+      age: 23,
+      country: "Nigeria",
+      bio: "Live streamer | Chill vibes 🎧 | Night streams 🌙",
+      imageUrl: "assets/images/streamer1.jpg",
     );
+  }
 
   @override
   Widget build(BuildContext context) {
+    // Now you can use 'user' anywhere in your build method
     return Scaffold(
-      backgroundColor: const Color(0xFF0F0B1F),
-
-      body: Container(child: Text("Hello the host name is ${user.name}"),),
-      );
+      appBar: AppBar(title: Text(user.name)),
+    );
   }
-
 }
 
   
