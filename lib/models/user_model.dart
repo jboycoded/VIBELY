@@ -6,6 +6,10 @@ class UserModel {
   int age;
   String bio;
   String country;
+  String? gender;
+  String? likes;
+  String? followers;
+  String? following;
   String imageUrl;
   File? imageFile;
 
@@ -17,5 +21,9 @@ class UserModel {
     required this.country,
     required this.imageUrl,
     this.imageFile,
+    this.gender,
+    this.likes,
+    this.followers,
+    this.following,
   });
 }
