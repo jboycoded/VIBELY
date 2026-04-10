@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
 
+import '../../../public_profile/public_profile_page.dart';
+
 import '../../../../models/live_stream.dart';
 import '../../../../models/comment.dart';
 import '../../../../models/gift.dart';
