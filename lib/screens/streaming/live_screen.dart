@@ -4,7 +4,7 @@ import 'controllers/live_connectivity.dart';
 import 'controllers/live_mock_controller.dart';
 import 'controllers/live_interactions.dart';
 
-import 'models/live_screen_state.dart';
+import 'model/live_screen_state.dart';
 
 import 'widgets/live_layout/live_screen_body.dart';
 import 'widgets/live_overlays/live_overlays.dart';
