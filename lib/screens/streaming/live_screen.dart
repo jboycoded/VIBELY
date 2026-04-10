@@ -8,6 +8,9 @@ import 'models/live_screen_state.dart';
 
 import 'widgets/live_layout/live_screen_body.dart';
 import 'widgets/live_overlays/live_overlays.dart';
+import 'widgets/live_overlays/live_overlay_builder.dart';
+
+import '../../models/comment.dart'; // you used CommentModel
 
 import 'utils/live_ui_helpers.dart';
 import 'mixins/live_lifecycle_mixin.dart';
