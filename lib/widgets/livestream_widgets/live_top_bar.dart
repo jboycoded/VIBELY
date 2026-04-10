@@ -6,9 +6,11 @@ class LiveTopBar extends StatelessWidget {
   final String title;
   final int viewers;
   final VoidCallback onClose;
+  final VoidCallback onHostTap;
 
   const LiveTopBar({
     super.key,
+    required this.hostID,
     required this.name,
     required this.title,
     required this.viewers,
