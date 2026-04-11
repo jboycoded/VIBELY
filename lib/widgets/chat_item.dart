@@ -1,62 +1,46 @@
 import 'package:flutter/material.dart';
 import '../screens/chats/private_chat_screen.dart';
- 
+
 class ChatItem extends StatelessWidget {
-  final String name;
-  final String userID;
-  final String message;
-  final String time;
-  final String image;
-  final bool unread;
-  final bool online;
+  final ConversationModel conversation;
   final VoidCallback onTap;
 
   const ChatItem({
     super.key,
-    required this.name,
-    required this.userID,
-    required this.message,
-    required this.time,
-    required this.image,
+    required this.conversation,
     required this.onTap,
-    this.unread = false,
-    this.online = false,
   });
 
   @override
   Widget build(BuildContext context) {
-    String heroTag = image+"_"+userID;
-    
+    final user = conversation.user;
+    final message = conversation.lastMessage;
+
+    String heroTag = user.imageUrl + "_" + user.id;
+
     return InkWell(
       onTap: onTap,
-
       child: Card(
         margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
         color: Colors.white.withOpacity(0.05),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15),
         ),
-
         child: Padding(
           padding: const EdgeInsets.all(12),
-
           child: Row(
             children: [
 
-              /// HERO AVATAR (for animation)
+              /// AVATAR
               Hero(
                 tag: heroTag,
-                child: SizedBox(
-                  height: 50,
-                  width: 50,
                 child: Stack(
                   children: [
                     CircleAvatar(
                       radius: 25,
-                      backgroundImage: AssetImage(image),
+                      backgroundImage: AssetImage(user.imageUrl),
                     ),
-
-                    if (online)
+                    if (user.isOnline)
                       Positioned(
                         bottom: 0,
                         right: 0,
@@ -75,29 +59,25 @@ class ChatItem extends StatelessWidget {
                       )
                   ],
                 ),
-                  ),
               ),
 
               const SizedBox(width: 12),
 
-             /// TEXT
+              /// TEXT
               Expanded(
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.start,
                   children: [
-
                     Text(
-                      name,
+                      user.name,
                       style: const TextStyle(
                         color: Colors.white,
                         fontWeight: FontWeight.bold,
                       ),
                     ),
-
                     const SizedBox(height: 4),
-
                     Text(
-                      message,
+                      message.text,
                       style: const TextStyle(color: Colors.white70),
                       overflow: TextOverflow.ellipsis,
                     ),
@@ -109,18 +89,15 @@ class ChatItem extends StatelessWidget {
               Column(
                 crossAxisAlignment: CrossAxisAlignment.end,
                 children: [
-
                   Text(
-                    time,
+                    _formatTime(message.timestamp),
                     style: const TextStyle(
                       color: Colors.white54,
                       fontSize: 12,
                     ),
                   ),
-
                   const SizedBox(height: 6),
-
-                  if (unread)
+                  if (conversation.unreadCount > 0)
                     Container(
                       height: 8,
                       width: 8,
@@ -136,5 +113,15 @@ class ChatItem extends StatelessWidget {
         ),
       ),
     );
+  }
+
+  String _formatTime(DateTime time) {
+    final now = DateTime.now();
+    final diff = now.difference(time);
+
+    if (diff.inMinutes < 1) return "Now";
+    if (diff.inMinutes < 60) return "${diff.inMinutes}m";
+    if (diff.inHours < 24) return "${diff.inHours}h";
+    return "${time.day}/${time.month}";
   }
 }
