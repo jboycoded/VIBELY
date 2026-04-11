@@ -16,20 +16,13 @@ class ChatBubble extends StatelessWidget {
     return Align(
       alignment:
           isMe ? Alignment.centerRight : Alignment.centerLeft,
-
       child: Container(
         margin: const EdgeInsets.symmetric(vertical: 6),
-
-        padding: const EdgeInsets.symmetric(
-          horizontal: 12,
-          vertical: 8,
-        ),
-
+        padding: const EdgeInsets.symmetric(horizontal: 12, vertical: 8),
         decoration: BoxDecoration(
           color: isMe
               ? const Color(0xFF9C27B0)
               : Colors.white.withOpacity(0.1),
-
           borderRadius: BorderRadius.only(
             topLeft: const Radius.circular(12),
             topRight: const Radius.circular(12),
@@ -39,21 +32,14 @@ class ChatBubble extends StatelessWidget {
                 isMe ? Radius.zero : const Radius.circular(12),
           ),
         ),
-
         child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
-
-            /// 💬 MESSAGE CONTENT
             _buildContent(),
-
             const SizedBox(height: 4),
-
-            /// ⏱ TIME + STATUS
             Row(
               mainAxisSize: MainAxisSize.min,
               children: [
-
                 Text(
                   _formatTime(message.timestamp),
                   style: const TextStyle(
@@ -61,15 +47,14 @@ class ChatBubble extends StatelessWidget {
                     fontSize: 10,
                   ),
                 ),
-
                 const SizedBox(width: 4),
-
-                /// ✅ STATUS (only for sender)
                 if (isMe)
                   Icon(
                     _statusIcon(message.status),
                     size: 12,
-                    color: Colors.white54,
+                    color: message.status == MessageStatus.seen
+                        ? Colors.blue
+                        : Colors.white54,
                   ),
               ],
             ),
@@ -79,7 +64,6 @@ class ChatBubble extends StatelessWidget {
     );
   }
 
-  /// 🔹 HANDLE DIFFERENT MESSAGE TYPES (FUTURE-PROOF)
   Widget _buildContent() {
     switch (message.type) {
       case MessageType.text:
@@ -88,32 +72,51 @@ class ChatBubble extends StatelessWidget {
           style: const TextStyle(color: Colors.white),
         );
 
+      case MessageType.image:
+        return ClipRRect(
+          borderRadius: BorderRadius.circular(10),
+          child: Image.asset(
+            message.mediaUrl ?? "",
+            width: 150,
+            height: 150,
+            fit: BoxFit.cover,
+          ),
+        );
+
+      case MessageType.voice:
+        return Row(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            const Icon(Icons.play_arrow, color: Colors.white),
+            const SizedBox(width: 6),
+            Container(
+              width: 100,
+              height: 4,
+              color: Colors.white54,
+            ),
+            const SizedBox(width: 6),
+            Text(
+              "${message.voiceDuration?.inSeconds ?? 0}s",
+              style: const TextStyle(color: Colors.white),
+            ),
+          ],
+        );
+
       case MessageType.gift:
         return Row(
           mainAxisSize: MainAxisSize.min,
           children: [
-            const Text("🎁 ", style: TextStyle(fontSize: 18)),
+            const Text("🎁", style: TextStyle(fontSize: 18)),
+            const SizedBox(width: 6),
             Text(
               message.text,
               style: const TextStyle(color: Colors.white),
             ),
           ],
         );
-
-      case MessageType.image:
-        return ClipRRect(
-          borderRadius: BorderRadius.circular(10),
-          child: Image.asset(
-            message.text, // assuming path
-            width: 150,
-            height: 150,
-            fit: BoxFit.cover,
-          ),
-        );
     }
   }
 
-  /// 🔹 TIME FORMATTER
   String _formatTime(DateTime time) {
     final diff = DateTime.now().difference(time);
 
@@ -124,7 +127,6 @@ class ChatBubble extends StatelessWidget {
     return "${time.day}/${time.month}";
   }
 
-  /// 🔹 MESSAGE STATUS ICON
   IconData _statusIcon(MessageStatus status) {
     switch (status) {
       case MessageStatus.sending:
