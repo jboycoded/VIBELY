@@ -4,14 +4,18 @@ class ChatInputBar extends StatelessWidget {
   final TextEditingController controller;
   final VoidCallback onSend;
   final VoidCallback onImage;
-  final VoidCallback onVoice;
+  final VoidCallback onVoiceStart;
+  final VoidCallback onVoiceEnd;
+  final bool isRecording;
 
   const ChatInputBar({
     super.key,
     required this.controller,
     required this.onSend,
     required this.onImage,
-    required this.onVoice,
+    required this.onVoiceStart,
+    required this.onVoiceEnd,
+    required this.isRecording,
   });
 
   @override
@@ -27,9 +31,13 @@ class ChatInputBar extends StatelessWidget {
         children: [
 
           GestureDetector(
-            onTap: onVoice,
-            child: const Icon(Icons.mic, color: Colors.white70),
-          ),
+  onLongPressStart: (_) => onVoiceStart(),
+  onLongPressEnd: (_) => onVoiceEnd(),
+  child: Icon(
+    isRecording ? Icons.mic : Icons.mic_none,
+    color: isRecording ? Colors.red : Colors.white70,
+  ),
+),
 
           const SizedBox(width: 10),
 
