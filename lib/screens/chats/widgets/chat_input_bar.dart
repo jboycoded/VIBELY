@@ -1,11 +1,17 @@
+import 'package:flutter/material.dart';
+
 class ChatInputBar extends StatelessWidget {
   final TextEditingController controller;
   final VoidCallback onSend;
+  final VoidCallback onImage;
+  final VoidCallback onVoice;
 
   const ChatInputBar({
     super.key,
     required this.controller,
     required this.onSend,
+    required this.onImage,
+    required this.onVoice,
   });
 
   @override
@@ -20,7 +26,10 @@ class ChatInputBar extends StatelessWidget {
       child: Row(
         children: [
 
-          const Icon(Icons.mic, color: Colors.white70),
+          GestureDetector(
+            onTap: onVoice,
+            child: const Icon(Icons.mic, color: Colors.white70),
+          ),
 
           const SizedBox(width: 10),
 
@@ -36,7 +45,10 @@ class ChatInputBar extends StatelessWidget {
             ),
           ),
 
-          const Icon(Icons.camera_alt, color: Colors.white70),
+          GestureDetector(
+            onTap: onImage,
+            child: const Icon(Icons.camera_alt, color: Colors.white70),
+          ),
 
           const SizedBox(width: 10),
 
