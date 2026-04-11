@@ -1,29 +1,125 @@
 import 'dart:io';
 
 class UserModel {
-  String name;
-  String userID;
-  int age;
-  String bio;
-  String country;
-  String? gender;
-  String? likes;
-  String? followers;
-  String? following;
-  String imageUrl;
-  File? imageFile;
+  final String id;
+  final String name;
+  final int age;
+  final String bio;
+  final String country;
+
+  /// 👤 Profile
+  final String imageUrl;
+  final File? imageFile;
+  final String? gender;
+
+  /// 📊 Social
+  final int followers;
+  final int following;
+  final int likes;
+
+  /// 🟢 Presence
+  final bool isOnline;
+  final DateTime? lastSeen;
+
+  /// 💰 Economy
+  final int coins;
+
+  /// 🎥 Live
+  final bool isLive;
 
   UserModel({
+    required this.id,
     required this.name,
-    required this.userID,
     required this.age,
     required this.bio,
     required this.country,
     required this.imageUrl,
     this.imageFile,
     this.gender,
-    this.likes,
-    this.followers,
-    this.following,
+    this.followers = 0,
+    this.following = 0,
+    this.likes = 0,
+    this.isOnline = false,
+    this.lastSeen,
+    this.coins = 0,
+    this.isLive = false,
   });
+
+  /// 🔁 CopyWith (VERY IMPORTANT)
+  UserModel copyWith({
+    String? id,
+    String? name,
+    int? age,
+    String? bio,
+    String? country,
+    String? imageUrl,
+    File? imageFile,
+    String? gender,
+    int? followers,
+    int? following,
+    int? likes,
+    bool? isOnline,
+    DateTime? lastSeen,
+    int? coins,
+    bool? isLive,
+  }) {
+    return UserModel(
+      id: id ?? this.id,
+      name: name ?? this.name,
+      age: age ?? this.age,
+      bio: bio ?? this.bio,
+      country: country ?? this.country,
+      imageUrl: imageUrl ?? this.imageUrl,
+      imageFile: imageFile ?? this.imageFile,
+      gender: gender ?? this.gender,
+      followers: followers ?? this.followers,
+      following: following ?? this.following,
+      likes: likes ?? this.likes,
+      isOnline: isOnline ?? this.isOnline,
+      lastSeen: lastSeen ?? this.lastSeen,
+      coins: coins ?? this.coins,
+      isLive: isLive ?? this.isLive,
+    );
+  }
+
+  /// 🔄 JSON (for backend later)
+  factory UserModel.fromJson(Map<String, dynamic> json) {
+    return UserModel(
+      id: json['id'],
+      name: json['name'],
+      age: json['age'],
+      bio: json['bio'],
+      country: json['country'],
+      imageUrl: json['imageUrl'],
+      gender: json['gender'],
+      followers: json['followers'] ?? 0,
+      following: json['following'] ?? 0,
+      likes: json['likes'] ?? 0,
+      isOnline: json['isOnline'] ?? false,
+      lastSeen: json['lastSeen'] != null
+          ? DateTime.parse(json['lastSeen'])
+          : null,
+      coins: json['coins'] ?? 0,
+      isLive: json['isLive'] ?? false,
+    );
+  }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'id': id,
+      'name': name,
+      'age': age,
+      'bio': bio,
+      'country': country,
+      'imageUrl': imageUrl,
+      'gender': gender,
+      'followers': followers,
+      'following': following,
+      'likes': likes,
+      'isOnline': isOnline,
+      'lastSeen': lastSeen?.toIso8601String(),
+      'coins': coins,
+      'isLive': isLive,
+    };
+  }
 }
