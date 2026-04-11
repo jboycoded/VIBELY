@@ -11,9 +11,14 @@ class MessageModel {
   final MessageType type;
   final MessageStatus status;
 
-  /// optional extras
-  final String? mediaUrl; // for image / voice
+  final String? mediaUrl;
   final Duration? voiceDuration;
+
+  /// 🆕 reactions
+  final Map<String, String> reactions; // userId -> emoji
+
+  /// 🆕 seen by users
+  final List<String> seenBy;
 
   MessageModel({
     required this.id,
@@ -24,10 +29,14 @@ class MessageModel {
     this.status = MessageStatus.sent,
     this.mediaUrl,
     this.voiceDuration,
+    this.reactions = const {},
+    this.seenBy = const [],
   });
 
   MessageModel copyWith({
     MessageStatus? status,
+    Map<String, String>? reactions,
+    List<String>? seenBy,
   }) {
     return MessageModel(
       id: id,
@@ -38,6 +47,8 @@ class MessageModel {
       status: status ?? this.status,
       mediaUrl: mediaUrl,
       voiceDuration: voiceDuration,
+      reactions: reactions ?? this.reactions,
+      seenBy: seenBy ?? this.seenBy,
     );
   }
 }
