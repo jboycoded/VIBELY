@@ -37,6 +37,9 @@ dependencies:
 
   # Dependencies for the image picker package 
   image_picker: ^1.0.7
+  
+  record: ^5.0.4
+  permission_handler: ^11.3.0
 
   #Dependencies for Internet package
   connectivity_plus: ^6.0.3
