@@ -1,4 +1,5 @@
-enum MessageType { text, gift, image }
+enum MessageType { text, image, voice, gift }
+
 enum MessageStatus { sending, sent, delivered, seen }
 
 class MessageModel {
@@ -6,8 +7,13 @@ class MessageModel {
   final String senderId;
   final String text;
   final DateTime timestamp;
+
   final MessageType type;
   final MessageStatus status;
+
+  /// optional extras
+  final String? mediaUrl; // for image / voice
+  final Duration? voiceDuration;
 
   MessageModel({
     required this.id,
@@ -16,6 +22,8 @@ class MessageModel {
     required this.timestamp,
     this.type = MessageType.text,
     this.status = MessageStatus.sent,
+    this.mediaUrl,
+    this.voiceDuration,
   });
 
   MessageModel copyWith({
@@ -28,6 +36,8 @@ class MessageModel {
       timestamp: timestamp,
       type: type,
       status: status ?? this.status,
+      mediaUrl: mediaUrl,
+      voiceDuration: voiceDuration,
     );
   }
 }
