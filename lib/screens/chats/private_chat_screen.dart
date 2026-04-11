@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+
+import '../../services/audio_service.dart';
+import '../../services/media_service.dart';
+
 import '../../models/message_model.dart';
 import '../../models/conversation_model.dart';
 import '../../widgets/chat_bubble.dart';
@@ -16,6 +20,12 @@ class PrivateChatScreen extends StatefulWidget {
 }
 
 class _PrivateChatScreenState extends State<PrivateChatScreen> {
+
+  final audioService = AudioService();
+final mediaService = MediaService();
+
+bool isRecording = false;
+DateTime? recordStart;
 
   final TextEditingController controller = TextEditingController();
 
@@ -93,39 +103,65 @@ class _PrivateChatScreenState extends State<PrivateChatScreen> {
     });
   }
 
-  /// IMAGE MESSAGE MOCK
-  void sendImage() {
-    setState(() {
-      messages.insert(
-        0,
-        MessageModel(
-          id: DateTime.now().toString(),
-          senderId: "me",
-          text: "",
-          type: MessageType.image,
-          mediaUrl: "assets/images/stream1.jpg",
-          timestamp: DateTime.now(),
-        ),
-      );
-    });
-  }
+/// 🎤 START RECORD
+Future<void> startRecording() async {
+  if (!await audioService.hasPermission()) return;
 
-  /// VOICE MESSAGE MOCK
-  void sendVoice() {
-    setState(() {
-      messages.insert(
-        0,
-        MessageModel(
-          id: DateTime.now().toString(),
-          senderId: "me",
-          text: "",
-          type: MessageType.voice,
-          voiceDuration: const Duration(seconds: 8),
-          timestamp: DateTime.now(),
-        ),
-      );
-    });
-  }
+  final path =
+      "/storage/emulated/0/Download/${DateTime.now().millisecondsSinceEpoch}.m4a";
+
+  await audioService.startRecording(path);
+
+  setState(() {
+    isRecording = true;
+    recordStart = DateTime.now();
+  });}
+
+/// 🎤 STOP RECORD
+Future<void> stopRecording() async {
+  final path = await audioService.stopRecording();
+
+  if (path == null) return;
+
+  final duration = DateTime.now().difference(recordStart!);
+
+  setState(() {
+    isRecording = false;
+
+    messages.insert(
+      0,
+      MessageModel(
+        id: DateTime.now().toString(),
+        senderId: "me",
+        text: "",
+        type: MessageType.voice,
+        mediaUrl: path,
+        voiceDuration: duration,
+        timestamp: DateTime.now(),
+      ),
+    );
+  });
+}
+
+/// 📷 PICK IMAGE
+Future<void> sendImage() async {
+  final path = await mediaService.pickImage();
+  if (path == null) return;
+
+  setState(() {
+    messages.insert(
+      0,
+      MessageModel(
+        id: DateTime.now().toString(),
+        senderId: "me",
+        text: "",
+        type: MessageType.image,
+        mediaUrl: path,
+        timestamp: DateTime.now(),
+      ),
+    );
+  });
+}
 
   @override
   Widget build(BuildContext context) {
@@ -177,7 +213,9 @@ class _PrivateChatScreenState extends State<PrivateChatScreen> {
                   controller: controller,
                   onSend: sendMessage,
                   onImage: sendImage,
-                  onVoice: sendVoice,
+                  onVoiceStart: startRecording,
+                  onVoiceEnd: stopRecording,
+                  isRecording: isRecording,
                 ),
               ],
             ),
