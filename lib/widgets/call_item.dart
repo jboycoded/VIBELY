@@ -1,6 +1,3 @@
-import 'package:flutter/material.dart';
-import '../models/call_model.dart';
-
 class CallItem extends StatelessWidget {
   final CallModel call;
 
@@ -8,8 +5,8 @@ class CallItem extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final user = call.user;
 
-    /// Determine call status icon
     IconData statusIcon;
     Color statusColor;
 
@@ -26,39 +23,47 @@ class CallItem extends StatelessWidget {
         statusIcon = Icons.call_made;
         statusColor = Colors.blue;
         break;
+      case CallStatus.ongoing:
+        statusIcon = Icons.call;
+        statusColor = Colors.orange;
+        break;
     }
 
-    /// Determine call type icon
     IconData typeIcon =
         call.type == CallType.video ? Icons.videocam : Icons.call;
 
     return Card(
       margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
       color: Colors.white.withOpacity(0.05),
-
       child: ListTile(
         leading: CircleAvatar(
-          backgroundImage: AssetImage(call.image),
+          backgroundImage: AssetImage(user.imageUrl),
         ),
-
         title: Text(
-          call.name,
+          user.name,
           style: const TextStyle(color: Colors.white),
         ),
-
         subtitle: Row(
           children: [
             Icon(statusIcon, size: 16, color: statusColor),
             const SizedBox(width: 5),
             Text(
-              call.time,
+              _formatTime(call.time),
               style: const TextStyle(color: Colors.white54),
             ),
           ],
         ),
-
         trailing: Icon(typeIcon, color: Colors.white),
       ),
     );
+  }
+
+  String _formatTime(DateTime time) {
+    final now = DateTime.now();
+    final diff = now.difference(time);
+
+    if (diff.inMinutes < 60) return "${diff.inMinutes}m ago";
+    if (diff.inHours < 24) return "${diff.inHours}h ago";
+    return "${time.day}/${time.month}";
   }
 }
