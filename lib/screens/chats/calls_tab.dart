@@ -1,8 +1,3 @@
-import 'package:flutter/material.dart';
-
-import '../../models/call_model.dart';
-import '../../widgets/call_item.dart';
-
 class CallsTab extends StatelessWidget {
   final List<CallModel> calls;
 
@@ -10,8 +5,18 @@ class CallsTab extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return ListView(
-      children: calls.map((call) => CallItem(call: call)).toList(),
+    if (calls.isEmpty) {
+      return const Center(
+        child: Text(
+          "No calls yet",
+          style: TextStyle(color: Colors.white54),
+        ),
+      );
+    }
+
+    return ListView.builder(
+      itemCount: calls.length,
+      itemBuilder: (_, i) => CallItem(call: calls[i]),
     );
   }
 }
