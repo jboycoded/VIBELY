@@ -144,7 +144,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                   "country": countryController.text,
                   "bio": bioController.text,
                   "imageFile": _image, // File?
-                  "imageUrl": widget.imageUrl, // fallback
+                  "imageUrl": widget.user.imageUrl, // fallback
                 });
               },
             ),
@@ -197,7 +197,7 @@ class _EditProfilePageState extends State<EditProfilePage> {
                           radius: 45,
                           backgroundImage: _image != null
                               ? FileImage(_image!)
-                              : AssetImage(widget.imageUrl) as ImageProvider,
+                              : AssetImage(widget.user.imageUrl) as ImageProvider,
                         ),
                         Container(
                           padding: const EdgeInsets.all(6),
