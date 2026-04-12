@@ -1,3 +1,5 @@
+import 'user_model.dart';
+
 enum CallType { voice, video }
 enum CallStatus { missed, incoming, outgoing, ongoing }
 
