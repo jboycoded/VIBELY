@@ -1,5 +1,10 @@
 import 'package:flutter/material.dart';
-import '../screens/chats/private_chat_screen.dart';
+import '../private_chat_screen.dart';
+
+import '../../../models/conversation_model.dart'; 
+import '../../../models/user_model.dart';
+import '../../../models/message_model.dart';
+
 
 class ChatItem extends StatelessWidget {
   final ConversationModel conversation;
@@ -18,17 +23,19 @@ class ChatItem extends StatelessWidget {
 
     String heroTag = user.imageUrl + "_" + user.id;
 
-    return InkWell(
-      onTap: onTap,
-      child: Card(
+    return Card(
         margin: const EdgeInsets.symmetric(horizontal: 8, vertical: 6),
         color: Colors.white.withOpacity(0.05),
         shape: RoundedRectangleBorder(
           borderRadius: BorderRadius.circular(15),
         ),
-        child: Padding(
-          padding: const EdgeInsets.all(12),
-          child: Row(
+      
+        child: InkWell(
+    borderRadius: BorderRadius.circular(15), // Match your card shape
+    onTap: onTap,
+    child: Padding(
+      padding: const EdgeInsets.all(12),
+      child: Row(
             children: [
 
               /// AVATAR
