@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:path_provider/path_provider.dart';
 
 import '../../services/audio_service.dart';
 import '../../services/media_service.dart';
@@ -107,8 +108,12 @@ DateTime? recordStart;
 Future<void> startRecording() async {
   if (!await audioService.hasPermission()) return;
 
-  final path =
-      "/storage/emulated/0/Download/${DateTime.now().millisecondsSinceEpoch}.m4a";
+  // ... inside startRecording
+final directory = await getTemporaryDirectory();
+final path = "${directory.path}/${DateTime.now().millisecondsSinceEpoch}.m4a";
+  
+  //final path =
+      //"/storage/emulated/0/Download/${DateTime.now().millisecondsSinceEpoch}.m4a";
 
   await audioService.startRecording(path);
 
