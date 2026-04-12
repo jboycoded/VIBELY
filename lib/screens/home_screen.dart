@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 
 import 'match/random_match_screen.dart';
 import 'streaming/livestreams.dart';
-import 'chats/chat_screen.dart';
+import 'chats/chats_screen.dart';
 import 'profile/profile_screen.dart';
 import 'golive/go_live_screen.dart';
 
