@@ -2,24 +2,15 @@ import 'dart:io';
 import 'package:flutter/material.dart';
 import 'package:image_picker/image_picker.dart';
 
+import '../../models/user_model.dart';
 import '../vibely_background.dart';
 
 class EditProfilePage extends StatefulWidget {
-  final String name;
-  final int age;
-  final String country;
-  final String bio;
-  final String imageUrl;
-  final File? imageFile;
+  final UserModel user;
 
-  const EditProfilePage({
+  const ({
     super.key,
-    required this.name,
-    required this.age,
-    required this.country,
-    required this.bio,
-    required this.imageUrl,
-    this.imageFile,
+    required this.user,
   });
 
   @override
@@ -49,12 +40,12 @@ class _EditProfilePageState extends State<EditProfilePage> {
     super.initState();
 
     // 🔄 Initialize with existing data
-    nameController = TextEditingController(text: widget.name);
-    ageController = TextEditingController(text: widget.age.toString());
-    countryController = TextEditingController(text: widget.country);
-    bioController = TextEditingController(text: widget.bio);
+    nameController = TextEditingController(text: widget.user.name);
+    ageController = TextEditingController(text: widget.user.age.toString());
+    countryController = TextEditingController(text: widget.user.country);
+    bioController = TextEditingController(text: widget.user.bio);
 
-    _image = widget.imageFile;
+    _image = widget.user.imageFile;
   }
 
   // 📸 IMAGE PICKER
