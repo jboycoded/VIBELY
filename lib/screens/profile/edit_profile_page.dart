@@ -8,7 +8,7 @@ import '../vibely_background.dart';
 class EditProfilePage extends StatefulWidget {
   final UserModel user;
 
-  const ({
+  const EditProfilePage({
     super.key,
     required this.user,
   });
