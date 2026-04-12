@@ -1,3 +1,6 @@
+import 'user_model.dart';
+import 'message_model.dart';
+
 class ConversationModel {
   final String id;
   final UserModel user;
