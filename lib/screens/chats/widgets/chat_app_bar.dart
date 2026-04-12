@@ -1,3 +1,9 @@
+import 'package:flutter/material.dart';
+
+// Replace 'your_app_name' with your actual project name
+import '../../../models/user_model.dart';
+
+
 class ChatAppBar extends StatelessWidget {
   final UserModel user;
 
