@@ -45,6 +45,9 @@ class ChatInputBar extends StatelessWidget {
             child: TextField(
               controller: controller,
               style: const TextStyle(color: Colors.white),
+              textCapitalization: TextCapitalization.sentences,
+              maxLines: 5,
+              minLines: 1,
               decoration: const InputDecoration(
                 hintText: "Type a message...",
                 hintStyle: TextStyle(color: Colors.white54),
