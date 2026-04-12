@@ -38,29 +38,25 @@ class _ProfileScreenState extends State<ProfileScreen> {
   context,
   MaterialPageRoute(
     builder: (_) => EditProfilePage(
-      name: user.name,
-      age: user.age,
-      country: user.country,
-      bio: user.bio,
-      imageUrl: user.imageUrl,
-      imageFile: user.imageFile,
+      user: user
     ),
   ),
 );
 
 if (result != null && mounted) {
   setState(() {
-    user.name = result["name"];
-    user.age = result["age"];
-    user.country = result["country"];
-    user.bio = result["bio"];
-    if (result["imageFile"] != null) {
-      user.imageFile = result["imageFile"]; // File
-    } else {
-      user.imageUrl = result["imageUrl"]; // String
-    }
+    user = user.copyWith(
+      name: result["name"],
+      age: result["age"],
+      country: result["country"],
+      bio: result["bio"],
+      // Handle the image logic cleanly
+      imageFile: result["imageFile"], 
+      imageUrl: result["imageFile"] == null ? result["imageUrl"] : null,
+    );
   });
 }
+
                               }
 
   @override
