@@ -26,7 +26,7 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   UserModel user = UserModel(
     name: "Johnson Onoja",
-    userID: "ID: 110305",
+    id: "ID: 110305",
     age: 23,
     country: "Nigeria",
     bio: "Live streamer | Chill vibes 🎧 | Night streams 🌙",
@@ -201,7 +201,7 @@ const SizedBox(height: 5),
 
 /// 🆔 USER ID
 Text(
-  user.userID,
+  user.id,
   style: TextStyle(color: Colors.white70),
 ),
 
