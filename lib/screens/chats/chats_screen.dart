@@ -1,5 +1,20 @@
 import 'package:flutter/material.dart';
 
+// 1. YOUR MODELS (Where UserModel, MessageModel, etc., are defined)
+import '../../models/user_model.dart';
+import '../../models/conversation_model.dart';
+import '../../models/message_model.dart';
+import '../../models/call_model.dart';
+
+// 2. YOUR CUSTOM WIDGETS (The components used in the build method)
+import 'widgets/chats_header.dart';
+import 'widgets/chats_list.dart';
+import 'widgets/call_list.dart';
+
+// 3. YOUR SCREENS (For navigation)
+import 'private_chat_screen.dart';
+
+
 class ChatsScreen extends StatefulWidget {
   const ChatsScreen({super.key});
 
