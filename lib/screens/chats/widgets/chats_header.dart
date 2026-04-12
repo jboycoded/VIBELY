@@ -1,3 +1,6 @@
+import 'package:flutter/material.dart';
+import 'chats_tabs.dart'; // Adjust path based on your folder structure
+
 class ChatsHeader extends StatelessWidget {
   final int totalUnread;
   final int selectedTab;
