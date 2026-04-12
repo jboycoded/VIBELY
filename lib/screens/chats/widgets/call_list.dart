@@ -1,3 +1,10 @@
+import 'package:flutter/material.dart';
+
+// Replace 'your_app_name' with your actual project name
+import '../../../models/call_model.dart';
+import 'call_item.dart'; // Or wherever CallItem is saved
+
+
 class CallList extends StatelessWidget {
   final List<CallModel> calls;
 
