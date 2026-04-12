@@ -26,7 +26,7 @@ class _PublicProfilePageState extends State<PublicProfilePage> {
     // 2. Initialize it here where 'widget' is accessible
     user = UserModel(
       name: widget.liveStream.hostName,
-      userID: widget.liveStream.id,
+      id: widget.liveStream.id,
       age: 23,
       country: "Nigeria",
       bio: "Live streamer | Chill vibes 🎧 | Night streams 🌙",
