@@ -1,3 +1,9 @@
+import 'package:flutter/material.dart';
+
+// Replace 'your_app_name' with your actual project name
+import '../../../models/conversation_model.dart';
+import 'chat_item.dart'; // Adjust path if needed
+
 class ChatsList extends StatelessWidget {
   final List<ConversationModel> conversations;
   final Function(ConversationModel) onTap;
