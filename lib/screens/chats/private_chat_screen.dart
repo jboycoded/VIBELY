@@ -5,10 +5,10 @@ import '../../services/media_service.dart';
 
 import '../../models/message_model.dart';
 import '../../models/conversation_model.dart';
-import '../../widgets/chat_bubble.dart';
-import '../../widgets/chat_app_bar.dart';
-import '../../widgets/chat_input_bar.dart';
-import '../../widgets/typing_indicator.dart';
+import 'widgets/chat_bubble.dart';
+import 'widgets/chat_app_bar.dart';
+import 'widgets/chat_input_bar.dart';
+import 'widgets/typing_indicator.dart';
 
 class PrivateChatScreen extends StatefulWidget {
   final ConversationModel conversation;
