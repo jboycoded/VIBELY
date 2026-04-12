@@ -1,3 +1,5 @@
+import 'package:flutter/material.dart';
+
 class ChatsTabs extends StatelessWidget {
   final int totalUnread;
   final int selectedTab;
@@ -41,7 +43,10 @@ class ChatsTabs extends StatelessWidget {
                   child: Container(
                     width: tabWidth,
                     height: 3,
-                    color: Colors.purple,
+                    decoration: BoxDecoration(
+    color: Colors.purple,
+    borderRadius: BorderRadius.circular(10), // Makes the indicator rounded
+  ),
                   ),
                 );
               },
