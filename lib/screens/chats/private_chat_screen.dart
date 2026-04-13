@@ -1,3 +1,5 @@
+// private_chat_screen.dart
+
 import 'package:flutter/material.dart';
 import 'package:path_provider/path_provider.dart';
 
@@ -6,10 +8,12 @@ import '../../services/media_service.dart';
 
 import '../../models/message_model.dart';
 import '../../models/conversation_model.dart';
+
 import 'widgets/chat_bubble.dart';
 import 'widgets/chat_app_bar.dart';
 import 'widgets/chat_input_bar.dart';
 import 'widgets/typing_indicator.dart';
+import 'widgets/date_separator.dart';
 
 class PrivateChatScreen extends StatefulWidget {
   final ConversationModel conversation;
@@ -21,17 +25,16 @@ class PrivateChatScreen extends StatefulWidget {
 }
 
 class _PrivateChatScreenState extends State<PrivateChatScreen> {
-
   final audioService = AudioService();
-final mediaService = MediaService();
-
-bool isRecording = false;
-DateTime? recordStart;
+  final mediaService = MediaService();
 
   final TextEditingController controller = TextEditingController();
 
   List<MessageModel> messages = [];
   bool isTyping = false;
+
+  bool isRecording = false;
+  DateTime? recordStart;
 
   @override
   void initState() {
@@ -46,7 +49,6 @@ DateTime? recordStart;
       ),
     ];
 
-    /// simulate seen
     Future.delayed(const Duration(seconds: 1), markAllSeen);
   }
 
@@ -73,26 +75,23 @@ DateTime? recordStart;
     );
 
     setState(() {
-      messages.insert(0, msg);
+      messages.add(msg); // ✅ FIXED
       isTyping = true;
     });
 
     controller.clear();
 
-    /// simulate delivery
     Future.delayed(const Duration(seconds: 1), () {
       setState(() {
-        messages[0] =
-            messages[0].copyWith(status: MessageStatus.delivered);
+        messages.last =
+            messages.last.copyWith(status: MessageStatus.delivered);
       });
     });
 
-    /// simulate reply
     Future.delayed(const Duration(seconds: 2), () {
       setState(() {
         isTyping = false;
-        messages.insert(
-          0,
+        messages.add(
           MessageModel(
             id: DateTime.now().toString(),
             senderId: widget.conversation.user.id,
@@ -104,69 +103,64 @@ DateTime? recordStart;
     });
   }
 
-/// 🎤 START RECORD
-Future<void> startRecording() async {
-  if (!await audioService.hasPermission()) return;
+  /// 🎤 START RECORD
+  Future<void> startRecording() async {
+    if (!await audioService.hasPermission()) return;
 
-  // ... inside startRecording
-final directory = await getTemporaryDirectory();
-final path = "${directory.path}/${DateTime.now().millisecondsSinceEpoch}.m4a";
-  
-  //final path =
-      //"/storage/emulated/0/Download/${DateTime.now().millisecondsSinceEpoch}.m4a";
+    final directory = await getTemporaryDirectory();
+    final path =
+        "${directory.path}/${DateTime.now().millisecondsSinceEpoch}.m4a";
 
-  await audioService.startRecording(path);
+    await audioService.startRecording(path);
 
-  setState(() {
-    isRecording = true;
-    recordStart = DateTime.now();
-  });}
+    setState(() {
+      isRecording = true;
+      recordStart = DateTime.now();
+    });
+  }
 
-/// 🎤 STOP RECORD
-Future<void> stopRecording() async {
-  final path = await audioService.stopRecording();
+  /// 🎤 STOP RECORD
+  Future<void> stopRecording() async {
+    final path = await audioService.stopRecording();
+    if (path == null) return;
 
-  if (path == null) return;
+    final duration = DateTime.now().difference(recordStart!);
 
-  final duration = DateTime.now().difference(recordStart!);
+    setState(() {
+      isRecording = false;
 
-  setState(() {
-    isRecording = false;
+      messages.add( // ✅ FIXED
+        MessageModel(
+          id: DateTime.now().toString(),
+          senderId: "me",
+          text: "",
+          type: MessageType.voice,
+          mediaUrl: path,
+          voiceDuration: duration,
+          timestamp: DateTime.now(),
+        ),
+      );
+    });
+  }
 
-    messages.insert(
-      0,
-      MessageModel(
-        id: DateTime.now().toString(),
-        senderId: "me",
-        text: "",
-        type: MessageType.voice,
-        mediaUrl: path,
-        voiceDuration: duration,
-        timestamp: DateTime.now(),
-      ),
-    );
-  });
-}
+  /// 📷 IMAGE
+  Future<void> sendImage() async {
+    final path = await mediaService.pickImage();
+    if (path == null) return;
 
-/// 📷 PICK IMAGE
-Future<void> sendImage() async {
-  final path = await mediaService.pickImage();
-  if (path == null) return;
-
-  setState(() {
-    messages.insert(
-      0,
-      MessageModel(
-        id: DateTime.now().toString(),
-        senderId: "me",
-        text: "",
-        type: MessageType.image,
-        mediaUrl: path,
-        timestamp: DateTime.now(),
-      ),
-    );
-  });
-}
+    setState(() {
+      messages.add( // ✅ FIXED
+        MessageModel(
+          id: DateTime.now().toString(),
+          senderId: "me",
+          text: "",
+          type: MessageType.image,
+          mediaUrl: path,
+          timestamp: DateTime.now(),
+        ),
+      );
+    });
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -176,6 +170,7 @@ Future<void> sendImage() async {
       body: Stack(
         children: [
 
+          /// 🌌 BACKGROUND
           Container(
             decoration: const BoxDecoration(
               image: DecorationImage(
@@ -193,22 +188,52 @@ Future<void> sendImage() async {
 
                 ChatAppBar(user: user),
 
+                /// 💬 CHAT LIST (UPDATED)
                 Expanded(
                   child: ListView.builder(
-                    reverse: true,
-                    padding: const EdgeInsets.all(12),
-                    itemCount: messages.length + (isTyping ? 1 : 0),
-                    itemBuilder: (_, i) {
-                      if (isTyping && i == 0) {
+                    padding: const EdgeInsets.symmetric(
+                        horizontal: 10, vertical: 10),
+                    itemCount:
+                        messages.length + (isTyping ? 1 : 0),
+                    itemBuilder: (context, index) {
+
+                      if (isTyping && index == messages.length) {
                         return const TypingIndicator();
                       }
 
-                      final msg =
-                          messages[isTyping ? i - 1 : i];
+                      final msg = messages[index];
 
-                      return ChatBubble(
-                        message: msg,
-                        isMe: msg.senderId == "me",
+                      final prev =
+                          index > 0 ? messages[index - 1] : null;
+                      final next = index < messages.length - 1
+                          ? messages[index + 1]
+                          : null;
+
+                      /// ✅ GROUPING LOGIC
+                      final isFirst = prev == null ||
+                          prev.senderId != msg.senderId;
+
+                      final isLast = next == null ||
+                          next.senderId != msg.senderId;
+
+                      /// ✅ DATE SEPARATOR
+                      final showDate = prev == null ||
+                          !_isSameDay(
+                              prev.timestamp, msg.timestamp);
+
+                      return Column(
+                        children: [
+
+                          if (showDate)
+                            DateSeparator(date: msg.timestamp),
+
+                          ChatBubble(
+                            message: msg,
+                            isMe: msg.senderId == "me",
+                            first: isFirst,
+                            last: isLast,
+                          ),
+                        ],
                       );
                     },
                   ),
@@ -228,5 +253,11 @@ Future<void> sendImage() async {
         ],
       ),
     );
+  }
+
+  bool _isSameDay(DateTime a, DateTime b) {
+    return a.year == b.year &&
+        a.month == b.month &&
+        a.day == b.day;
   }
 }
