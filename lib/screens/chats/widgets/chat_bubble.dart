@@ -130,7 +130,7 @@ class _ChatBubbleState extends State<ChatBubble> {
       width: 100,
       height: 100,
       File(widget.message.mediaUrl ?? ""),
-      fit: Boxfit.cover,
+      fit: BoxFit.cover,
       errorBuilder: (context, error, stackTrace) => const Icon(Icons.broken_image),
     ),
   );
