@@ -41,7 +41,7 @@ class ChatsTabs extends StatelessWidget {
                 return Align(
                 alignment: Alignment.centerLeft,
                 child: Transform.translate(
-                  offset: Offset(position * tabWidth, 0),
+                  offset: Offset(pos * tabWidth, 0),
                   child: Container(
                     width: tabWidth,
                     height: 3,
