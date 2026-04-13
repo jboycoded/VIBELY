@@ -25,8 +25,8 @@ class ChatsTabs extends StatelessWidget {
 
             Row(
               children: [
-                Expanded(child: _tab("Messages", 0)),
-                Expanded(child: _tab("Calls", 1)),
+                Expanded(child: _tab("Messages", Icons.chat, 0)),
+                Expanded(child: _tab("Calls", Icons.call, 1)),
               ],
             ),
 
@@ -38,17 +38,20 @@ class ChatsTabs extends StatelessWidget {
                 double pos =
                     controller.hasClients ? controller.page ?? 0 : 0;
 
-                return Transform.translate(
-                  offset: Offset(pos * tabWidth, 0),
+                return Align(
+                alignment: Alignment.centerLeft,
+                child: Transform.translate(
+                  offset: Offset(position * tabWidth, 0),
                   child: Container(
                     width: tabWidth,
                     height: 3,
                     decoration: BoxDecoration(
-    color: Colors.purple,
-    borderRadius: BorderRadius.circular(10), // Makes the indicator rounded
-  ),
+                      color: const Color(0xFF9C27B0),
+                      borderRadius: BorderRadius.circular(10),
+                    ),
                   ),
-                );
+                ),
+              );
               },
             )
           ],
@@ -57,7 +60,7 @@ class ChatsTabs extends StatelessWidget {
     );
   }
 
-  Widget _tab(String text, int index) {
+  Widget _tab(String text, IconData icon, int index) {
     final isSelected = selectedTab == index;
 
     return GestureDetector(
@@ -66,6 +69,12 @@ class ChatsTabs extends StatelessWidget {
         child: Row(
           mainAxisSize: MainAxisSize.min,
           children: [
+            Icon(
+            icon,
+            color: isSelected ? Colors.white : Colors.white54,
+          ),
+
+          const SizedBox(width: 5),
 
             Text(
               text,
@@ -85,7 +94,7 @@ class ChatsTabs extends StatelessWidget {
                 ),
                 child: Text(
                   "$totalUnread",
-                  style: const TextStyle(fontSize: 10),
+                  style: const TextStyle(fontSize: 10, color: Colors.white),
                 ),
               )
           ],
