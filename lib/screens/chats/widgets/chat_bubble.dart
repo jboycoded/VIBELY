@@ -127,8 +127,10 @@ class _ChatBubbleState extends State<ChatBubble> {
   return ClipRRect(
     borderRadius: BorderRadius.circular(8), // Optional: rounds the corners
     child: Image.file(
+      width: 100,
+      height: 100,
       File(widget.message.mediaUrl ?? ""),
-      fit: Image.cover,
+      fit: Boxfit.cover,
       errorBuilder: (context, error, stackTrace) => const Icon(Icons.broken_image),
     ),
   );
@@ -181,7 +183,7 @@ class _ChatBubbleState extends State<ChatBubble> {
                 ),
                 // Active Progress (Changes based on playback)
                 Container(
-                  width: 150 * 0.5 //currentProgress, // currentProgress is 0.0 to 1.0
+                  width: 150 * 0.5, //currentProgress, // currentProgress is 0.0 to 1.0
                   height: 3,
                   decoration: BoxDecoration(
                     color: Colors.white,
