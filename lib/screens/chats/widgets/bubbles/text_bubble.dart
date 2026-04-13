@@ -1,5 +1,3 @@
-// text_bubble.dart
-
 import 'package:flutter/material.dart';
 import '../base_bubble.dart';
 import '../../../../models/message_model.dart';
@@ -26,6 +24,8 @@ class TextBubble extends StatelessWidget {
       seen: message.seenBy.isNotEmpty,
       isFirstInGroup: first,
       isLastInGroup: last,
+      replyText: message.replyText,
+      reactions: message.reactions,
       child: Text(
         message.text,
         style: const TextStyle(color: Colors.white),
