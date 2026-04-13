@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'dart:io';
 import 'package:intl/intl.dart';
 
 import '../../../models/message_model.dart';
@@ -32,7 +33,11 @@ class _ChatBubbleState extends State<ChatBubble> {
       child: Align(
         alignment:
             widget.isMe ? Alignment.centerRight : Alignment.centerLeft,
-        child: Column(
+        child: Row(
+        children: [
+          if(widget.isMe)
+            const SizedBox(width: 50),
+          Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
 
@@ -103,6 +108,10 @@ class _ChatBubbleState extends State<ChatBubble> {
               ),
           ],
         ),
+          if(!widget.isMe)
+            const SizedBox(width: 50),
+          ],
+          ),
       ),
     );
   }
@@ -115,13 +124,95 @@ class _ChatBubbleState extends State<ChatBubble> {
             style: const TextStyle(color: Colors.white));
 
       case MessageType.image:
-        return Image.asset(widget.message.mediaUrl ?? "");
+  return ClipRRect(
+    borderRadius: BorderRadius.circular(8), // Optional: rounds the corners
+    child: Image.file(
+      File(widget.message.mediaUrl ?? ""),
+      fit: Image.cover,
+      errorBuilder: (context, error, stackTrace) => const Icon(Icons.broken_image),
+    ),
+  );
+        case MessageType.voice:
+  return Row(
+    mainAxisSize: MainAxisSize.min,
+    children: [
+      // 4. User Avatar (WhatsApp style often shows the sender's pic here)
+      const CircleAvatar(
+        radius: 14,
+        backgroundColor: Colors.white12,
+        child: Icon(Icons.mic, size: 16, color: Colors.white),
+      ),
+      // 1. Play/Pause Button with a Circle background
+      GestureDetector(
+        onTap: _togglePlay,
+        child: Container(
+          padding: const EdgeInsets.all(4),
+          decoration: const BoxDecoration(
+            color: Colors.white24, // Subtle circle background
+            shape: BoxShape.circle,
+          ),
+          child: Icon(
+            isPlaying ? Icons.pause_rounded : Icons.play_arrow_rounded,
+            color: Colors.white,
+            size: 30,
+          ),
+        ),
+      ),
 
+      const SizedBox(width: 8),
+
+      // 2. The Seek Bar / Progress Line
+      Expanded(
+        child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.start,
+          children: [
+            Stack(
+              alignment: Alignment.centerLeft,
+              children: [
+                // Background Track
+                Container(
+                  width: 150, // Set a fixed max width for the bubble
+                  height: 3,
+                  decoration: BoxDecoration(
+                    color: Colors.white38,
+                    borderRadius: BorderRadius.circular(2),
+                  ),
+                ),
+                // Active Progress (Changes based on playback)
+                Container(
+                  width: 150 * currentProgress, // currentProgress is 0.0 to 1.0
+                  height: 3,
+                  decoration: BoxDecoration(
+                    color: Colors.white,
+                    borderRadius: BorderRadius.circular(2),
+                  ),
+                ),
+                // Draggable Knob (Optional)
+              ],
+            ),
+            const SizedBox(height: 4),
+            
+            // 3. Duration Text
+            Text(
+              isPlaying ? _formatDuration(currentPosition) : "${widget.message.voiceDuration?.inSeconds ?? 0}s",
+              style: const TextStyle(color: Colors.white70, fontSize: 11),
+            ),
+          ],
+        ),
+      ),
+      
+      const SizedBox(width: 8),
+    ],
+  );
+        
+      /*
       case MessageType.voice:
         return Row(
           mainAxisSize: MainAxisSize.min,
           children: [
 
+            ///TODO: COME TO THIS ONE LATER 
             GestureDetector(
               onTap: _togglePlay,
               child: Icon(
@@ -146,6 +237,7 @@ class _ChatBubbleState extends State<ChatBubble> {
             ),
           ],
         );
+        */
 
       case MessageType.gift:
         return Row(
