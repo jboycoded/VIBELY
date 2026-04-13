@@ -22,7 +22,7 @@ class ChatBubble extends StatefulWidget {
 }
 
 class _ChatBubbleState extends State<ChatBubble> {
-
+  
   final player = AudioPlayerService();
   bool isPlaying = false;
 
@@ -181,7 +181,7 @@ class _ChatBubbleState extends State<ChatBubble> {
                 ),
                 // Active Progress (Changes based on playback)
                 Container(
-                  width: 150 * currentProgress, // currentProgress is 0.0 to 1.0
+                  width: 150 * 0.5 //currentProgress, // currentProgress is 0.0 to 1.0
                   height: 3,
                   decoration: BoxDecoration(
                     color: Colors.white,
@@ -195,7 +195,8 @@ class _ChatBubbleState extends State<ChatBubble> {
             
             // 3. Duration Text
             Text(
-              isPlaying ? _formatDuration(currentPosition) : "${widget.message.voiceDuration?.inSeconds ?? 0}s",
+              isPlaying ? "1s" : "${widget.message.voiceDuration?.inSeconds ?? 0}s",
+              //_formatDuration(currentPosition) : "${widget.message.voiceDuration?.inSeconds ?? 0}s",
               style: const TextStyle(color: Colors.white70, fontSize: 11),
             ),
           ],
@@ -276,6 +277,21 @@ class _ChatBubbleState extends State<ChatBubble> {
       ),
     );
   }
+
+  /*
+  String _formatDuration(Duration? duration) {
+  if (duration == null) return "0:00";
+
+  // Get minutes and the remaining seconds
+  String minutes = duration.inMinutes.toString();
+  
+  // .padLeft(2, '0') ensures 5 seconds becomes "05"
+  String seconds = (duration.inSeconds % 60).toString().padLeft(2, '0');
+
+  return "$minutes:$seconds";
+  }
+  */
+  
 
   String _formatTime(DateTime time) {
     // 'h:mm' = 12-hour format with minutes
