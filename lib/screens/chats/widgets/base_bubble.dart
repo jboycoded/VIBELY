@@ -24,7 +24,17 @@ class BaseBubble extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Padding(
+    return GestureDetector (
+      onDoubleTap: () {
+        // quick react ❤️
+      },
+      onHorizontalDragEnd: (_) {
+        // swipe to reply.
+      },
+      onLongPress: () {
+        // fpr long press to display emojis
+      },
+      child: Padding(
       padding: EdgeInsets.only(
         top: isFirstInGroup ? 10 : 2,
         bottom: isLastInGroup ? 10 : 2,
@@ -110,6 +120,7 @@ class BaseBubble extends StatelessWidget {
           ],
         ),
       ),
+        ),
     );
   }
 }
