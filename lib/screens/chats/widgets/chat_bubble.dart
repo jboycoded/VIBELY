@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:intl/intl.dart';
+
 import '../../../models/message_model.dart';
 import '../../../services/audio_player_service.dart';
 
@@ -184,7 +186,11 @@ class _ChatBubbleState extends State<ChatBubble> {
   }
 
   String _formatTime(DateTime time) {
-    final diff = DateTime.now().difference(time);
+    // 'h:mm' = 12-hour format with minutes
+  // 'a'    = AM/PM marker
+  return DateFormat('h:mm a').format(time);
+  
+    /*final diff = DateTime.now().difference(time);
 
     if (diff.inMinutes < 1) return "Now";
     if (diff.inMinutes < 60) return "${diff.inMinutes}m";
@@ -192,5 +198,6 @@ class _ChatBubbleState extends State<ChatBubble> {
   if (diff.inDays < 7) return "${diff.inDays}d";
 
   return "${(diff.inDays / 7).floor()}w";
+  */
   }
 }
