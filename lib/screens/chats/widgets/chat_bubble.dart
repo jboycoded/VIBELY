@@ -37,7 +37,8 @@ class _ChatBubbleState extends State<ChatBubble> {
         children: [
           if(widget.isMe)
             const SizedBox(width: 50),
-          Column(
+          Flexible(
+          child: Column(
           crossAxisAlignment: CrossAxisAlignment.end,
           children: [
 
@@ -108,6 +109,7 @@ class _ChatBubbleState extends State<ChatBubble> {
               ),
           ],
         ),
+            ),
           if(!widget.isMe)
             const SizedBox(width: 50),
           ],
