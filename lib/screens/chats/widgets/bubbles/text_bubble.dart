@@ -1,7 +1,6 @@
 import 'package:flutter/material.dart';
 import '../base_bubble.dart';
 import '../../../../models/message_model.dart';
-import 'reply_widgets/reply_preview.dart';
 
 class TextBubble extends StatelessWidget {
   final MessageModel message;
