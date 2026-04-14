@@ -45,13 +45,24 @@ class ChatInputBar extends StatelessWidget {
         if (replyingTo != null)
           Container(
             padding: const EdgeInsets.all(8),
-            color: Colors.black54,
+            decoration: BoxDecoration(
+  color: Colors.white.withOpacity(0.05),
+  borderRadius: BorderRadius.circular(12),
+  border: Border.all(
+    color: Colors.white.withOpacity(0.08),
+    width: 1,
+  ),
+),
             child: Row(
               children: [
                 Expanded(
                   child: Text(
                     replyingTo!.text,
-                    style: const TextStyle(color: Colors.white70),
+                    style: TextStyle(
+  color: Colors.white.withOpacity(0.75),
+  ),
+                    maxLines: 1,
+      overflow: TextOverflow.ellipsis,
                   ),
                 ),
                 IconButton(
