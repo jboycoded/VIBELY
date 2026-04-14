@@ -26,55 +26,64 @@ class ChatInputBar extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
+    return Container(
+      margin: const EdgeInsets.all(10),
+      padding: const EdgeInsets.all(10),
+      decoration: BoxDecoration(
+        color: Colors.black.withOpacity(0.3),
+        borderRadius: BorderRadius.circular(30),
+      ),
+      child: Row(
+        children: [
 
-        if (replyingTo != null)
-          Container(
-            padding: const EdgeInsets.all(8),
-            color: Colors.black54,
-            child: Row(
-              children: [
-                Expanded(
-                  child: Text(
-                    replyingTo!.text,
-                    style: const TextStyle(color: Colors.white70),
-                  ),
-                ),
-                IconButton(
-                  icon: const Icon(Icons.close, color: Colors.white),
-                  onPressed: onCancelReply,
-                )
-              ],
+          GestureDetector(
+  onLongPressStart: (_) => onVoiceStart(),
+  onLongPressEnd: (_) => onVoiceEnd(),
+  child: Icon(
+    isRecording ? Icons.mic : Icons.mic_none,
+    color: isRecording ? Colors.red : Colors.white70,
+  ),
+),
+
+          const SizedBox(width: 10),
+
+          Expanded(
+            child: TextField(
+              controller: controller,
+              style: const TextStyle(color: Colors.white),
+              textCapitalization: TextCapitalization.sentences,
+              maxLines: 5,
+              minLines: 1,
+              decoration: const InputDecoration(
+                hintText: "Type a message...",
+                hintStyle: TextStyle(color: Colors.white54),
+                border: InputBorder.none,
+              ),
             ),
           ),
 
-        Row(
-          children: [
+          GestureDetector(
+            onTap: onImage,
+            child: const Icon(Icons.camera_alt, color: Colors.white70),
+          ),
 
-            IconButton(
-              icon: const Icon(Icons.image),
-              onPressed: onImage,
-            ),
+          const SizedBox(width: 10),
 
-            Expanded(
-              child: TextField(
-                controller: controller,
-                decoration:
-                    const InputDecoration(hintText: "Message"),
+          GestureDetector(
+            onTap: onSend,
+            child: Container(
+              padding: const EdgeInsets.all(10),
+              decoration: const BoxDecoration(
+                shape: BoxShape.circle,
+                gradient: LinearGradient(
+                  colors: [Color(0xFF9C27B0), Color(0xFFE91E63)],
+                ),
               ),
+              child: const Icon(Icons.send, color: Colors.white),
             ),
-
-            GestureDetector(
-              onLongPress: onVoiceStart,
-              onLongPressUp: onVoiceEnd,
-              child: Icon(
-                isRecording ? Icons.mic : Icons.send,
-              ),
-            ),
-          ],
-        ),
-      ],
+          ),
+        ],
+      ),
     );
   }
 }
