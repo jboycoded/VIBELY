@@ -29,7 +29,8 @@ class ChatBubble extends StatelessWidget {
         if (details.primaryVelocity != null &&
             details.primaryVelocity! > 200) {
           onReply?.call(message);
-        },
+        };
+      },
       onLongPress: () {
         // reaction picker
       },
