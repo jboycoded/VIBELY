@@ -33,7 +33,29 @@ class ChatInputBar extends StatelessWidget {
         color: Colors.black.withOpacity(0.3),
         borderRadius: BorderRadius.circular(30),
       ),
-      child: Row(
+      Column(
+      children: [
+
+        if (replyingTo != null)
+          Container(
+            padding: const EdgeInsets.all(8),
+            color: Colors.black54,
+            child: Row(
+              children: [
+                Expanded(
+                  child: Text(
+                    replyingTo!.text,
+                    style: const TextStyle(color: Colors.white70),
+                  ),
+                ),
+                IconButton(
+                  icon: const Icon(Icons.close, color: Colors.white),
+                  onPressed: onCancelReply,
+                )
+              ],
+            ),
+          ),
+          Row(
         children: [
 
           GestureDetector(
@@ -84,6 +106,8 @@ class ChatInputBar extends StatelessWidget {
           ),
         ],
       ),
+        ]
+        ),
     );
   }
 }
