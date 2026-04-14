@@ -84,7 +84,7 @@ class ChatInputBar extends StatelessWidget {
               minLines: 1,
               decoration: const InputDecoration(
                 hintText: "Type a message...",
-                hintStyle: TextStyle(color: Colors.white54),
+                hintStyle: TextStyle(color: Colors.white70),
                 border: InputBorder.none,
               ),
             ),
