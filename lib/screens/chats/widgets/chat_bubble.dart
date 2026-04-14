@@ -25,9 +25,11 @@ class ChatBubble extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return GestureDetector(
-      onHorizontalDragEnd: (_) {
-        onReply?.call(message);
-      },
+      onHorizontalDragEnd: (details) {
+        if (details.primaryVelocity != null &&
+            details.primaryVelocity! > 200) {
+          onReply?.call(message);
+        },
       onLongPress: () {
         // reaction picker
       },
