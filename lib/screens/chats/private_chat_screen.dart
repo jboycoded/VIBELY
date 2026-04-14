@@ -29,6 +29,7 @@ class _PrivateChatScreenState extends State<PrivateChatScreen> {
   final mediaService = MediaService();
 
   final TextEditingController controller = TextEditingController();
+  final ScrollController scrollController = ScrollController();
 
   List<MessageModel> messages = [];
   MessageModel? replyingTo;
@@ -85,6 +86,7 @@ class _PrivateChatScreenState extends State<PrivateChatScreen> {
       replyingTo = null; // ✅ IMPORTANT
       isTyping = true;
     });
+    scrollToBottom();
 
     controller.clear();
 
@@ -108,6 +110,18 @@ class _PrivateChatScreenState extends State<PrivateChatScreen> {
         );
       });
     });
+  }
+
+  void scrollToBottom() {
+  WidgetsBinding.instance.addPostFrameCallback((_) {
+    if (!scrollController.hasClients) return;
+
+    scrollController.animateTo(
+      scrollController.position.maxScrollExtent,
+      duration: const Duration(milliseconds: 300),
+      curve: Curves.easeOut,
+    );
+  });
   }
 
   /// 🎤 START RECORD
@@ -148,6 +162,7 @@ class _PrivateChatScreenState extends State<PrivateChatScreen> {
         ),
       );
     });
+    scrollToBottom();
   }
 
   /// 📷 IMAGE
@@ -167,6 +182,7 @@ class _PrivateChatScreenState extends State<PrivateChatScreen> {
         ),
       );
     });
+    scrollToBottom();
   }
 
   @override
@@ -198,6 +214,7 @@ class _PrivateChatScreenState extends State<PrivateChatScreen> {
                 /// 💬 CHAT LIST (UPDATED)
                 Expanded(
                   child: ListView.builder(
+                    controller: scrollController,
                     padding: const EdgeInsets.symmetric(
                         horizontal: 10, vertical: 10),
                     itemCount:
