@@ -33,7 +33,7 @@ class ChatInputBar extends StatelessWidget {
         color: Colors.black.withOpacity(0.3),
         borderRadius: BorderRadius.circular(30),
       ),
-      Column(
+      child: Column(
       children: [
 
         if (replyingTo != null)
