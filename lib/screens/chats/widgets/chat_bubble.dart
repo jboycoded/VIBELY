@@ -4,6 +4,7 @@ import 'bubbles/text_bubble.dart';
 import 'bubbles/image_bubble.dart';
 import 'bubbles/voice_bubble.dart';
 import 'bubbles/gift_bubble.dart';
+import 'reply_widgets/reply_preview.dart';
 
 class ChatBubble extends StatelessWidget {
   final MessageModel message;
