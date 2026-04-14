@@ -275,6 +275,13 @@ class _PrivateChatScreenState extends State<PrivateChatScreen> {
                   onVoiceStart: startRecording,
                   onVoiceEnd: stopRecording,
                   isRecording: isRecording,
+                  /// ✅ ADD THESE
+                  replyingTo: replyingTo,
+                  onCancelReply: () {
+                    setState(() {
+                      replyingTo = null;
+                    });
+                  },
                 ),
               ],
             ),
