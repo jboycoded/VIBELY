@@ -20,8 +20,14 @@ class ChatInputBar extends StatelessWidget {
     required this.onVoiceStart,
     required this.onVoiceEnd,
     required this.isRecording,
-    this.replyingTo,
-    this.onCancelReply,
+
+    /// ✅ ADD THESE
+    replyingTo: replyingTo,
+    onCancelReply: () {
+      setState(() {
+        replyingTo = null;
+      });
+    },
   });
 
   @override
