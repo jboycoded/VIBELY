@@ -1,54 +1,61 @@
 enum MessageType { text, image, voice, gift }
 
-enum MessageStatus { sending, sent, delivered, seen }
+enum MessageStatus { sending, delivered, seen }
 
 class MessageModel {
   final String id;
   final String senderId;
   final String text;
-  final DateTime timestamp;
-
   final MessageType type;
-  final MessageStatus status;
-
   final String? mediaUrl;
   final Duration? voiceDuration;
+  final DateTime timestamp;
 
-  /// 🆕 reactions
-  final Map<String, String> reactions; // userId -> emoji
-
-  /// 🆕 seen by users
+  final MessageStatus status;
   final List<String> seenBy;
+
+  /// 🔁 REPLY
+  final String? replyToMessageId;
+  final String? replyText;
+  final String? replySenderId;
+
+  /// ❤️ REACTIONS
+  final Map<String, String> reactions;
 
   MessageModel({
     required this.id,
     required this.senderId,
     required this.text,
-    required this.timestamp,
     this.type = MessageType.text,
-    this.status = MessageStatus.sent,
     this.mediaUrl,
     this.voiceDuration,
-    this.reactions = const {},
+    required this.timestamp,
+    this.status = MessageStatus.sending,
     this.seenBy = const [],
+    this.replyToMessageId,
+    this.replyText,
+    this.replySenderId,
+    this.reactions = const {},
   });
 
   MessageModel copyWith({
     MessageStatus? status,
     Map<String, String>? reactions,
-    List<String>? seenBy,
   }) {
     return MessageModel(
       id: id,
       senderId: senderId,
       text: text,
-      timestamp: timestamp,
       type: type,
-      status: status ?? this.status,
       mediaUrl: mediaUrl,
       voiceDuration: voiceDuration,
+      timestamp: timestamp,
+      status: status ?? this.status,
+      seenBy: seenBy,
+      replyToMessageId: replyToMessageId,
+      replyText: replyText,
+      replySenderId: replySenderId,
       reactions: reactions ?? this.reactions,
-      seenBy: seenBy ?? this.seenBy,
     );
   }
 }
