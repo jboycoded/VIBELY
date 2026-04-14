@@ -31,6 +31,7 @@ class _PrivateChatScreenState extends State<PrivateChatScreen> {
   final TextEditingController controller = TextEditingController();
 
   List<MessageModel> messages = [];
+  MessageModel? replyingTo;
   bool isTyping = false;
 
   bool isRecording = false;
@@ -72,10 +73,16 @@ class _PrivateChatScreenState extends State<PrivateChatScreen> {
       text: controller.text,
       timestamp: DateTime.now(),
       status: MessageStatus.sending,
+
+      /// 🔁 REPLY DATA
+      replyText: replyingTo?.text,
+      replyToMessageId: replyingTo?.id,
+      replySenderId: replyingTo?.senderId,
     );
 
     setState(() {
       messages.add(msg); // ✅ FIXED
+      replyingTo = null; // ✅ IMPORTANT
       isTyping = true;
     });
 
@@ -232,6 +239,11 @@ class _PrivateChatScreenState extends State<PrivateChatScreen> {
                             isMe: msg.senderId == "me",
                             first: isFirst,
                             last: isLast,
+                            onReply: (m) {
+                              setState(() {
+                                replyingTo = m;
+                              });
+                            },
                           ),
                         ],
                       );
