@@ -29,14 +29,18 @@ jobs:
           #path: build/app/outputs/flutter-apk/app-release.apk
           #retention-days: 7
 
-          # ADD THIS INSTEAD
       - name: Upload APK to transfer.sh
         run: |
-          # 1. Capture the link in a variable
-          DOWNLOAD_URL=$(curl --upload-file ./app/build/outputs/apk/debug/app-debug.apk https://transfer.sh)
-    
-          # 2. Print it clearly in the logs
+          # 1. Update this path based on your build type (debug or release)
+          # Common path: build/app/outputs/flutter-apk/app-release.apk
+          APK_PATH=$(find build/app/outputs/flutter-apk -name "*.apk" | head -n 1)
+          if [ -z "$APK_PATH" ]; then
+            echo "ERROR: No APK was found in the Flutter build folder!"
+            exit 1
+          fi
+          echo "Uploading file from: $APK_PATH"
+          # 2. Upload and display link
+          DOWNLOAD_URL=$(curl --upload-file "$APK_PATH" https://transfer.sh)
           echo "================================================"
-          echo "BUILD SUCCESSFUL!"
           echo "DOWNLOAD LINK: $DOWNLOAD_URL"
           echo "================================================"
