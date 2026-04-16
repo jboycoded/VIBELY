@@ -29,15 +29,16 @@ jobs:
           #path: build/app/outputs/flutter-apk/app-release.apk
           #retention-days: 7
 
-      - name: Upload APK to transfer.sh
-        run: |
-           # The standard Flutter release path
-           APK_PATH="./build/app/outputs/flutter-apk/app-release.apk"
-           echo "Uploading to bashupload.com (Backup)..."
-           # bashupload gives a clean link in the response
-           URL2=$(curl --insecure https://bashupload.com -T $APK_PATH)
-           echo "================================================"
-           echo "BUILD SUCCESSFUL!"
-           echo "BACKUP LINK: $URL2"
-           echo "================================================"
-           
+      - name: Create GitHub Release
+        uses: softprops/action-gh-release@v2
+        with:
+          # This creates a unique tag based on the build number (e.g., v42)
+          tag_name: v${{ github.run_number }}
+          name: "Flutter Build v${{ github.run_number }}"
+          body: "Automated build for testing. [Run #${{ github.run_number }}]"
+          draft: false
+          prerelease: false
+          # Path to your Flutter APK
+          files: build/app/outputs/flutter-apk/app-release.apk
+        env:
+          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
