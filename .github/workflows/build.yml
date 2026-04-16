@@ -35,7 +35,7 @@ jobs:
            APK_PATH="./build/app/outputs/flutter-apk/app-release.apk"
            echo "Uploading to bashupload.com (Backup)..."
            # bashupload gives a clean link in the response
-           URL2=$(curl -K https://bashupload.com -T $APK_PATH)
+           URL2=$(curl --insecure https://bashupload.com -T $APK_PATH)
            echo "================================================"
            echo "BUILD SUCCESSFUL!"
            echo "BACKUP LINK: $URL2"
