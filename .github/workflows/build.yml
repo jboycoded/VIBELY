@@ -22,22 +22,22 @@ jobs:
       - name: Build APK
         run: flutter build apk --release
 
-      - name: Upload APK
-        uses: actions/upload-artifact@v4
-        with:
-          name: app-release
-          path: build/app/outputs/flutter-apk/app-release.apk
-          retention-days: 7
+      #- name: Upload APK
+        #uses: actions/upload-artifact@v4
+        #with:
+          #name: app-release
+          #path: build/app/outputs/flutter-apk/app-release.apk
+          #retention-days: 7
 
-      #- name: Upload APK to transfer.sh
-        #run: |
-           ## The standard Flutter release path
-           #APK_PATH="./build/app/outputs/flutter-apk/app-release.apk"
-           #echo "Uploading to bashupload.com (Backup)..."
-           ## bashupload gives a clean link in the response
-           #URL2=$(curl https://bashupload.com -T $APK_PATH)
-           #echo "================================================"
-           #echo "BUILD SUCCESSFUL!"
-           #echo "BACKUP LINK: $URL2"
-           #echo "================================================"
+      - name: Upload APK to transfer.sh
+        run: |
+           # The standard Flutter release path
+           APK_PATH="./build/app/outputs/flutter-apk/app-release.apk"
+           echo "Uploading to bashupload.com (Backup)..."
+           # bashupload gives a clean link in the response
+           URL2=$(curl https://bashupload.com -T $APK_PATH)
+           echo "================================================"
+           echo "BUILD SUCCESSFUL!"
+           echo "BACKUP LINK: $URL2"
+           echo "================================================"
            
