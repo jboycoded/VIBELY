@@ -1,7 +1,10 @@
+import 'user_model.dart';
+
 class LiveStream {
   final String id;
   final String hostName;
   final String title;
+  final UserModel? user;
   final int viewers;
   final int likes;
   final bool isLive;
@@ -13,6 +16,7 @@ class LiveStream {
     required this.viewers,
     required this.likes,
     required this.isLive,
+    this.user,
   });
 
   LiveStream copyWith({
