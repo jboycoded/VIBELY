@@ -46,8 +46,8 @@ class UserModel {
     this.followerIds = const [],
     this.followingIds = const [],
     this.badges = const [
-      BadgeModel("assets/images/streamer1.jpg", "Lv 15"),
-      BadgeModel("assets/images/streamer1.jpg", "Lv 12"),
+      BadgeModel(imageUrl: "assets/images/streamer1.jpg", label: "Lv 15"),
+      BadgeModel(imageUrl: "assets/images/streamer1.jpg", label: "Lv 12"),
     ],
     this.photos = [
       "assets/images/stream1.jpg",
