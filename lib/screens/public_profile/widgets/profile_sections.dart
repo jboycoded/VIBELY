@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import '../../../models/user_model.dart';
+import '../../../models/badge_model.dart';
 
 class ProfileSections extends StatelessWidget {
   final UserModel user;
@@ -16,10 +17,14 @@ class ProfileSections extends StatelessWidget {
         ),
 
         _card(
-          title: "Basic Information",
-          content:
-              "${user.age} • ${user.gender} • ${user.country}",
-        ),
+  title: "Basic Information",
+  content: [
+    user.age?.toString() ?? "Age unknown",
+    user.gender ?? "Gender unknown",
+    user.country ?? "Location unknown"
+  ].join(" • "), // This handles the dots more cleanly
+),
+
 
         _buildBadgesCard()
       ],
@@ -118,7 +123,7 @@ class ProfileSections extends StatelessWidget {
   Widget _buildBadgeItem(BadgeModel badge) {
   return Padding(
     padding: const EdgeInsets.only(right: 12.0),
-    child: Column(
+    child: const Column(
       children: [
         // Badge Icon/Graphic
         badge.imageUrl.startsWith('http')
@@ -126,12 +131,15 @@ class ProfileSections extends StatelessWidget {
         badge.imageUrl,
         height: 45,
         width: 45,
+        errorBuilder: (context, error, stackTrace) => const Icon(Icons.verified, color: Colors.amber, size: 45),
       )
     : Image.asset(
         badge.imageUrl,
         height: 45,
         width: 45,
+        errorBuilder: (context, error, stackTrace) => const Icon(Icons.badge, color: Colors.white24, size: 45),
       ),
+
 
         const SizedBox(height: 4),
         // Badge Label (Pill shape like the screenshot)
