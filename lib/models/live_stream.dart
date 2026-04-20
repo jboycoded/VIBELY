@@ -22,6 +22,7 @@ class LiveStream {
   LiveStream copyWith({
     int? viewers,
     int? likes,
+    UserModel? user
   }) {
     return LiveStream(
       id: id,
@@ -29,6 +30,7 @@ class LiveStream {
       title: title,
       viewers: viewers ?? this.viewers,
       likes: likes ?? this.likes,
+      user: user ?? this.user,
       isLive: isLive,
     );
   }
