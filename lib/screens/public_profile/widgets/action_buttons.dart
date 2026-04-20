@@ -8,7 +8,7 @@ class ActionButtons extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final isFollowing = user.isFollowing; // from your model
+    final isFollowing = user.isFollowing(user.id); // from your model
 
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
