@@ -49,9 +49,21 @@ class _FullGalleryScreenState extends State<FullGalleryScreen> {
                   child: Hero(
                     tag: "photo_${widget.userId}_$i",
                     child: InteractiveViewer(
-                      child: Image.network(
-                        widget.photos[i],
-                        fit: BoxFit.contain,
+                      child: widget.photos[i].startsWith('http')
+    ? Image.network(
+        widget.photos[i],
+        fit: BoxFit.contain,
+        loadingBuilder: (context, child, progress) {
+          if (progress == null) return child;
+          return const Center(child: CircularProgressIndicator());
+        },
+        errorBuilder: (context, error, stackTrace) => const Icon(Icons.broken_image),
+      )
+    : Image.asset(
+        widget.photos[i],
+        fit: BoxFit.contain,
+      ),
+
                       ),
                     ),
                   ),
