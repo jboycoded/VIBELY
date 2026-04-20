@@ -1,11 +1,11 @@
 import 'dart:ui';
 import 'package:flutter/material.dart';
-import '../models/user_model.dart';
-import '../widgets/user_details.dart';
-import '../widgets/stats_container.dart';
-import '../widgets/action_buttons.dart';
-import '../widgets/profile_sections.dart';
-import '../widgets/animated_header.dart';
+import '../../models/user_model.dart';
+import 'widgets/user_details.dart';
+import 'widgets/stats_container.dart';
+import 'widgets/action_buttons.dart';
+import 'widgets/profile_sections.dart';
+import 'widgets/animated_header.dart';
 
 class PublicProfileScreen extends StatefulWidget {
   final UserModel user;
