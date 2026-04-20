@@ -104,6 +104,10 @@ class UserModel {
   );
   }
 
+  bool isFollowing(String currentUserId) {
+    return followerIds.contains(currentUserId);
+  }
+
 
   /// 🔄 JSON (for backend later)
   factory UserModel.fromJson(Map<String, dynamic> json) {
