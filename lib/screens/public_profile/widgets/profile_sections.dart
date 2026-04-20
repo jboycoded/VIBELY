@@ -21,12 +21,7 @@ class ProfileSections extends StatelessWidget {
               "${user.age} • ${user.gender} • ${user.country}",
         ),
 
-        _card(
-          title: "Badges",
-          content: user.badges.isEmpty
-              ? "No badges yet"
-              : user.badges.join(", "),
-        ),
+        _buildBadgesCard()
       ],
     );
   }
@@ -65,4 +60,97 @@ class ProfileSections extends StatelessWidget {
       ),
     );
   }
+
+  Widget _buildBadgesCard() {
+  return Container(
+    margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 8),
+    padding: const EdgeInsets.all(16),
+    decoration: BoxDecoration(
+      color: Colors.white.withOpacity(0.05),
+      borderRadius: BorderRadius.circular(16),
+      border: Border.all(
+        color: Colors.white.withOpacity(0.08),
+      ),
+    ),
+    child: Column(
+      crossAxisAlignment: CrossAxisAlignment.start,
+      children: [
+        Row(
+          mainAxisAlignment: MainAxisAlignment.spaceBetween,
+          children: [
+            const Text(
+              "Badges",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 16,
+                color: Colors.white,
+              ),
+            ),
+            GestureDetector(
+              onTap: () {}, // Replace with your navigation logic
+              child: const Text(
+                "View all >",
+                style: TextStyle(color: Colors.white54, fontSize: 12),
+              ),
+            ),
+          ],
+        ),
+        const SizedBox(height: 16), // Increased spacing for a cleaner look
+        user.badges.isEmpty
+            ? const Text(
+                "No badges yet",
+                style: TextStyle(color: Colors.white54),
+              )
+            : SingleChildScrollView(
+                scrollDirection: Axis.horizontal,
+                physics: const BouncingScrollPhysics(), // Smoother scrolling
+                child: Row(
+                  children: user.badges.map((badge) {
+                    return _buildBadgeItem(badge);
+                  }).toList(),
+                ),
+              ),
+      ],
+    ),
+  );
+}
+
+  Widget _buildBadgeItem(BadgeModel badge) {
+  return Padding(
+    padding: const EdgeInsets.only(right: 12.0),
+    child: Column(
+      children: [
+        // Badge Icon/Graphic
+        badge.imageUrl.startsWith('http')
+    ? Image.network(
+        badge.imageUrl,
+        height: 45,
+        width: 45,
+      )
+    : Image.asset(
+        badge.imageUrl,
+        height: 45,
+        width: 45,
+      ),
+
+        const SizedBox(height: 4),
+        // Badge Label (Pill shape like the screenshot)
+        Container(
+          padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 2),
+          decoration: BoxDecoration(
+            color: Colors.white.withOpacity(0.1),
+            borderRadius: BorderRadius.circular(10),
+          ),
+          child: Text(
+            badge.label,
+            style: const TextStyle(color: Colors.white, fontSize: 10),
+          ),
+        ),
+      ],
+    ),
+  );
+  }
+  
+
+  
 }
