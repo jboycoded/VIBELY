@@ -7,6 +7,7 @@ class UserModel {
   final int age;
   final String bio;
   final String country;
+  final List<String> photos;
 
   /// 👤 Profile
   final String imageUrl;
@@ -47,6 +48,18 @@ class UserModel {
     this.badges = const [
       BadgeModel("assets/images/streamer1.jpg", "Lv 15"),
       BadgeModel("assets/images/streamer1.jpg", "Lv 12"),
+    ],
+    this.photos = [
+      "assets/images/stream1.jpg",
+      "assets/images/stream2.jpg",
+      "assets/images/stream3.jpg",
+      "assets/images/stream4.jpg",
+      "assets/images/streamer1.jpg",
+      "assets/images/streamer1.jpg"
+      "assets/images/streamer1.jpg"
+      "assets/images/streamer1.jpg"
+      "assets/images/streamer1.jpg"
+      "assets/images/streamer1.jpg"
     ],
     this.likes = 0,
     this.isOnline = false,
