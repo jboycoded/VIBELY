@@ -28,8 +28,8 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
 
     _scrollController.addListener(() {
       final newOffset = _scrollController.offset;
-      final newBlur = (newOffset / 200).clamp(0, 6);
-
+      final newBlur = (newOffset / 200).clamp(0, 6).toDouble();
+t
       if ((newBlur - blur).abs() > 0.2) {
         setState(() {
           blur = newBlur;
