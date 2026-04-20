@@ -66,8 +66,7 @@ class _FullGalleryScreenState extends State<FullGalleryScreen> {
 
                       ),
                     ),
-                  ),
-                );
+                  );
               },
             ),
 
