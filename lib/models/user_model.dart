@@ -1,4 +1,5 @@
 import 'dart:io';
+import 'badge_model.dart';
 
 class UserModel {
   final String id;
@@ -18,6 +19,7 @@ class UserModel {
   final int followers;
   final int following;
   final int likes;
+  final List<BadgeModel> badges;
 
   /// 🟢 Presence
   final bool isOnline;
@@ -42,6 +44,10 @@ class UserModel {
     this.following = 0,
     this.followerIds = const [],
     this.followingIds = const [],
+    this.badges = const [
+      BadgeModel("assets/images/streamer1.jpg", "Lv 15"),
+      BadgeModel("assets/images/streamer1.jpg", "Lv 12"),
+    ],
     this.likes = 0,
     this.isOnline = false,
     this.lastSeen,
