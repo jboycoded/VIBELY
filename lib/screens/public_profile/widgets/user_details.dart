@@ -1,3 +1,6 @@
+import 'package:flutter/material.dart';
+import '../../../models/user_model.dart'; // Replace with your actual file path
+
 class UserDetails extends StatelessWidget {
   final UserModel user;
 
