@@ -49,7 +49,7 @@ class UserModel {
       BadgeModel(imageUrl: "assets/images/streamer1.jpg", label: "Lv 15"),
       BadgeModel(imageUrl: "assets/images/streamer1.jpg", label: "Lv 12"),
     ],
-    this.photos = [
+    this.photos = const [
       "assets/images/stream1.jpg",
       "assets/images/stream2.jpg",
       "assets/images/stream3.jpg",
