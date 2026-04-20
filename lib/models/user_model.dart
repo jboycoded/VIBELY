@@ -13,6 +13,8 @@ class UserModel {
   final String? gender;
 
   /// 📊 Social
+  final List<String> followerIds;
+  final List<String> followingIds;
   final int followers;
   final int following;
   final int likes;
@@ -38,6 +40,8 @@ class UserModel {
     this.gender,
     this.followers = 0,
     this.following = 0,
+    this.followerIds = const [],
+    this.followingIds = const [],
     this.likes = 0,
     this.isOnline = false,
     this.lastSeen,
@@ -57,6 +61,8 @@ class UserModel {
     String? gender,
     int? followers,
     int? following,
+    List<String>? followerIds,
+    List<String>? followingIds,
     int? likes,
     bool? isOnline,
     DateTime? lastSeen,
@@ -72,6 +78,8 @@ class UserModel {
       imageUrl: imageUrl ?? this.imageUrl,
       imageFile: imageFile ?? this.imageFile,
       gender: gender ?? this.gender,
+      followerIds: followerIds ?? this.followerIds,
+      followingIds: followingIds ?? this.followingIds,
       followers: followers ?? this.followers,
       following: following ?? this.following,
       likes: likes ?? this.likes,
@@ -81,6 +89,21 @@ class UserModel {
       isLive: isLive ?? this.isLive,
     );
   }
+
+  UserModel addFollower(String id) {
+  return copyWith(
+    followerIds: [...followerIds, id],
+    followers: followers + 1,
+  );
+}
+
+  UserModel addFollowing(String id) {
+  return copyWith(
+    followingIds: [...followingIds, id],
+    following: following + 1,
+  );
+  }
+
 
   /// 🔄 JSON (for backend later)
   factory UserModel.fromJson(Map<String, dynamic> json) {
