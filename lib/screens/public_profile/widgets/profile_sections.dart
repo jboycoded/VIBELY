@@ -18,7 +18,7 @@ class ProfileSections extends StatelessWidget {
         _card(
           title: "Basic Information",
           content:
-              "${user.age} • ${user.gender} • ${user.location}",
+              "${user.age} • ${user.gender} • ${user.country}",
         ),
 
         _card(
