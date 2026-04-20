@@ -16,7 +16,20 @@ import '../../../../widgets/livestream_widgets/gift_overlay.dart';
 
 class LiveScreenBody extends StatelessWidget {
   final LiveStream liveStream;
+  final LiveStream userLiveStream;
   final List<CommentModel> comments;
+
+  userLiveStream: liveStream.copyWith(
+          user: UserModel(
+      id: "1000",
+      name: "Cydnee",
+      age: 22,
+      bio: "",
+      country: "US",
+      imageUrl: "assets/images/stream1.jpg",
+      isOnline: true,
+    ));
+  final user = userLiveStream.user;
 
   final VoidCallback onLike;
   final VoidCallback onShare;
@@ -76,8 +89,8 @@ class LiveScreenBody extends StatelessWidget {
   Navigator.push(
     context,
     MaterialPageRoute(
-      builder: (_) => PublicProfilePage(
-        liveStream: liveStream,
+      builder: (_) => PublicProfileScreen(
+        user: user
       ),
     ),
   );
