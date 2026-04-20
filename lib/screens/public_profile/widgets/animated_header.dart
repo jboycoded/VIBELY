@@ -55,9 +55,12 @@ class _AnimatedHeaderState extends State<AnimatedHeader> {
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
                 image: DecorationImage(
-                  image: NetworkImage(user.photos[selectedIndex]),
-                  fit: BoxFit.cover,
-                ),
+  image: user.photos[selectedIndex].startsWith('http')
+      ? NetworkImage(user.photos[selectedIndex]) as ImageProvider
+      : AssetImage(user.photos[selectedIndex]),
+  fit: BoxFit.cover,
+),
+
               ),
             ),
           ),
@@ -65,12 +68,11 @@ class _AnimatedHeaderState extends State<AnimatedHeader> {
 
         SizedBox(height: 12 * p),
 
-        /// 📸 SWIPE PHOTOS
-        Opacity(
+            Opacity(
           opacity: p,
           child: SizedBox(
             height: 80,
-            child: PageView.builder(
+            child: PageView.build   child: PageView.buildder(
               controller: _controller,
               itemCount: user.photos.length,
               onPageChanged: (i) {
@@ -97,9 +99,21 @@ class _AnimatedHeaderState extends State<AnimatedHeader> {
                       padding: const EdgeInsets.symmetric(horizontal: 8),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(12),
-                        child: Image.network(
-                          user.photos[index],
-                          fit: BoxFit.cover,
+                        child: user.photos[i].startsWith('http')
+    ? Image.network(
+        user.photos[i],
+        fit: BoxFit.contain,
+        loadingBuilder: (context, child, progress) {
+          if (progress == null) return child;
+          return const Center(child: CircularProgressIndicator());
+        },
+        errorBuilder: (context, error, stackTrace) => const Icon(Icons.broken_image),
+      )
+    : Image.asset(
+        users.photos[i],
+        fit: BoxFit.contain,
+      ),
+
                         ),
                       ),
                     ),
