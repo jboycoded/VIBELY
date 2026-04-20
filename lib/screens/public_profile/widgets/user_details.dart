@@ -19,7 +19,7 @@ class UserDetails extends StatelessWidget {
         const SizedBox(height: 6),
 
         Text(
-          "${user.age} • ${user.gender} • ${user.location}",
+          "${user.age} • ${user.gender} • ${user.country}",
           style: TextStyle(color: Colors.white.withOpacity(0.7)),
         ),
 
