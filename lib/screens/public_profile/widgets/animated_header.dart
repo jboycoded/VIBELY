@@ -72,7 +72,7 @@ class _AnimatedHeaderState extends State<AnimatedHeader> {
           opacity: p,
           child: SizedBox(
             height: 80,
-            child: PageView.build   child: PageView.buildder(
+            child: PageView.builder(
               controller: _controller,
               itemCount: user.photos.length,
               onPageChanged: (i) {
@@ -117,7 +117,7 @@ class _AnimatedHeaderState extends State<AnimatedHeader> {
                         ),
                       ),
                     ),
-                  ),
+                
                 );
               },
             ),
