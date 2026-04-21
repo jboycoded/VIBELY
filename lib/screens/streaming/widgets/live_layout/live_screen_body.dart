@@ -19,17 +19,8 @@ class LiveScreenBody extends StatelessWidget {
   final LiveStream liveStream;
   final List<CommentModel> comments;
 
-  final LiveStream userLiveStream = liveStream.copyWith(
-          user: UserModel(
-      id: "1000",
-      name: "Cydnee",
-      age: 22,
-      bio: "",
-      country: "US",
-      imageUrl: "assets/images/stream1.jpg",
-      isOnline: true,
-    ));
-  final user = userLiveStream.user;
+  final LiveStream userLiveStream;
+  final UserModel user;
 
   final VoidCallback onLike;
   final VoidCallback onShare;
@@ -41,7 +32,7 @@ class LiveScreenBody extends StatelessWidget {
   final GlobalKey reactionsKey;
   final GlobalKey giftKey;
 
-  const LiveScreenBody({
+  LiveScreenBody({
     super.key,
     required this.liveStream,
     required this.comments,
@@ -53,7 +44,23 @@ class LiveScreenBody extends StatelessWidget {
     required this.onExit,
     required this.reactionsKey,
     required this.giftKey,
-  });
+  }) : userLiveStream = liveStream.user != null 
+          ? liveStream 
+          : liveStream.copyWith(
+              user: UserModel(
+                id: "1000",
+                name: "Cydnee",
+                age: 22,
+                bio: "",
+                country: "US",
+                imageUrl: "assets/images/stream1.jpg",
+                isOnline: true,
+              ),
+            ),
+       user = (liveStream.user != null) 
+          ? liveStream.user! 
+          : UserModel(id: "1000", name: "Cydnee", age: 22);
+
 
   @override
   Widget build(BuildContext context) {
