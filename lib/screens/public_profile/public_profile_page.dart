@@ -9,19 +9,15 @@ import '../../widgets/profile_widgets/info_cards.dart';
 import '../../widgets/profile_widgets/badges_section.dart';
 
 class PublicProfileScreen extends StatelessWidget {
-  const PublicProfileScreen({super.key});
+  final UserModel user;
+  PublicProfileScreen({
+    super.key,
+    required this.user,
+    });
 
   @override
   Widget build(BuildContext context) {
-    final user = UserModel(
-      name: "Cydnee",
-      id: "ID: 1000",
-      age: 22,
-      country: "US",
-      bio: "livestreamer with a chill vibe",
-      imageUrl: "assets/images/streamer1.jpg",
-    );
-
+  
     final photos = [
       "assets/images/streamer1.jpg",
       "assets/images/streamer1.jpg",
