@@ -5,6 +5,7 @@ import '../../../public_profile/public_profile_page.dart';
 import '../../../../models/live_stream.dart';
 import '../../../../models/comment.dart';
 import '../../../../models/gift.dart';
+import '../../../../models/user_model.dart';
 
 import '../../../../widgets/livestream_widgets/live_top_bar.dart';
 import '../../../../widgets/livestream_widgets/live_right_actions.dart';
@@ -16,10 +17,9 @@ import '../../../../widgets/livestream_widgets/gift_overlay.dart';
 
 class LiveScreenBody extends StatelessWidget {
   final LiveStream liveStream;
-  final LiveStream userLiveStream;
   final List<CommentModel> comments;
 
-  userLiveStream: liveStream.copyWith(
+  final LiveStream userLiveStream = liveStream.copyWith(
           user: UserModel(
       id: "1000",
       name: "Cydnee",
