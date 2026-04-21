@@ -59,7 +59,9 @@ class LiveScreenBody extends StatelessWidget {
             ),
        user = (liveStream.user != null) 
           ? liveStream.user! 
-          : UserModel(id: "1000", name: "Cydnee", age: 22);
+          : UserModel(id: "1000", name: "Cydnee", age: 22,
+                     bio: "livestreamer with a chill vibe",
+                     country: "US", imageUrl: "assets/images/streamer1.jpg");
 
 
   @override
