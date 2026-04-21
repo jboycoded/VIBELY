@@ -1,134 +1,98 @@
-import 'dart:ui';
 import 'package:flutter/material.dart';
 import '../../models/user_model.dart';
-import 'widgets/user_details.dart';
-import 'widgets/stats_container.dart';
-import 'widgets/action_buttons.dart';
-import 'widgets/profile_sections.dart';
-import 'widgets/animated_header.dart';
 
-class PublicProfileScreen extends StatefulWidget {
-  final UserModel user;
+import '../../widgets/profile_widgets/profile_header.dart';
+import '../../widgets/profile_widgets/photo_strip.dart';
+import '../../widgets/profile_widgets/profile_stats.dart';
+import '../../widgets/profile_widgets/action_buttons.dart';
+import '../../widgets/profile_widgets/info_cards.dart';
 
-  const PublicProfileScreen({super.key, required this.user});
-
-  @override
-  State<PublicProfileScreen> createState() => _PublicProfileScreenState();
-}
-
-class _PublicProfileScreenState extends State<PublicProfileScreen> {
-  final ScrollController _scrollController = ScrollController();
-
-  double blur = 0;
-  double offset = 0;
-
-  @override
-  void initState() {
-    super.initState();
-
-    _scrollController.addListener(() {
-      final newOffset = _scrollController.offset;
-      final newBlur = (newOffset / 200).clamp(0, 6).toDouble();
-      if ((newBlur - blur).abs() > 0.2) {
-        setState(() {
-          blur = newBlur;
-          offset = newOffset;
-        });
-      }
-    });
-  }
+class PublicProfileScreen extends StatelessWidget {
+  const PublicProfileScreen({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final user = widget.user;
+    final user = UserModel(
+      name: "Cydnee",
+      id: "ID: 1000",
+      age: 22,
+      country: "US",
+      bio: "livestreamer with a chill vibe",
+      imageUrl: "assets/images/streamer1.jpg",
+    );
+
+    final photos = [
+      "assets/images/streamer1.jpg",
+      "assets/images/streamer1.jpg",
+      "assets/images/streamer1.jpg",
+    ];
 
     return Scaffold(
+      backgroundColor: const Color(0xFF0F0B1F),
       body: Stack(
         children: [
-          /// 🌌 PARALLAX BACKGROUND
-          Positioned(
-            top: -offset * 0.3,
-            left: 0,
-            right: 0,
-            bottom: 0,
-            child: Image.asset(
-              "assets/images/login_bg.png",
-              fit: BoxFit.cover,
-            ),
-          ),
-
-          /// 🌫️ BLUR OVERLAY
-          Positioned.fill(
-            child: BackdropFilter(
-              filter: ImageFilter.blur(
-                sigmaX: blur,
-                sigmaY: blur,
-              ),
-              child: Container(
-                color: Colors.black.withOpacity(0.2),
+          /// BACKGROUND
+          Container(
+            decoration: const BoxDecoration(
+              image: DecorationImage(
+                image: AssetImage("assets/images/login_bg.png"),
+                fit: BoxFit.cover,
               ),
             ),
           ),
 
-          CustomScrollView(
-            controller: _scrollController,
-            slivers: [
-              SliverAppBar(
-                expandedHeight: 280,
-                pinned: true,
-                backgroundColor: Colors.transparent,
+          /// OVERLAY
+          Container(color: Colors.black.withOpacity(0.35)),
 
-                leading: IconButton(
-                  icon: const Icon(Icons.arrow_back),
-                  onPressed: () {},
-                ),
+          SafeArea(
+            child: SingleChildScrollView(
+              child: Column(
+                children: [
+                  const _TopBar(),
 
-                actions: [
-                  IconButton(
-                    icon: const Icon(Icons.block),
-                    onPressed: () {},
-                  ),
-                  IconButton(
-                    icon: const Icon(Icons.flag),
-                    onPressed: () {},
-                  ),
+                  ProfileHeader(user: user),
+
+                  PhotoStrip(photos: photos),
+
+                  ProfileStats(),
+
+                  ActionButtons(),
+
+                  const InfoCards(),
+
+                  /// 👉 BADGES GO HERE LATER
+
+                  const SizedBox(height: 80),
                 ],
-
-                flexibleSpace: FlexibleSpaceBar(
-                  centerTitle: true,
-                  title: Text(user.name),
-                  background: LayoutBuilder(
-                    builder: (context, constraints) {
-                      final top = constraints.biggest.height;
-                      final progress =
-                          (top - kToolbarHeight) / (280 - kToolbarHeight);
-
-                      return AnimatedHeader(
-                        user: user,
-                        progress: progress.clamp(0, 1),
-                      );
-                    },
-                  ),
-                ),
               ),
-
-              SliverToBoxAdapter(
-                child: Column(
-                  children: [
-                    const SizedBox(height: 10),
-                    UserDetails(user: user),
-                    const SizedBox(height: 16),
-                    StatsContainer(user: user),
-                    const SizedBox(height: 20),
-                    ActionButtons(user: user),
-                    const SizedBox(height: 20),
-                    ProfileSections(user: user),
-                    const SizedBox(height: 40),
-                  ],
-                ),
-              ),
-            ],
+            ),
           ),
+        ],
+      ),
+    );
+  }
+}
+
+/// 🔝 TOP BAR
+class _TopBar extends StatelessWidget {
+  const _TopBar();
+
+  @override
+  Widget build(BuildContext context) {
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 20, vertical: 10),
+      child: Row(
+        mainAxisAlignment: MainAxisAlignment.spaceBetween,
+        children: [
+          const Icon(Icons.arrow_back, color: Colors.white),
+
+          Row(
+            children: const [
+              Icon(Icons.block, color: Colors.white),
+              SizedBox(width: 10),
+              Icon(Icons.flag, color: Colors.white),
+            ],
+          )
         ],
       ),
     );
