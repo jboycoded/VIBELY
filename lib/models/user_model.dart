@@ -55,11 +55,11 @@ class UserModel {
       "assets/images/stream3.jpg",
       "assets/images/stream4.jpg",
       "assets/images/streamer1.jpg",
-      "assets/images/streamer1.jpg"
-      "assets/images/streamer1.jpg"
-      "assets/images/streamer1.jpg"
-      "assets/images/streamer1.jpg"
-      "assets/images/streamer1.jpg"
+      "assets/images/streamer1.jpg",
+      "assets/images/streamer1.jpg",
+      "assets/images/streamer1.jpg",
+      "assets/images/streamer1.jpg",
+      "assets/images/streamer1.jpg",
     ],
     this.likes = 0,
     this.isOnline = false,
