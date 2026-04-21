@@ -52,7 +52,7 @@ class _PublicProfileScreenState extends State<PublicProfileScreen> {
             right: 0,
             bottom: 0,
             child: Image.asset(
-              "assets/images/your_bg.png",
+              "assets/images/login_bg.png",
               fit: BoxFit.cover,
             ),
           ),
