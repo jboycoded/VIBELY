@@ -6,6 +6,7 @@ import '../../widgets/profile_widgets/photo_strip.dart';
 import '../../widgets/profile_widgets/profile_stats.dart';
 import '../../widgets/profile_widgets/action_buttons.dart';
 import '../../widgets/profile_widgets/info_cards.dart';
+import '../../widgets/profile_widgets/badges_section.dart';
 
 class PublicProfileScreen extends StatelessWidget {
   const PublicProfileScreen({super.key});
@@ -61,6 +62,7 @@ class PublicProfileScreen extends StatelessWidget {
                   const InfoCards(),
 
                   /// 👉 BADGES GO HERE LATER
+                  BadgesSection(badges: user.badges),
 
                   const SizedBox(height: 80),
                 ],
