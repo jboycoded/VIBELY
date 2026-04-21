@@ -99,9 +99,9 @@ class _AnimatedHeaderState extends State<AnimatedHeader> {
                       padding: const EdgeInsets.symmetric(horizontal: 8),
                       child: ClipRRect(
                         borderRadius: BorderRadius.circular(12),
-                        child: user.photos[i].startsWith('http')
+                        child: user.photos[index].startsWith('http')
     ? Image.network(
-        user.photos[i],
+        user.photos[index],
         fit: BoxFit.contain,
         loadingBuilder: (context, child, progress) {
           if (progress == null) return child;
@@ -110,7 +110,7 @@ class _AnimatedHeaderState extends State<AnimatedHeader> {
         errorBuilder: (context, error, stackTrace) => const Icon(Icons.broken_image),
       )
     : Image.asset(
-        users.photos[i],
+        user.photos[index],
         fit: BoxFit.contain,
       ),
 
