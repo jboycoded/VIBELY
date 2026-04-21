@@ -123,7 +123,7 @@ class ProfileSections extends StatelessWidget {
   Widget _buildBadgeItem(BadgeModel badge) {
   return Padding(
     padding: const EdgeInsets.only(right: 12.0),
-    child: const Column(
+    child: Column(
       children: [
         // Badge Icon/Graphic
         badge.imageUrl.startsWith('http')
