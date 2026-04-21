@@ -21,7 +21,7 @@ class LiveStream {
 
   LiveStream copyWith({
     int? viewers,
-    int? l likes,
+    int? likes,
    UserModel? user
   }) {
     return LiveStream(
