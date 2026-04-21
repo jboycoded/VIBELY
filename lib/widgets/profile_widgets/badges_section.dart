@@ -12,10 +12,10 @@ class BadgesSection extends StatelessWidget {
       margin: const EdgeInsets.symmetric(horizontal: 16, vertical: 12),
       padding: const EdgeInsets.all(16),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.05),
+        color: Colors.white.withOpacity(0.07),
         borderRadius: BorderRadius.circular(16),
         border: Border.all(
-          color: Colors.white.withOpacity(0.08),
+          color: Colors.white.withOpacity(0.12),
         ),
       ),
       child: Column(
