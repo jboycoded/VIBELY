@@ -26,14 +26,14 @@ class StatCard extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      width: 120,
+    return Expanded(
+      child: Container(
       padding: const EdgeInsets.symmetric(vertical: 12),
       decoration: BoxDecoration(
         gradient: const LinearGradient(
           colors: [Color(0xFF1B1448), Color(0xFF15102E)],
         ),
-        borderRadius: BorderRadius.circular(12),
+        borderRadius: BorderRadius.circular(30),
       ),
       child: Column(
         children: [
@@ -45,6 +45,7 @@ class StatCard extends StatelessWidget {
               style: const TextStyle(color: Colors.white70, fontSize: 12)),
         ],
       ),
-    );
+    ),
+      );
   }
 }
