@@ -19,8 +19,13 @@ class ActionButtons extends StatelessWidget {
                 borderRadius: BorderRadius.circular(30),
               ),
               child: const Center(
-                child: Text("+ Follow", style: TextStyle(color: Colors.white)),
-              ),
+                child: Row(
+                children: [
+                  Icon(Icons.add, color: Colors.white),
+                  Text("Follow", style: TextStyle(color: Colors.white)),
+              ],
+                  ),
+                ),
             ),
           ),
           const SizedBox(width: 10),
@@ -33,7 +38,12 @@ class ActionButtons extends StatelessWidget {
                 border: Border.all(color: Colors.white.withOpacity(0.25)),
               ),
               child: const Center(
-                child: Text("Chat", style: TextStyle(color: Colors.white)),
+                child: Row(
+                children: [
+                  Icon(Icons.message, color: Colors.white),
+                  Text("Chat", style: TextStyle(color: Colors.white)),
+              ],
+                  ),
               ),
             ),
           ),
