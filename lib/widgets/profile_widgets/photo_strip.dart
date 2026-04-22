@@ -28,9 +28,9 @@ class PhotoStrip extends StatelessWidget {
             },
             child: Hero(
               tag: "photo_$index",
-              SizedBox(
+              child: SizedBox(
                 width: 100, // Limit width
-                height: 90
+                height: 90,
               child: Container(
                 margin: const EdgeInsets.symmetric(horizontal: 8),
                 decoration: BoxDecoration(
