@@ -9,10 +9,11 @@ class ProfileHeader extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return Column(
+  children: [
+    /// PROFILE IMAGE
+    Stack(
+      alignment: Alignment.bottomRight,
       children: [
-        const SizedBox(height: 10),
-
-        /// PROFILE IMAGE
         Container(
           padding: const EdgeInsets.all(3),
           decoration: const BoxDecoration(
@@ -23,13 +24,27 @@ class ProfileHeader extends StatelessWidget {
           ),
           child: CircleAvatar(
             radius: 50,
-            backgroundImage: AssetImage(user.imageUrl),
+            backgroundImage: user.imageFile != null
+                ? FileImage(user.imageFile!)
+                : AssetImage(user.imageUrl) as ImageProvider,
           ),
         ),
 
-        const SizedBox(height: 12),
+        /// ❤️ LIKE BUTTON
+        Container(
+          padding: const EdgeInsets.all(8),
+          decoration: const BoxDecoration(
+            shape: BoxShape.circle,
+            color: Colors.pink,
+          ),
+          child: const Icon(Icons.favorite, color: Colors.white, size: 18),
+        ),
+      ],
+    ),
 
-        /// NAME + TAG
+    const SizedBox(height: 16),
+
+    /// NAME + TAG
         Row(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -37,22 +52,25 @@ class ProfileHeader extends StatelessWidget {
               user.name,
               style: const TextStyle(
                 color: Colors.white,
-                fontSize: 20,
+                fontSize: 22,
                 fontWeight: FontWeight.bold,
               ),
             ),
 
             const SizedBox(width: 8),
-
             Container(
               padding: const EdgeInsets.symmetric(horizontal: 8, vertical: 3),
               decoration: BoxDecoration(
-                color: Colors.pinkAccent.withOpacity(0.2),
+                color: Colors.pinkAccent.withOpacity(0.5),
                 borderRadius: BorderRadius.circular(12),
               ),
               child: Row(
                 children: [
-                  const Icon(Icons.female, size: 12, color: Colors.pinkAccent),
+                  const Icon(
+                    user.gender == "male"
+                    ? Icons.male
+                    : Icons.female, 
+                    size: 12, color: Colors.pinkAccent),
                   const SizedBox(width: 3),
                   Text(
                     "${user.age}",
@@ -64,25 +82,52 @@ class ProfileHeader extends StatelessWidget {
           ],
         ),
 
-        const SizedBox(height: 6),
+    const SizedBox(height: 8),
 
-        Text(user.country, style: const TextStyle(color: Colors.white70)),
-        const SizedBox(height: 5),
-        Text(user.id, style: const TextStyle(color: Colors.white70)),
-
-        const SizedBox(height: 10),
-
-        Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 30),
-          child: Text(
-            user.bio,
-            textAlign: TextAlign.center,
-            style: const TextStyle(color: Colors.white60),
-          ),
+    /// 🌍 AGE + COUNTRY
+    Row(
+      mainAxisAlignment: MainAxisAlignment.center,
+      children: [
+        const Icon(Icons.cake, size: 14, color: Colors.white70),
+        const SizedBox(width: 4),
+        Text(
+          '${user.age}',
+          style: const TextStyle(color: Colors.white70),
         ),
-
-        const SizedBox(height: 20),
+        const SizedBox(width: 12),
+        const Icon(Icons.location_on, size: 14, color: Colors.white70),
+        const SizedBox(width: 4),
+        Text(
+          user.country,
+          style: const TextStyle(color: Colors.white70),
+        ),
       ],
-    );
+    ),
+
+    const SizedBox(height: 4),
+
+    /// 🆔 USER ID
+    Text(
+      'ID: ${user.id}',
+      style: const TextStyle(color: Colors.white54, fontSize: 12),
+    ),
+
+    const SizedBox(height: 12),
+
+    /// 🧾 BIO
+    Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 40),
+      child: Text(
+        user.bio,
+        textAlign: TextAlign.center,
+        maxLines: 3,
+        overflow: TextOverflow.ellipsis,
+        style: const TextStyle(color: Colors.white60, height: 1.4),
+      ),
+    ),
+    const SizedBox(height: 20),
+  ],
+);
   }
 }
+      
