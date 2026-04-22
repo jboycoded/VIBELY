@@ -22,6 +22,7 @@ class PublicProfileScreen extends StatelessWidget {
       "assets/images/streamer1.jpg",
       "assets/images/streamer1.jpg",
       "assets/images/streamer1.jpg",
+      "assets/images/login_bg.png",
     ];
 
     return Scaffold(
