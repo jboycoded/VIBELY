@@ -9,7 +9,7 @@ class PhotoStrip extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SizedBox(
-      height: 110,
+      height: 100,
       child: PageView.builder(
         controller: PageController(viewportFraction: 0.75),
         itemCount: photos.length,
@@ -28,6 +28,8 @@ class PhotoStrip extends StatelessWidget {
             },
             child: Hero(
               tag: "photo_$index",
+              SizedBox(
+                width: 100, // Limit width
               child: Container(
                 margin: const EdgeInsets.symmetric(horizontal: 8),
                 decoration: BoxDecoration(
@@ -36,6 +38,7 @@ class PhotoStrip extends StatelessWidget {
                     image: AssetImage(photos[index]),
                     fit: BoxFit.cover,
                   ),
+                ),
                 ),
               ),
             ),
