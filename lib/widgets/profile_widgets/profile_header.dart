@@ -66,7 +66,7 @@ class ProfileHeader extends StatelessWidget {
               ),
               child: Row(
                 children: [
-                  const Icon(
+                  Icon(
                     user.gender == "male"
                     ? Icons.male
                     : Icons.female, 
