@@ -56,8 +56,6 @@ class PublicProfileScreen extends StatelessWidget {
 
                   ActionButtons(),
 
-                  const InfoCards(),
-
                   /// 👉 BADGES GO HERE LATER
                   BadgesSection(badges: user.badges),
 
