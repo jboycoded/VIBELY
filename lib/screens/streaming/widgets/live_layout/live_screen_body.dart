@@ -52,6 +52,7 @@ class LiveScreenBody extends StatelessWidget {
       id: "ID: 1000",
       age: 22,
       country: "US",
+      gender: "male",
       bio: "livestreamer with a chill vibe",
       imageUrl: "assets/images/streamer1.jpg",
     ),
