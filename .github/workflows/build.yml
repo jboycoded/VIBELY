@@ -22,23 +22,23 @@ jobs:
       - name: Build APK
         run: flutter build apk --release
 
-      #- name: Upload APK
-        #uses: actions/upload-artifact@v4
-        #with:
-          #name: app-release
-          #path: build/app/outputs/flutter-apk/app-release.apk
-          #retention-days: 7
-
-      - name: Create GitHub Release
-        uses: softprops/action-gh-release@v2
+      - name: Upload APK
+        uses: actions/upload-artifact@v4
         with:
-          # This creates a unique tag based on the build number (e.g., v42)
-          tag_name: v${{ github.run_number }}
-          name: "Flutter Build v${{ github.run_number }}"
-          body: "Automated build for testing. [Run #${{ github.run_number }}]"
-          draft: false
-          prerelease: false
-          # Path to your Flutter APK
-          files: build/app/outputs/flutter-apk/app-release.apk
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+          name: app-release
+          path: build/app/outputs/flutter-apk/app-release.apk
+          retention-days: 7
+
+      #- name: Create GitHub Release
+        #uses: softprops/action-gh-release@v2
+        #with:
+          ## This creates a unique tag based on the build number (e.g., v42)
+          #tag_name: v${{ github.run_number }}
+          #name: "Flutter Build v${{ github.run_number }}"
+          #body: "Automated build for testing. [Run #${{ github.run_number }}]"
+          #draft: false
+          #prerelease: false
+          ## Path to your Flutter APK
+          #files: build/app/outputs/flutter-apk/app-release.apk
+        #env:
+          #GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
