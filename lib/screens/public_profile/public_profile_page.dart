@@ -8,6 +8,7 @@ import '../../widgets/profile_widgets/photo_strip.dart';
 import '../../widgets/profile_widgets/profile_stats.dart';
 import '../../widgets/profile_widgets/action_buttons.dart';
 import '../../widgets/profile_widgets/badges_section.dart';
+import '../../widgets/profile_widgets/about_me_section.dart';
 
 class PublicProfileScreen extends StatelessWidget {
   final UserModel user;
@@ -128,7 +129,11 @@ class PublicProfileScreen extends StatelessWidget {
                   ),
 
                   const SizedBox(height: 26),
-
+                  AboutMeSection(
+                    bio: user.bio,
+                  ),
+                  
+                  const SizedBox(height: 26),
                   BadgesSection(
                     badges: user.badges,
                   ),
