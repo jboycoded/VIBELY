@@ -142,11 +142,12 @@ class _PremiumActionButton extends StatelessWidget {
               ),
 
               /// ARROW
+              /*
               Icon(
                 Icons.arrow_forward_rounded,
                 color: Colors.white.withOpacity(0.8),
                 size: 20,
-              ),
+              ),*/
             ],
           ),
         ),
