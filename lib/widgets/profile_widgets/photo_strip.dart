@@ -121,6 +121,7 @@ class PhotoStrip extends StatelessWidget {
                         ),
 
                         /// BOTTOM INFO
+                        /*
                         Positioned(
                           left: 14,
                           right: 14,
@@ -215,7 +216,7 @@ class PhotoStrip extends StatelessWidget {
                               ),
                             ],
                           ),
-                        ),
+                        ),*/
                       ],
                     ),
                   ),
