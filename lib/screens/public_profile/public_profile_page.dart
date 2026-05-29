@@ -31,25 +31,30 @@ class PublicProfileScreen extends StatelessWidget {
             child: Image.asset(
               "assets/images/login_bg.png",
               fit: BoxFit.cover,
+              filterQuality: FilterQuality.high,
             ),
           ),
 
           /// DARK OVERLAY
-          Positioned.fill(
-            child: Container(
-              decoration: BoxDecoration(
-                gradient: LinearGradient(
-                  begin: Alignment.topCenter,
-                  end: Alignment.bottomCenter,
-                  colors: [
-                    Colors.black.withOpacity(0.15),
-                    const Color(0xFF090414),
-                    const Color(0xFF090414),
-                  ],
-                ),
-              ),
-            ),
-          ),
+          /// DARK OVERLAY
+Positioned.fill(
+  child: Container(
+    decoration: BoxDecoration(
+      gradient: LinearGradient(
+        begin: Alignment.topCenter,
+        end: Alignment.bottomCenter,
+        colors: [
+
+          Colors.black.withOpacity(0.05),
+
+          Colors.black.withOpacity(0.18),
+
+          const Color(0xFF090414).withOpacity(0.45),
+        ],
+      ),
+    ),
+  ),
+),
 
           /// PURPLE GLOW
           Positioned(
@@ -60,7 +65,7 @@ class PublicProfileScreen extends StatelessWidget {
               height: 250,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: const Color(0xFF9B4DFF).withOpacity(0.35),
+                color: const Color(0xFF9B4DFF).withOpacity(0.18),
               ),
             ),
           ),
@@ -74,7 +79,7 @@ class PublicProfileScreen extends StatelessWidget {
               height: 220,
               decoration: BoxDecoration(
                 shape: BoxShape.circle,
-                color: const Color(0xFFFF4D8D).withOpacity(0.22),
+                color: const Color(0xFFFF4D8D).withOpacity(0.18),
               ),
             ),
           ),
@@ -83,8 +88,8 @@ class PublicProfileScreen extends StatelessWidget {
           Positioned.fill(
             child: BackdropFilter(
               filter: ImageFilter.blur(
-                sigmaX: 60,
-                sigmaY: 60,
+                sigmaX: 18,
+                sigmaY: 18,
               ),
               child: Container(
                 color: Colors.transparent,
