@@ -181,49 +181,24 @@ class ProfileHeader extends StatelessWidget {
             ),
 
             _infoChip(
-              icon: Icons.favorite_rounded,
-              text: "${user.likes} Likes",
-            ),
-
-            _infoChip(
-              icon: Icons.diamond_rounded,
-              text: "${user.coins} Coins",
-            ),
+      icon: Icons.badge_rounded,
+      text: "ID: ${user.id}",
+    ),
           ],
         ),
 
-        const SizedBox(height: 18),
-
-        /// BIO
-        Padding(
-          padding: const EdgeInsets.symmetric(
-            horizontal: 32,
-          ),
-          child: Text(
-            user.bio,
-            textAlign: TextAlign.center,
-            maxLines: 3,
-            overflow: TextOverflow.ellipsis,
-            style: TextStyle(
-              color: Colors.white.withOpacity(0.72),
-              fontSize: 15,
-              height: 1.7,
-              fontWeight: FontWeight.w400,
-            ),
-          ),
-        ),
-
-        const SizedBox(height: 14),
+        //const SizedBox(height: 14),
 
         /// USER ID
+        /*
         Text(
-          "ID ${user.id}",
+          "ID: ${user.id}",
           style: TextStyle(
             color: Colors.white.withOpacity(0.35),
             fontSize: 12,
             letterSpacing: 1.1,
           ),
-        ),
+        ),*/
       ],
     );
   }
