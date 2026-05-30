@@ -49,7 +49,7 @@ class ProfileHeader extends StatelessWidget {
                   ),
                 ),
                 child: CircleAvatar(
-                  radius: 56,
+                  radius: 50,
                   backgroundImage: user.imageFile != null
                       ? FileImage(user.imageFile!)
                       : AssetImage(user.imageUrl)
@@ -96,7 +96,7 @@ class ProfileHeader extends StatelessWidget {
                     style: const TextStyle(
                       color: Colors.white,
                       fontWeight: FontWeight.w700,
-                      fontSize: 11,
+                      fontSize: 10,
                       letterSpacing: 0.6,
                     ),
                   ),
@@ -119,7 +119,7 @@ class ProfileHeader extends StatelessWidget {
                 overflow: TextOverflow.ellipsis,
                 style: const TextStyle(
                   color: Colors.white,
-                  fontSize: 30,
+                  fontSize: 20,
                   fontWeight: FontWeight.w800,
                   letterSpacing: -0.5,
                 ),
