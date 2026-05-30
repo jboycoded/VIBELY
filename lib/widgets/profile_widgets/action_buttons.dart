@@ -25,7 +25,7 @@ class ActionButtons extends StatelessWidget {
           child: _PremiumActionButton(
             title: "Chat",
             icon: Icons.message_rounded,
-            isPrimary: false,
+            isPrimary: true,
           ),
         ),
       ],
