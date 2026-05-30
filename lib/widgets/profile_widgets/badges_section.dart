@@ -79,8 +79,14 @@ class BadgesSection extends StatelessWidget {
                       ),
 
                       decoration: BoxDecoration(
-                        color: Colors.white
-                            .withOpacity(0.06),
+                        gradient: LinearGradient(
+                    colors: [
+                      Color(0xFFFF4D8D),
+                      Color(0xFF9B4DFF),
+                    ],
+                  ),
+                        //color: Colors.white
+                            //.withOpacity(0.06),
 
                         borderRadius:
                             BorderRadius.circular(20),
