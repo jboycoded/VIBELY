@@ -31,7 +31,7 @@ class PublicProfileScreen extends StatelessWidget {
             child: Image.asset(
               "assets/images/login_bg.png",
               fit: BoxFit.cover,
-              filterQuality: FilterQuality.high,
+              //filterQuality: FilterQuality.high,
             ),
           ),
 
@@ -61,6 +61,7 @@ Positioned.fill(
   */
 ),
 
+          /*
           /// PURPLE GLOW
           Positioned(
             top: -120,
@@ -89,7 +90,7 @@ Positioned.fill(
             ),
           ),
 
-          /*
+          
           /// BLUR
           Positioned.fill(
             child: BackdropFilter(
@@ -193,10 +194,10 @@ class _TopBar extends StatelessWidget {
     return Container(
       padding: const EdgeInsets.all(10),
       decoration: BoxDecoration(
-        color: Colors.white.withOpacity(0.08),
+        color: Colors.white.withOpacity(0.05),
         borderRadius: BorderRadius.circular(14),
         border: Border.all(
-          color: Colors.white.withOpacity(0.08),
+          color: Colors.white.withOpacity(0.05),
         ),
       ),
       child: Icon(
