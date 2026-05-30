@@ -68,8 +68,14 @@ class _PremiumStatCard extends StatelessWidget {
           ),
 
           decoration: BoxDecoration(
-            color: Colors.white.withOpacity(0.07),
-
+            gradient: LinearGradient(
+    begin: Alignment.topLeft,
+    end: Alignment.bottomRight,
+    colors: [
+      Color(0xFF1B1448), // A slightly lighter navy for the "glow"
+      Color(0xFF15102E), // Your deep midnight navy
+    ],
+  ),
             borderRadius: BorderRadius.circular(26),
 
             border: Border.all(
