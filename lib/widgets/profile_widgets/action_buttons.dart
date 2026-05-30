@@ -14,7 +14,7 @@ class ActionButtons extends StatelessWidget {
           child: _PremiumActionButton(
             title: "Follow",
             icon: Icons.add_rounded,
-            isPrimary: false,
+            isPrimary: true,
           ),
         ),
 
@@ -25,7 +25,7 @@ class ActionButtons extends StatelessWidget {
           child: _PremiumActionButton(
             title: "Chat",
             icon: Icons.message_rounded,
-            isPrimary: false,
+            isPrimary: true,
           ),
         ),
       ],
@@ -67,8 +67,8 @@ class _PremiumActionButton extends StatelessWidget {
             gradient: isPrimary
                 ? const LinearGradient(
                     colors: [
+                      Color(0xFF7B3BFF),
                       Color(0xFFFF4D8D),
-                      Color(0xFF9B4DFF),
                     ],
                   )
                 : null,
