@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "81311233916",
+    "project_id": "vibely-65874",
+    "storage_bucket": "vibely-65874.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:81311233916:android:e258e3704fe7eee06156f9",
+        "android_client_info": {
+          "package_name": "com.example.vibely"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyBv1IGebFoaJMkz6iLrkZGypJ1XlzKPRE0"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
