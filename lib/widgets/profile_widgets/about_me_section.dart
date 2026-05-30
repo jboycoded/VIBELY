@@ -19,31 +19,31 @@ class AboutMeSection extends StatelessWidget {
       child: ClipRRect(
         borderRadius: BorderRadius.circular(30),
 
-        child: BackdropFilter(
+        /*child: BackdropFilter(
           filter: ImageFilter.blur(
             sigmaX: 20,
             sigmaY: 20,
-          ),
+          ),*/
 
           child: Container(
             padding: const EdgeInsets.all(22),
 
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.06),
+              color: Colors.white.withOpacity(0.05),
 
               borderRadius: BorderRadius.circular(30),
 
               border: Border.all(
-                color: Colors.white.withOpacity(0.08),
+                color: Colors.white.withOpacity(0.05),
               ),
 
-              boxShadow: [
+              /*boxShadow: [
                 BoxShadow(
                   color: Colors.black.withOpacity(0.18),
                   blurRadius: 20,
                   offset: const Offset(0, 10),
                 ),
-              ],
+              ],*/
             ),
 
             child: Column(
@@ -111,7 +111,7 @@ class AboutMeSection extends StatelessWidget {
               ],
             ),
           ),
-        ),
+        //),
       ),
     );
   }
