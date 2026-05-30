@@ -39,6 +39,10 @@ class PublicProfileScreen extends StatelessWidget {
           /// DARK OVERLAY
 Positioned.fill(
   child: Container(
+            color: Colors.black.withOpacity(0.35),
+          ),
+  /*
+  child: Container(
     decoration: BoxDecoration(
       gradient: LinearGradient(
         begin: Alignment.topCenter,
@@ -54,6 +58,7 @@ Positioned.fill(
       ),
     ),
   ),
+  */
 ),
 
           /// PURPLE GLOW
@@ -84,6 +89,7 @@ Positioned.fill(
             ),
           ),
 
+          /*
           /// BLUR
           Positioned.fill(
             child: BackdropFilter(
@@ -96,6 +102,7 @@ Positioned.fill(
               ),
             ),
           ),
+          */
 
           SafeArea(
             child: SingleChildScrollView(
