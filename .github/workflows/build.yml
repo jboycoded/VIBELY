@@ -11,10 +11,42 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
+      - name: Set up Java
+        uses: actions/setup-java@v4
+        with:
+          distribution: 'temurin'
+          java-version: '17'
+
       - name: Install Flutter
         uses: subosito/flutter-action@v2
         with:
           flutter-version: '3.29.0'
+          cache: true
+
+      - name: Cache pub packages
+        uses: actions/cache@v4
+        with:
+          path: ~/.pub-cache
+          key: pub-${{ runner.os }}-${{ hashFiles('pubspec.lock') }}
+          restore-keys: |
+            pub-${{ runner.os }}-
+
+      - name: Cache Gradle
+        uses: actions/cache@v4
+        with:
+          path: |
+            ~/.gradle/caches
+            ~/.gradle/wrapper
+          key: gradle-${{ runner.os }}-${{ hashFiles('**/*.gradle*') }}
+          restore-keys: |
+            gradle-${{ runner.os }}-
+
+      - name: Set up Android SDK
+        uses: android-actions/setup-android@v3
+
+      - name: Install Android SDK components
+        run: |
+          sdkmanager "platforms;android-36" "build-tools;36.0.0" "ndk;27.0.12077973"
 
       - name: Get dependencies
         run: flutter pub get
@@ -28,17 +60,3 @@ jobs:
           name: app-release
           path: build/app/outputs/flutter-apk/app-release.apk
           retention-days: 7
-
-      #- name: Create GitHub Release
-        #uses: softprops/action-gh-release@v2
-        #with:
-          ## This creates a unique tag based on the build number (e.g., v42)
-          #tag_name: v${{ github.run_number }}
-          #name: "Flutter Build v${{ github.run_number }}"
-          #body: "Automated build for testing. [Run #${{ github.run_number }}]"
-          #draft: false
-          #prerelease: false
-          ## Path to your Flutter APK
-          #files: build/app/outputs/flutter-apk/app-release.apk
-        #env:
-          #GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
