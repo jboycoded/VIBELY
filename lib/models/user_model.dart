@@ -4,6 +4,7 @@ import 'badge_model.dart';
 class UserModel {
   final String id;
   final String name;
+  final String email;
   final int age;
   final String bio;
   final String country;
@@ -35,6 +36,7 @@ class UserModel {
   UserModel({
     required this.id,
     required this.name,
+    required this.email,
     required this.age,
     required this.bio,
     required this.country,
