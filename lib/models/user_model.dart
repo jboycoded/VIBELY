@@ -12,7 +12,7 @@ class UserModel {
 
   /// 👤 Profile
   final String imageUrl;
-  final File? imageFile;
+  //final File? imageFile;
   final String? gender;
 
   /// 📊 Social
@@ -26,6 +26,7 @@ class UserModel {
   /// 🟢 Presence
   final bool isOnline;
   final DateTime? lastSeen;
+  final DateTime createdAt;
 
   /// 💰 Economy
   final int coins;
@@ -41,6 +42,7 @@ class UserModel {
     required this.bio,
     required this.country,
     required this.imageUrl,
+    required this.createdAt,
     this.imageFile,
     this.gender,
     this.followers = 0,
@@ -149,6 +151,15 @@ class UserModel {
           : null,
       coins: json['coins'] ?? 0,
       isLive: json['isLive'] ?? false,
+      photos: List<String>.from(
+        json['photos'] ?? [],
+      ),
+      followerIds: List<String>.from(
+        json['followerIds'] ?? [],
+      ),
+      followingIds: List<String>.from(
+        json['followingIds'] ?? [],
+      ),
     );
   }
 
@@ -168,6 +179,9 @@ class UserModel {
       'lastSeen': lastSeen?.toIso8601String(),
       'coins': coins,
       'isLive': isLive,
+      'photos': photos,
+      'followerIds': followerIds,
+      'followingIds': followingIds,
     };
   }
 }
