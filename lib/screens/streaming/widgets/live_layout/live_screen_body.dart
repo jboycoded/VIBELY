@@ -50,7 +50,7 @@ class LiveScreenBody extends StatelessWidget {
               user: UserModel(
       name: "Cydnee",
       username: "Cydnee",
-      email: "johnson.onoja1@gmail.com"
+      email: "johnson.onoja1@gmail.com",
       id: "1000",
       age: 22,
       country: "US",
