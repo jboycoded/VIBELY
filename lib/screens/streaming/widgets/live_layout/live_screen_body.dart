@@ -49,19 +49,21 @@ class LiveScreenBody extends StatelessWidget {
           : liveStream.copyWith(
               user: UserModel(
       name: "Cydnee",
+      username: "Cydnee",
+      email: "johnson.onoja1@gmail.com"
       id: "1000",
       age: 22,
       country: "US",
-      gender: "male",
       bio: "Live streamer | Chill vibes 🎧 | Night streams 🌙",
+      gender: "male",
       imageUrl: "assets/images/streamer1.jpg",
     ),
             ),
        user = (liveStream.user != null) 
           ? liveStream.user! 
-          : UserModel(id: "1000", name: "Cydnee", age: 22,
+          : UserModel(id: "1000", name: "Cydnee", username: "Cydnee", email: "johnson.onoja1@gmail.com", age: 22,
                      bio: "Just here to have fun, vibe with amazing people abd spread good energy.🥂💫💜",
-                     country: "US", imageUrl: "assets/images/streamer1.jpg");
+                     gender: "male", country: "US", imageUrl: "assets/images/streamer1.jpg");
 
 
   @override
