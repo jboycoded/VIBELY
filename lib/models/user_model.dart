@@ -12,7 +12,7 @@ class UserModel {
 
   /// 👤 Profile
   final String imageUrl;
-  //final File? imageFile;
+  final File? imageFile;
   final String? gender;
 
   /// 📊 Social
