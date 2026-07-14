@@ -2,18 +2,20 @@ import 'dart:io';
 import 'badge_model.dart';
 
 class UserModel {
+  //basic details
   final String id;
   final String name;
+  final String username;
   final String email;
   final int age;
   final String bio;
+  final String? gender;
   final String country;
   final List<String> photos;
 
   /// 👤 Profile
   final String imageUrl;
   final File? imageFile;
-  final String? gender;
 
   /// 📊 Social
   final List<String> followerIds;
@@ -26,7 +28,7 @@ class UserModel {
   /// 🟢 Presence
   final bool isOnline;
   final DateTime? lastSeen;
-  final DateTime createdAt;
+  //final DateTime createdAt;
 
   /// 💰 Economy
   final int coins;
@@ -37,14 +39,15 @@ class UserModel {
   UserModel({
     required this.id,
     required this.name,
+    required this.username,
     required this.email,
     required this.age,
     required this.bio,
+    required this.gender,
     required this.country,
     required this.imageUrl,
-    required this.createdAt,
+    //required this.createdAt,
     this.imageFile,
-    this.gender,
     this.followers = 0,
     this.following = 0,
     this.followerIds = const [],
@@ -76,12 +79,14 @@ class UserModel {
   UserModel copyWith({
     String? id,
     String? name,
+    String? username,
+    String? email,
     int? age,
     String? bio,
+    String? gender,
     String? country,
     String? imageUrl,
     File? imageFile,
-    String? gender,
     int? followers,
     int? following,
     List<String>? followerIds,
@@ -95,12 +100,14 @@ class UserModel {
     return UserModel(
       id: id ?? this.id,
       name: name ?? this.name,
+      username: username ?? this.username,
+      email: email ?? this.email,
       age: age ?? this.age,
       bio: bio ?? this.bio,
+      gender: gender ?? this.gender,
       country: country ?? this.country,
       imageUrl: imageUrl ?? this.imageUrl,
       imageFile: imageFile ?? this.imageFile,
-      gender: gender ?? this.gender,
       followerIds: followerIds ?? this.followerIds,
       followingIds: followingIds ?? this.followingIds,
       followers: followers ?? this.followers,
@@ -137,11 +144,13 @@ class UserModel {
     return UserModel(
       id: json['id'],
       name: json['name'],
+      username: json['username'],
+      email: json['email'],
       age: json['age'],
       bio: json['bio'],
+      gender: json['gender'],
       country: json['country'],
       imageUrl: json['imageUrl'],
-      gender: json['gender'],
       followers: json['followers'] ?? 0,
       following: json['following'] ?? 0,
       likes: json['likes'] ?? 0,
@@ -167,11 +176,13 @@ class UserModel {
     return {
       'id': id,
       'name': name,
+      'username': username,
+      'email': email,
       'age': age,
       'bio': bio,
+      'gender': gender,
       'country': country,
       'imageUrl': imageUrl,
-      'gender': gender,
       'followers': followers,
       'following': following,
       'likes': likes,
