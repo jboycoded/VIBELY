@@ -26,6 +26,9 @@ class _ProfileScreenState extends State<ProfileScreen> {
 
   UserModel user = UserModel(
     name: "Johnson Onoja",
+    username: "Johnson",
+    email: "johnson.onoja1@gmail.com",
+    gender: "male",
     id: "ID: 110305",
     age: 23,
     country: "Nigeria",
