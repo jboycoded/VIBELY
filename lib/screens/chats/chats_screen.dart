@@ -44,6 +44,9 @@ class _ChatsScreenState extends State<ChatsScreen> {
     final user1 = UserModel(
       id: "1000",
       name: "Jenny",
+      username: "Jenny",
+      email: "johnson.onoja1@gmail.com",
+      gender: "female",
       age: 22,
       bio: "",
       country: "US",
@@ -54,6 +57,9 @@ class _ChatsScreenState extends State<ChatsScreen> {
     final user2 = UserModel(
       id: "1001",
       name: "Lisa",
+      username: "Lisa",
+      email: "johnson.onoja1@gmail.com",
+      gender: "female",
       age: 24,
       bio: "",
       country: "UK",
