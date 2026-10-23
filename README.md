@@ -1,16 +1,11 @@
-# vibely
+# VIBELY 🚀
 
-A new Flutter project.
+**VIBELY** is a cross-platform mobile video streaming application built using Flutter. This project focuses heavily on clean architecture, optimized state management, and scalable UI structures.
 
-## Getting Started
+## 🛠️ Tech Stack & Key Features
+- **Frontend Framework:** Flutter & Dart (Cross-platform Android & iOS)
+- **Backend Infrastructure:** Firebase integration underway (Authentication, Firestore configuration initiated)
+- **Architecture:** Clean, modular folder structuring designed for scalability and seamless integration of third-party APIs.
 
-This project is a starting point for a Flutter application.
-
-A few resources to get you started if this is your first Flutter project:
-
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
-
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## 📌 Project Status
+This is an active, ongoing development project where I am mapping out robust streaming workflows and exploring native performance channel integrations.
